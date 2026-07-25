@@ -19,6 +19,7 @@ namespace Training_Platform.Models
         [Required]
         [MaxLength(400)]
         public string Description { get; set; }
+        public int DurationInHours { get; set; }
         public string? Thumbnail { get; set; }
         [Required]
         public CourseLevel Level { get; set; }

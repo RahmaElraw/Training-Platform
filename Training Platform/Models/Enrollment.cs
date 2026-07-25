@@ -13,5 +13,6 @@ namespace Training_Platform.Models
 
         public int CourseId { get; set; }
         public Course Course { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

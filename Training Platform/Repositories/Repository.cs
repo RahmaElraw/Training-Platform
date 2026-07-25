@@ -7,7 +7,7 @@ namespace Training_Platform.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private ApplicationDbContext _context= new ApplicationDbContext();
+        private readonly ApplicationDbContext _context;
         private DbSet<T> _dbSet;
 
         public Repository(ApplicationDbContext context)
@@ -31,21 +31,21 @@ namespace Training_Platform.Repositories
             _dbSet.Update(entity);
         }
         public async Task<List<T>> GetAsync(Expression<Func<T, bool>>? expression = null, bool tracked = true
-            , Expression<Func<T, object>>[]? includs = null)
+            , Expression<Func<T, object>>[]? includes = null)
         {
-            var category = _dbSet.AsQueryable();
+            var query = _dbSet.AsQueryable();
 
             if (!tracked)
-                category = category.AsNoTracking();
+                query = query.AsNoTracking();
 
             if (expression is not null)
-                category = category.Where(expression);
+                query = query.Where(expression);
 
-            if (includs is not null)
-                foreach (var include in includs)
-                    category = category.Include(include);
+            if (includes is not null)
+                foreach (var include in includes)
+                    query = query.Include(include);
 
-            return await category.ToListAsync();
+            return await query.ToListAsync();
         }
         public async Task<T?> GetOneAsync(Expression<Func<T, bool>>? expression = null, bool tracked = true)
         {

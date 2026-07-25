@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -14,6 +14,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Trainee\Data\" />
+    <Folder Include="Areas\Trainee\Models\" />
+    <Folder Include="Areas\Trainee\Views\" />
+    <Folder Include="Areas\Trainer\Controllers\" />
+    <Folder Include="Areas\Trainer\Data\" />
+    <Folder Include="Areas\Trainer\Models\" />
+    <Folder Include="Areas\Trainer\Views\" />
   </ItemGroup>
 
 </Project>

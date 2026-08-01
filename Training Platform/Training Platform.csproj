@@ -7,6 +7,8 @@
     <RootNamespace>Training_Platform</RootNamespace>
   </PropertyGroup>
 
+  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
@@ -16,17 +18,15 @@
     </PackageReference>
   </ItemGroup>
 
+  
+
   <ItemGroup>
+    <Folder Include="Areas\" />
     <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\" />
-    <Folder Include="Areas\Trainee\Data\" />
-    <Folder Include="Areas\Trainee\Models\" />
+    <Folder Include="Areas\Trainee\Controllers\" />
     <Folder Include="Areas\Trainee\Views\" />
     <Folder Include="Areas\Trainer\Controllers\" />
-    <Folder Include="Areas\Trainer\Data\" />
-    <Folder Include="Areas\Trainer\Models\" />
     <Folder Include="Areas\Trainer\Views\" />
   </ItemGroup>
 

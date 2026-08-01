@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Training_Platform.Models;
-
 namespace Training_Platform.Controllers
 {
+    [Area(SD.Trainee_Area)]
     public class HomeController : Controller
     {
         public IActionResult Index()

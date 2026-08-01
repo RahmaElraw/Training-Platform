@@ -8,6 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Trainee\Data\**" />
+    <Compile Remove="Areas\Trainee\Models\**" />
+    <Compile Remove="Areas\Trainer\Data\**" />
+    <Compile Remove="Areas\Trainer\Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Trainee\Data\**" />
+    <Content Remove="Areas\Trainee\Models\**" />
+    <Content Remove="Areas\Trainer\Data\**" />
+    <Content Remove="Areas\Trainer\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Trainee\Data\**" />
+    <EmbeddedResource Remove="Areas\Trainee\Models\**" />
+    <EmbeddedResource Remove="Areas\Trainer\Data\**" />
+    <EmbeddedResource Remove="Areas\Trainer\Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Trainee\Data\**" />
+    <None Remove="Areas\Trainee\Models\**" />
+    <None Remove="Areas\Trainer\Data\**" />
+    <None Remove="Areas\Trainer\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10">
@@ -18,15 +45,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\" />
-    <Folder Include="Areas\Trainee\Data\" />
-    <Folder Include="Areas\Trainee\Models\" />
     <Folder Include="Areas\Trainee\Views\" />
     <Folder Include="Areas\Trainer\Controllers\" />
-    <Folder Include="Areas\Trainer\Data\" />
-    <Folder Include="Areas\Trainer\Models\" />
     <Folder Include="Areas\Trainer\Views\" />
   </ItemGroup>
 

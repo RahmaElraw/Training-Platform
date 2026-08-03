@@ -2,7 +2,8 @@
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
-    public class DashboardController : Controller
+    [Area(SD.Admin_Area)]
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {

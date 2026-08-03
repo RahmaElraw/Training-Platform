@@ -1,0 +1,231 @@
+﻿@model Training_Platform.ViewModels.ReviewWithRelatedVM
+
+<div class="card mb-3">
+    @if (Model.TotalPages > 1)
+    {
+        <nav>
+
+            <ul class="pagination justify-content-center">
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-query="@Model.Query">
+
+                            @i
+
+                        </a>
+
+                    </li>
+                }
+
+            </ul>
+
+        </nav>
+    }
+
+    <div class="card-header">
+        <div class="row align-items-center">
+
+            <div class="col">
+                <h5 class="mb-0">All Reviews</h5>
+            </div>
+
+            <div class="col-auto">
+
+                <form asp-action="Index" method="get">
+
+                    <div class="input-group">
+
+                        <input name="query"
+                               value="@Model.Query"
+                               class="form-control form-control-sm"
+                               placeholder="Search..." />
+
+                        <button class="btn btn-primary btn-sm">
+
+                            <i class="fas fa-search"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        @if (!Model.Reviews.Any())
+        {
+            <div class="alert alert-warning text-center mb-0">
+
+                No reviews found.
+
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="bg-200">
+
+                        <tr>
+
+                            <th>Course</th>
+
+                            <th>User</th>
+
+                            <th>Rating</th>
+
+                            <th>Comment</th>
+
+                            <th>Date</th>
+
+                            <th class="text-center">Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Reviews)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    <strong>@item.Course.Title</strong>
+
+                                </td>
+
+                                <td>
+
+                                    @item.User.UserName
+
+                                </td>
+
+                                <td>
+
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= item.Rating)
+                                        {
+                                            <i class="fas fa-star text-warning"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star text-secondary"></i>
+                                        }
+                                    }
+
+                                    <span class="ms-1">
+
+                                        (@item.Rating)
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    @(string.IsNullOrWhiteSpace(item.Comment)
+                                        ? "-"
+                                        : item.Comment.Length > 60
+                                            ? item.Comment[..60] + "..."
+                                            : item.Comment)
+
+                                </td>
+
+                                <td>
+
+                                    @item.CreatedAt.ToString("dd MMM yyyy")
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-info btn-sm text-white">
+
+                                        <i class="fas fa-eye"></i>
+
+                                    </a>
+
+                                    <button class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteReviewModal"
+                                            data-id="@item.Id">
+
+                                        <i class="fas fa-trash"></i>
+
+                                    </button>
+
+                                    <form asp-action="Delete" method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               id="deleteReviewId"
+                                               name="id" />
+
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+
+                                            Cancel
+
+                                        </button>
+
+                                        <button type="submit"
+                                                class="btn btn-danger">
+
+                                            Delete
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+
+</div>
+
+@section Scripts
+{
+    <script>
+
+        const reviewModal = document.getElementById('deleteReviewModal');
+
+        reviewModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+
+            document.getElementById('deleteReviewId').value =
+                button.getAttribute('data-id');
+        });
+
+    </script>
+}

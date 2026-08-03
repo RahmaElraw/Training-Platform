@@ -1,0 +1,82 @@
+﻿@model Training_Platform.ViewModels.CategoryVM
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">
+            Edit Category
+        </h5>
+    </div>
+
+    <div class="card-body bg-light">
+
+        <form asp-action="Edit" method="post" class="row gx-3">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Id" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="col-12 mb-3">
+
+                <label asp-for="Name" class="form-label">
+                    Category Name
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input asp-for="Name"
+                       class="form-control"
+                       placeholder="Enter category name" />
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+
+            </div>
+
+            <div class="col-12 mb-3">
+
+                <label asp-for="Description" class="form-label">
+                    Description
+                </label>
+
+                <textarea asp-for="Description"
+                          rows="5"
+                          class="form-control"
+                          placeholder="Enter category description"></textarea>
+
+                <span asp-validation-for="Description" class="text-danger"></span>
+
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2">
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    <i class="fas fa-arrow-left me-1"></i>
+
+                    Back
+
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fas fa-save me-1"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

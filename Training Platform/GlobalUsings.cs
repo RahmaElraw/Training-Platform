@@ -6,3 +6,4 @@ global using Training_Platform.Models;
 global using Training_Platform.Utilities;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Diagnostics;
+global using Training_Platform.ViewModels;

@@ -1,0 +1,122 @@
+﻿@model Training_Platform.ViewModels.ReviewVM
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0">
+                    <i class="fas fa-star text-warning me-2"></i>
+                    Review Details
+                </h4>
+
+                <a asp-action="Index" class="btn btn-falcon-default btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Back
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-bold">
+                            Course
+                        </label>
+
+                        <div class="form-control bg-light">
+                            @Model.CourseTitle
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-bold">
+                            User
+                        </label>
+
+                        <div class="form-control bg-light">
+                            @Model.UserName
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Rating
+                    </label>
+
+                    <div>
+
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= Model.Rating)
+                            {
+                                <i class="fas fa-star fa-lg text-warning"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-star fa-lg text-secondary"></i>
+                            }
+                        }
+
+                        <span class="ms-2 fw-bold fs-5">
+                            @Model.Rating / 5
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Comment
+                    </label>
+
+                    <div class="border rounded p-3 bg-light">
+
+                        @if (string.IsNullOrWhiteSpace(Model.Comment))
+                        {
+                            <span class="text-muted">
+                                No comment.
+                            </span>
+                        }
+                        else
+                        {
+                            @Model.Comment
+                        }
+
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <label class="form-label fw-bold">
+                        Review Date
+                    </label>
+
+                    <div class="form-control bg-light">
+                        @Model.CreatedAt.ToString("dd MMM yyyy - hh:mm tt")
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

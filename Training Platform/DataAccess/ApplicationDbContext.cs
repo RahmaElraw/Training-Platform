@@ -1,16 +1,27 @@
+<<<<<<< Updated upstream
 ﻿using Microsoft.EntityFrameworkCore;
+=======
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> Stashed changes
 using Training_Platform.Models;
 
 namespace Training_Platform.DataAccess
 {
+<<<<<<< Updated upstream
     public class ApplicationDbContext : DbContext
+=======
+    public class ApplicationDbContext
+    : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+>>>>>>> Stashed changes
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
         {
         }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+       // public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }

@@ -7,10 +7,7 @@
     <RootNamespace>Training_Platform</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="E:\Data_My Courses\.Netcourse\Data\Lec_24\reops-template\falcon-v3.14.0\public\assets\img\icons\spot-illustrations\falcon.png" Link="wwwroot\images\admin_layout\falcon.png" />
-    <Content Include="E:\Data_My Courses\.Netcourse\Data\Lec_24\reops-template\falcon-v3.14.0\public\vendors\simplebar\simplebar.min.css" Link="wwwroot\css\admin\simplebar.min.css" />
-  </ItemGroup>
+
 
 
   

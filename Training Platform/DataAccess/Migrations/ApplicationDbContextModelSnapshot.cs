@@ -8,7 +8,7 @@ using Training_Platform.DataAccess;
 
 #nullable disable
 
-namespace Training_Platform.DataAccess.Migrations
+namespace Training_Platform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -221,9 +221,6 @@ namespace Training_Platform.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-<<<<<<< Updated upstream
-                    b.ToTable("ApplicationUsers");
-=======
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -233,7 +230,6 @@ namespace Training_Platform.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
->>>>>>> Stashed changes
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Category", b =>
@@ -603,8 +599,6 @@ namespace Training_Platform.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserProgresses");
-<<<<<<< Updated upstream
-=======
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -656,7 +650,6 @@ namespace Training_Platform.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> Stashed changes
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Certificate", b =>

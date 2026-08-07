@@ -1,0 +1,95 @@
+﻿@model Training_Platform.ViewModels.EditUserVM
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Edit User</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit" method="post">
+
+            <input asp-for="Id" type="hidden" />
+
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Profile Image
+                </label>
+
+                <input type="file"
+                       name="ProfileImageFile"
+                       class="form-control"
+                       accept="image/*" />
+
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="IsApproved" class="form-check-input" />
+                <label asp-for="IsApproved" class="form-check-label"></label>
+            </div>
+
+            <hr />
+
+            <h6 class="mb-3">Change Password</h6>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password"
+                       type="password"
+                       class="form-control"
+                       placeholder="Leave empty if you don't want to change it" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword"
+                       type="password"
+                       class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-warning">
+                Save Changes
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

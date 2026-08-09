@@ -6,10 +6,10 @@ using Training_Platform.Models;
 namespace Training_Platform.DataAccess
 {
     public class ApplicationDbContext
-    : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+        : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+            : base(options)
         {
         }
 
@@ -32,16 +32,16 @@ namespace Training_Platform.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Course>()
-              .HasOne(c => c.Category)
-              .WithMany(cat => cat.Courses)
-              .HasForeignKey(c => c.CategoryId)
-              .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(c => c.Category)
+                .WithMany(cat => cat.Courses)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Course>()
-             .HasOne(c => c.Trainer)
-             .WithMany(u => u.CoursesCreated)
-             .HasForeignKey(c => c.TrainerId)
-             .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(c => c.Trainer)
+                .WithMany(u => u.CoursesCreated)
+                .HasForeignKey(c => c.TrainerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.User)

@@ -7,3 +7,5 @@ global using Training_Platform.Utilities;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Diagnostics;
 global using Training_Platform.ViewModels;
+global using Training_Platform.Services.IServices;
+global using Training_Platform.Services;

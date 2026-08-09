@@ -8,8 +8,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Trainee\Data\**" />
+    <Compile Remove="Areas\Trainee\Models\**" />
+    <Compile Remove="Areas\Trainer\Data\**" />
+    <Compile Remove="Areas\Trainer\Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Trainee\Data\**" />
+    <Content Remove="Areas\Trainee\Models\**" />
+    <Content Remove="Areas\Trainer\Data\**" />
+    <Content Remove="Areas\Trainer\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Trainee\Data\**" />
+    <EmbeddedResource Remove="Areas\Trainee\Models\**" />
+    <EmbeddedResource Remove="Areas\Trainer\Data\**" />
+    <EmbeddedResource Remove="Areas\Trainer\Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Trainee\Data\**" />
+    <None Remove="Areas\Trainee\Models\**" />
+    <None Remove="Areas\Trainer\Data\**" />
+    <None Remove="Areas\Trainer\Models\**" />
   </ItemGroup>
+
+
+  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
@@ -20,12 +46,28 @@
     </PackageReference>
   </ItemGroup>
 
+
+  
+
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Views\" />
-    <Folder Include="Areas\Trainee\Views\" />
+    <Folder Include="Areas\Trainee\Controllers\" />
     <Folder Include="Areas\Trainer\Controllers\" />
-    <Folder Include="Areas\Trainer\Views\" />
+    <Folder Include="wwwroot\assets\trainee\" />
+    <Folder Include="wwwroot\assets\trainer\" />
+    <Folder Include="wwwroot\css\trainer\" />
+    <Folder Include="wwwroot\css\trainee\" />
+    <Folder Include="wwwroot\images\admin_layout\" />
+    <Folder Include="wwwroot\images\trainer_layout\" />
+    <Folder Include="wwwroot\images\trainee_layout\" />
+    <Folder Include="wwwroot\js\trainee\" />
+    <Folder Include="wwwroot\js\trainer\" />
+  </ItemGroup>
+
+
+  
+
+  <ItemGroup>
+    <None Include="E:\Data_My Courses\.Netcourse\Data\Lec_24\reops-template\falcon-v3.14.0\public\vendors\simplebar\simplebar.min.js" Link="wwwroot\js\admin\simplebar.min.js" />
   </ItemGroup>
 
 </Project>

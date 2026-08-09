@@ -5,9 +5,9 @@ namespace Training_Platform.DataAccess
 {
     public class ApplicationDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-I5HQKRE\\SQLEXPRESS;Database=TrainingPlatformDB;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }

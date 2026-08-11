@@ -1,0 +1,201 @@
+﻿@using Training_Platform.Models
+@model Training_Platform.Models.Question
+
+<div class="card shadow-sm">
+
+    <!-- Header -->
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            Question Details
+        </h5>
+
+        <a asp-action="Index"
+           class="btn btn-secondary btn-sm">
+
+            <i class="fas fa-arrow-left me-1"></i>
+            Back
+
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <!-- Question Text -->
+        <h4 class="mb-3">
+            @Model.QuestionText
+        </h4>
+
+
+        <!-- Quiz -->
+        <p class="text-muted">
+
+            <strong>Quiz:</strong>
+
+            @(Model.Quiz?.Title ?? "No Quiz")
+
+        </p>
+
+
+        <hr />
+
+
+        <!-- Question Information -->
+        <div class="row">
+
+            <!-- Mark -->
+            <div class="col-md-4">
+
+                <strong>
+                    Mark
+                </strong>
+
+                <p class="mt-1">
+                    @Model.Mark
+                </p>
+
+            </div>
+
+
+            <!-- Question Type -->
+            <div class="col-md-4">
+
+                <strong>
+                    Question Type
+                </strong>
+
+                <p class="mt-1">
+
+                    @if (Model.QuestionType == QuestionType.MultipleChoice)
+                    {
+                        <span class="badge bg-primary">
+
+                            <i class="fas fa-list me-1"></i>
+                            Multiple Choice
+
+                        </span>
+                    }
+                    else if (Model.QuestionType == QuestionType.TrueFalse)
+                    {
+                        <span class="badge bg-info">
+
+                            <i class="fas fa-check-circle me-1"></i>
+                            True / False
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+                            @Model.QuestionType
+                        </span>
+                    }
+
+                </p>
+
+            </div>
+
+
+            <!-- Options Count -->
+            <div class="col-md-4">
+
+                <strong>
+                    Options
+                </strong>
+
+                <p class="mt-1">
+                    @Model.QuestionOptions.Count
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr class="my-4" />
+
+
+        <!-- Question Options -->
+        <h5 class="mb-3">
+            Question Options
+        </h5>
+
+
+        @if (Model.QuestionOptions.Any())
+        {
+            <div class="list-group mb-4">
+
+                @foreach (var option in Model.QuestionOptions)
+                {
+                    <div class="list-group-item">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <!-- Option Text -->
+                            <div>
+
+                                <span class="fw-semibold">
+                                    @option.OptionText
+                                </span>
+
+                            </div>
+
+
+                            <!-- Correct / Incorrect -->
+                            @if (option.IsCorrect)
+                            {
+                                <span class="badge bg-success">
+
+                                    <i class="fas fa-check me-1"></i>
+                                    Correct Answer
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+
+                                    <i class="fas fa-times me-1"></i>
+                                    Incorrect
+
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info mb-4">
+
+                <i class="fas fa-info-circle me-1"></i>
+
+                No options added yet.
+
+            </div>
+        }
+
+
+        <!-- Actions -->
+        <div class="mt-4">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-warning">
+
+                <i class="fas fa-edit me-1"></i>
+                Edit
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

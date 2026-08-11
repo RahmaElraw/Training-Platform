@@ -1,0 +1,129 @@
+﻿@model Training_Platform.ViewModels.QuestionOptionVM
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            Edit Question Option
+        </h5>
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.QuestionId"
+           class="btn btn-secondary btn-sm">
+
+            <i class="fas fa-arrow-left me-1"></i>
+            Back to Question
+
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <form asp-action="EditOption"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Hidden Data -->
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+            <input type="hidden"
+                   asp-for="QuestionId" />
+
+
+            <!-- Validation -->
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+
+            <!-- Option Text -->
+
+            <div class="mb-3">
+
+                <label asp-for="OptionText"
+                       class="form-label">
+
+                    Option Text
+                    <span class="text-danger">*</span>
+
+                </label>
+
+                <textarea asp-for="OptionText"
+                          class="form-control"
+                          rows="3"
+                          maxlength="500"
+                          placeholder="Enter option text..."></textarea>
+
+                <span asp-validation-for="OptionText"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Correct Answer -->
+
+            <div class="form-check mb-4">
+
+                <input asp-for="IsCorrect"
+                       class="form-check-input"
+                       id="IsCorrect" />
+
+                <label asp-for="IsCorrect"
+                       class="form-check-label">
+
+                    Correct Answer
+
+                </label>
+
+                <div class="form-text">
+
+                    Check this option if it is the correct answer.
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fas fa-save me-1"></i>
+                    Save Changes
+
+                </button>
+
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.QuestionId"
+                   class="btn btn-secondary">
+
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

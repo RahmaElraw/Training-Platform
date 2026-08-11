@@ -91,43 +91,104 @@
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-        <div class="container" data-layout="container">
-            <script>
-                            var isFluid = JSON.parse(localStorage.getItem('isFluid'));
-                            if (isFluid) {
-                                var container = document.querySelector('[data-layout]');
-                                container.classList.remove('container');
-                                container.classList.add('container-fluid');
-                            }
-            </script>
+      <div class="container-fluid" data-layout="container">
+        <script>
+          var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+          if (isFluid) {
+            var container = document.querySelector('[data-layout]');
+            container.classList.remove('container');
+            container.classList.add('container-fluid');
+          }
+        </script>
+        <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
+          <script>
+            var navbarStyle = localStorage.getItem("navbarStyle");
+            if (navbarStyle && navbarStyle !== 'transparent') {
+              document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+            }
+          </script>
+          <div class="d-flex align-items-center">
+            <div class="toggle-icon-wrapper">
 
-            <!-- Navbar Vertical -->
-            <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
-                <script>
-                                    var navbarStyle = localStorage.getItem("navbarStyle");
-                                    if (navbarStyle && navbarStyle !== 'transparent') {
-                                        document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-                                    }
-                </script>
-                <div class="d-flex align-items-center">
-                    <div class="toggle-icon-wrapper">
-                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation">
-                            <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
-                        </button>
+              <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+
+            </div><a class="navbar-brand" href="index.html">
+              <div class="d-flex align-items-center py-3"><img class="me-2" src="~/images/admin_layout/falcon.png" alt="" width="40" /><span class="font-sans-serif">falcon</span>
+              </div>
+            </a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+            <div class="navbar-vertical-content scrollbar">
+              <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                <li class="nav-item">
+                  <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">Dashboard</span>
                     </div>
-                    <a class="navbar-brand" href="index.html">
-                        <div class="d-flex align-items-center py-3">
-                            <img class="me-2" src="~/images/admin_layout/falcon.png" alt="" width="40" />
-                            <span class="font-sans-serif">falcon</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-                    <div class="navbar-vertical-content scrollbar">
-                        <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                  </a>
+                        <ul class="nav collapse show flex-column gap-2" id="dashboard">
                             <li class="nav-item">
-                                <a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
+                                <a class="nav-link active" href="https://localhost:7069/Admin/Home/Index">
+                        <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Default</span>
+                        </div>
+                      </a>
+                      <!-- more inner pages-->
+                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://localhost:7069/Admin/Categories/index">
+                        <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Categories</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Courses/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Courses</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Lessons/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Lessons</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Enrollments/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Enrollments</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard/analytics.html">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Trainers</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard/analytics.html">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Trainees</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Questions/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Questions</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Quizzes/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Quizzes</span>
+                        </div>
+                      </a>
+                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://localhost:7069/Admin/Reviews/index">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Courses Review</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/UserProgresses/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span>
                                         <span class="nav-link-text ps-1">Dashboard</span>

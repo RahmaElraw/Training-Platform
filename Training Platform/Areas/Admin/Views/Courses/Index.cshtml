@@ -1,0 +1,472 @@
+﻿@model Training_Platform.ViewModels.CourseWithRelatedVM
+
+<div class="card mb-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            All Courses
+        </h5>
+
+        <a asp-action="Create" class="btn btn-primary">
+
+            <i class="fas fa-plus me-1"></i>
+
+            Add Course
+
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <!-- Search -->
+
+        <form method="get">
+
+            <div class="input-group">
+
+                <input asp-for="Query"
+                       name="query"
+                       class="form-control"
+                       placeholder="Search course..." />
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fas fa-search"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- No Courses -->
+
+@if (!Model.Courses.Any())
+{
+    <div class="alert alert-warning">
+
+        No Courses Found.
+
+    </div>
+}
+
+
+<!-- Courses -->
+
+@foreach (var item in Model.Courses)
+{
+    <article class="card mb-3 overflow-hidden shadow-sm">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Course Information -->
+
+                <div class="col-md-9">
+
+                    <div class="d-flex align-items-start gap-3">
+
+                        <!-- Thumbnail -->
+
+                        @if (!string.IsNullOrWhiteSpace(item.Thumbnail))
+                        {
+                            <img src="@item.Thumbnail"
+                                 alt="@item.Title"
+                                 class="rounded"
+                                 style="width: 120px;
+                                        height: 80px;
+                                        object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <div class="bg-secondary text-white rounded
+                                        d-flex align-items-center justify-content-center"
+                                 style="width: 120px;
+                                        height: 80px;">
+
+                                <i class="fas fa-book fa-2x"></i>
+
+                            </div>
+                        }
+
+
+                        <!-- Title + Description -->
+
+                        <div>
+
+                            <h4 class="mb-1">
+                                @item.Title
+                            </h4>
+
+                            <p class="text-muted mb-2">
+
+                                @(string.IsNullOrWhiteSpace(item.Description)
+                                    ? "No Description"
+                                    : item.Description)
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Course Information -->
+
+                    <div class="d-flex flex-wrap gap-4 mt-3">
+
+                        <span>
+
+                            <strong>Category:</strong>
+
+                            @(item.Category?.Name ?? "No Category")
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Trainer:</strong>
+
+                            @(item.Trainer?.UserName ?? "No Trainer")
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Duration:</strong>
+
+                            @item.DurationInHours hours
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Level:</strong>
+
+                            @switch (item.Level)
+                            {
+                                case Training_Platform.Models.CourseLevel.Beginner:
+
+                                    <span class="badge bg-success">
+                                        Beginner
+                                    </span>
+
+                                    break;
+
+                                case Training_Platform.Models.CourseLevel.Intermediate:
+
+                                    <span class="badge bg-warning text-dark">
+                                        Intermediate
+                                    </span>
+
+                                    break;
+
+                                case Training_Platform.Models.CourseLevel.Advanced:
+
+                                    <span class="badge bg-danger">
+                                        Advanced
+                                    </span>
+
+                                    break;
+                            }
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Status:</strong>
+
+                            @if (item.IsPublished)
+                            {
+                                <span class="badge bg-success">
+                                    Published
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    Draft
+                                </span>
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Related Data -->
+
+                    <div class="d-flex gap-4 mt-3">
+
+                        <span>
+
+                            <strong>Lessons:</strong>
+
+                            @item.Lessons.Count
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Quizzes:</strong>
+
+                            @item.Quizzes.Count
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Enrollments:</strong>
+
+                            @item.Enrollments.Count
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>Reviews:</strong>
+
+                            @item.Reviews.Count
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Created Date -->
+
+                    <div class="mt-3 text-muted">
+
+                        <small>
+
+                            <i class="fas fa-calendar me-1"></i>
+
+                            Created:
+
+                            @item.CreatedAt.ToString("dd/MM/yyyy")
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Actions -->
+
+                <div class="col-md-3">
+
+                    <div class="d-grid gap-2">
+
+                        <!-- Details -->
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-info text-white">
+
+                            <i class="fas fa-eye me-1"></i>
+
+                            Details
+
+                        </a>
+                        <!-- Related Courses -->
+
+                        <a asp-action="RelatedCourses"
+                           asp-route-id="@item.Id"
+                           class="btn btn-outline-info">
+
+                            <i class="fas fa-layer-group me-1"></i>
+
+                            Related Courses
+
+                        </a>
+
+                        <!-- Edit -->
+
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-primary">
+
+                            <i class="fas fa-edit me-1"></i>
+
+                            Edit
+
+                        </a>
+
+
+                        <!-- Delete -->
+
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteCourseModal"
+                                data-id="@item.Id"
+                                data-name="@item.Title">
+
+                            <i class="fas fa-trash-alt me-1"></i>
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+}
+
+
+<!-- Delete Modal -->
+
+<div class="modal fade"
+     id="deleteCourseModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Delete Course
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                Are you sure you want to delete
+
+                <strong id="courseName"></strong> ?
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+
+                <form id="deleteCourseForm"
+                      method="post"
+                      asp-action="Delete">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           id="courseId"
+                           name="id" />
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        Delete
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Pagination -->
+
+@if (Model.TotalPages > 1)
+{
+    <nav>
+
+        <ul class="pagination justify-content-center">
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item
+                    @(i == Model.CurrentPage ? "active" : "")">
+
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@i"
+                       asp-route-query="@Model.Query">
+
+                        @i
+
+                    </a>
+
+                </li>
+            }
+
+        </ul>
+
+    </nav>
+}
+
+
+@section Scripts
+{
+    <script>
+
+        const deleteModal =
+            document.getElementById('deleteCourseModal');
+
+        deleteModal.addEventListener(
+            'show.bs.modal',
+            function (event)
+            {
+                const button = event.relatedTarget;
+
+                const id =
+                    button.getAttribute('data-id');
+
+                const name =
+                    button.getAttribute('data-name');
+
+                document.getElementById('courseName')
+                    .textContent = name;
+
+                document.getElementById('courseId')
+                    .value = id;
+            });
+
+    </script>
+}

@@ -6,11 +6,11 @@ namespace Training_Platform.Services
 {
     public class QuizService : IQuizService
     {
-        private readonly IRepository<Quiz> _quizRepository;
+        private readonly IQuizRepository _quizRepository;
         private readonly IRepository<QuizResult> _quizResultRepository;
 
         public QuizService(
-            IRepository<Quiz> quizRepository,
+            IQuizRepository quizRepository,
             IRepository<QuizResult> quizResultRepository)
         {
             _quizRepository = quizRepository;
@@ -21,14 +21,8 @@ namespace Training_Platform.Services
             int quizId,
             CancellationToken cancellationToken = default)
         {
-            var quiz = await _quizRepository.GetOneAsync(
-                q => q.Id == quizId,
-                new Expression<Func<Quiz, object>>[]
-                {
-            q => q.Questions,
-            q => q.Questions.Select(x => x.QuestionOptions)
-                },
-                tracked: false,
+            var quiz = await _quizRepository.GetQuizForTakingAsync(
+                quizId,
                 cancellationToken);
 
             if (quiz == null)
@@ -61,14 +55,8 @@ namespace Training_Platform.Services
             SubmitQuizDto dto,
             CancellationToken cancellationToken = default)
         {
-            var quiz = await _quizRepository.GetOneAsync(
-                q => q.Id == quizId,
-                new Expression<Func<Quiz, object>>[]
-                {
-                    q => q.Questions,
-                    q => q.Questions.Select(x => x.QuestionOptions)
-                },
-                tracked: false,
+            var quiz = await _quizRepository.GetQuizForTakingAsync(
+                quizId,
                 cancellationToken);
 
             if (quiz == null)

@@ -34,17 +34,10 @@ namespace Training_Platform.Repositories
             _dbSet.Update(entity);
         }
 
-        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
+        public async Task<int> CommitAsync(
+        CancellationToken cancellationToken = default)
         {
-            try
-            {
-                return await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return 0;
-            }
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<T>> GetAsync(

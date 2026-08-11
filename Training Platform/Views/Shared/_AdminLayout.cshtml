@@ -19,12 +19,24 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico">
     <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
 
     <script src="~/js/admin/config.js"></script>
     <script src="~/js/admin/simplebar/simplebar.min.js"></script>
 
+    <style>
+            #toast-container > .toast.toast-success {
+                background-color: #28a745 !important;
+                color: #fff !important;
+            }
+
+                #toast-container > .toast.toast-success .toast-message {
+                    color: #fff !important;
+                }
+    </style>>
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
@@ -91,48 +103,51 @@
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-      <div class="container-fluid" data-layout="container">
-        <script>
-          var isFluid = JSON.parse(localStorage.getItem('isFluid'));
-          if (isFluid) {
-            var container = document.querySelector('[data-layout]');
-            container.classList.remove('container');
-            container.classList.add('container-fluid');
-          }
-        </script>
-        <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
-          <script>
-            var navbarStyle = localStorage.getItem("navbarStyle");
-            if (navbarStyle && navbarStyle !== 'transparent') {
-              document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-            }
-          </script>
-          <div class="d-flex align-items-center">
-            <div class="toggle-icon-wrapper">
+        <div class="container" data-layout="container">
+            <script>
+                            var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+                            if (isFluid) {
+                                var container = document.querySelector('[data-layout]');
+                                container.classList.remove('container');
+                                container.classList.add('container-fluid');
+                            }
+            </script>
+            <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
+                <script>
+                                    var navbarStyle = localStorage.getItem("navbarStyle");
+                                    if (navbarStyle && navbarStyle !== 'transparent') {
+                                        document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+                                    }
+                </script>
+                <div class="d-flex align-items-center">
+                    <div class="toggle-icon-wrapper">
 
-              <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 
-            </div><a class="navbar-brand" href="index.html">
-              <div class="d-flex align-items-center py-3"><img class="me-2" src="~/images/admin_layout/falcon.png" alt="" width="40" /><span class="font-sans-serif">falcon</span>
-              </div>
-            </a>
-          </div>
-          <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-            <div class="navbar-vertical-content scrollbar">
-              <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
-                <li class="nav-item">
-                  <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
-                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">Dashboard</span>
+                    </div><a class="navbar-brand" href="index.html">
+                    <div class="d-flex align-items-center py-3">
+                        <img class="me-2" src="~/images/admin_layout/falcon.png" alt="" width="40" /><span class="font-sans-serif">falcon</span>
                     </div>
-                  </a>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+                <div class="navbar-vertical-content scrollbar">
+                    <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                        <li class="nav-item">
+                            <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">Dashboard</span>
+                            </div>
+                        </a>
                         <ul class="nav collapse show flex-column gap-2" id="dashboard">
                             <li class="nav-item">
                                 <a class="nav-link active" href="https://localhost:7069/Admin/Home/Index">
-                        <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Default</span>
-                        </div>
-                      </a>
-                      <!-- more inner pages-->
-                    </li>
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-text ps-1">Default</span>
+                                    </div>
+                                </a>
+                                <!-- more inner pages-->
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="https://localhost:7069/Admin/Categories/index">
                         <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Categories</span>
@@ -154,16 +169,18 @@
                     <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Enrollments/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Enrollments</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard/analytics.html">
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="dashboard/analytics.html">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Trainers</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard/analytics.html">
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="dashboard/analytics.html">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Trainees</span>
                         </div>

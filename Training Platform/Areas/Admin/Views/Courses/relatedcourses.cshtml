@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "Related Courses";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Related Courses</h2>
+            <p class="text-muted mb-0">
+                Courses in the same category
+            </p>
+        </div>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back to Courses
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No related courses found.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+
+            @foreach (var course in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        @if (!string.IsNullOrWhiteSpace(course.Thumbnail))
+                        {
+                            <img src="@course.Thumbnail"
+                                 class="card-img-top"
+                                 alt="@course.Title"
+                                 style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-light d-flex align-items-center justify-content-center"
+                                 style="height: 200px;">
+                                <span class="text-muted">
+                                    No Image
+                                </span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+
+                            <span class="badge bg-primary mb-2">
+                                @course.Category?.Name
+                            </span>
+
+                            <h5 class="card-title">
+                                @course.Title
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                @course.Description
+                            </p>
+
+                            <div class="mb-3">
+
+                                <small class="text-muted d-block">
+                                    Duration:
+                                    @course.DurationInHours hours
+                                </small>
+
+                                <small class="text-muted d-block">
+                                    Trainer:
+                                    @(course.Trainer?.UserName ?? "N/A")
+                                </small>
+
+                            </div>
+
+                            <a asp-action="Details"
+                               asp-route-id="@course.Id"
+                               class="btn btn-outline-primary">
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>

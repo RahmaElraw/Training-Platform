@@ -9,10 +9,10 @@ using Training_Platform.DataAccess;
 
 #nullable disable
 
-namespace Training_Platform.DataAccess.Migrations
+namespace Training_Platform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260807142500_InitialCreate")]
+    [Migration("20260807155124_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

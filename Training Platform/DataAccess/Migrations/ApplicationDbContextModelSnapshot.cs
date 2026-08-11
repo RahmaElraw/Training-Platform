@@ -8,7 +8,7 @@ using Training_Platform.DataAccess;
 
 #nullable disable
 
-namespace Training_Platform.DataAccess.Migrations
+namespace Training_Platform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

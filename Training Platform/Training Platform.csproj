@@ -28,8 +28,6 @@
   
 
   <ItemGroup>
-    <Folder Include="Areas\Trainee\Controllers\" />
-    <Folder Include="Areas\Trainer\Controllers\" />
     <Folder Include="wwwroot\assets\trainee\" />
     <Folder Include="wwwroot\assets\trainer\" />
     <Folder Include="wwwroot\css\trainer\" />

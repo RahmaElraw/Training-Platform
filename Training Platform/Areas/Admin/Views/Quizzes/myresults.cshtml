@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Training_Platform.ViewModels.QuizResultViewModel>
+
+<h2>My Quiz Results</h2>
+
+@if (!Model.Any())
+{
+    <p>You don't have any quiz results yet.</p>
+}
+else
+{
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>Submitted At</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var result in Model)
+            {
+                <tr>
+                    <td>
+                        @result.QuizTitle
+                    </td>
+
+                    <td>
+                        @result.Score%
+                    </td>
+
+                    <td>
+                        @(result.IsPassed ? "Passed" : "Failed")
+                    </td>
+
+                    <td>
+                        @result.SubmittedAt
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}

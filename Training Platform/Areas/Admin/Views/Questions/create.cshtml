@@ -1,0 +1,484 @@
+﻿@using Training_Platform.Models
+@model Training_Platform.ViewModels.QuestionVM
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+
+        <h5 class="mb-0">
+            <i class="fas fa-plus-circle me-1"></i>
+            Create Question
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Create"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Validation -->
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+
+            <!-- Question Information -->
+
+            <div class="row">
+
+                <!-- Question Text -->
+
+                <div class="col-md-12 mb-3">
+
+                    <label asp-for="QuestionText"
+                           class="form-label">
+
+                        Question
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <textarea asp-for="QuestionText"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter question..."></textarea>
+
+                    <span asp-validation-for="QuestionText"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Quiz -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="QuizId"
+                           class="form-label">
+
+                        Quiz
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <select asp-for="QuizId"
+                            asp-items="ViewBag.Quizzes"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Quiz --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="QuizId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Mark -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label asp-for="Mark"
+                           class="form-label">
+
+                        Mark
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input asp-for="Mark"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+
+                    <span asp-validation-for="Mark"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Question Type -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label asp-for="QuestionType"
+                           class="form-label">
+
+                        Question Type
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <select asp-for="QuestionType"
+                            asp-items="Html.GetEnumSelectList<QuestionType>()"
+                            class="form-select"
+                            id="questionType">
+
+                        <option value="">
+                            -- Select Type --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="QuestionType"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <hr class="my-4" />
+
+
+            <!-- Options -->
+
+            <h5 class="mb-3">
+
+                <i class="fas fa-list me-1"></i>
+                Question Options
+
+            </h5>
+
+
+            <div id="optionsContainer">
+
+                @for (int i = 0; i < Model.QuestionOptions.Count; i++)
+                {
+                    <div class="card mb-3 option-row"
+                         data-index="@i">
+
+                        <div class="card-body">
+
+                            <div class="row align-items-end">
+
+                                <!-- Option Number -->
+
+                                <div class="col-md-1">
+
+                                    <span class="badge bg-secondary fs-6">
+                                        @(i + 1)
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Option Text -->
+
+                                <div class="col-md-8">
+
+                                    <label asp-for="QuestionOptions[i].OptionText"
+                                           class="form-label">
+
+                                        Option @(i + 1)
+
+                                        <span class="text-danger">*</span>
+
+                                    </label>
+
+                                    <input asp-for="QuestionOptions[i].OptionText"
+                                           class="form-control option-text"
+                                           placeholder="Enter option..." />
+
+                                    <span asp-validation-for="QuestionOptions[i].OptionText"
+                                          class="text-danger">
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Correct -->
+
+                                <div class="col-md-3">
+
+                                    <div class="form-check">
+
+                                        <input asp-for="QuestionOptions[i].IsCorrect"
+                                               class="form-check-input correct-answer"
+                                               id="correct_@i" />
+
+                                        <label asp-for="QuestionOptions[i].IsCorrect"
+                                               class="form-check-label"
+                                               for="correct_@i">
+
+                                            Correct Answer
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+
+            <!-- Options Validation -->
+
+            <span asp-validation-for="QuestionOptions"
+                  class="text-danger">
+            </span>
+
+
+            <!-- Multiple Choice Help -->
+
+            <div id="multipleChoiceHelp"
+                 class="alert alert-info">
+
+                <i class="fas fa-info-circle me-1"></i>
+
+                <strong>Multiple Choice:</strong>
+
+                Enter at least two options and select exactly one
+                correct answer.
+
+            </div>
+
+
+            <!-- True False Help -->
+
+            <div id="trueFalseHelp"
+                 class="alert alert-info"
+                 style="display:none;">
+
+                <i class="fas fa-info-circle me-1"></i>
+
+                <strong>True / False:</strong>
+
+                The first option will be
+                <strong>True</strong>
+
+                and the second option will be
+                <strong>False</strong>.
+
+                Select exactly one correct answer.
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="d-flex gap-2 mt-4">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fas fa-save me-1"></i>
+                    Create Question
+
+                </button>
+
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const questionType =
+                document.getElementById("questionType");
+
+            const optionRows =
+                document.querySelectorAll(".option-row");
+
+            const optionInputs =
+                document.querySelectorAll(".option-text");
+
+            const correctCheckboxes =
+                document.querySelectorAll(".correct-answer");
+
+            const multipleChoiceHelp =
+                document.getElementById("multipleChoiceHelp");
+
+            const trueFalseHelp =
+                document.getElementById("trueFalseHelp");
+
+
+            function updateQuestionType() {
+
+                const type = questionType.value;
+
+
+                // Multiple Choice
+
+                if (type === "0") {
+
+                    multipleChoiceHelp.style.display = "block";
+
+                    trueFalseHelp.style.display = "none";
+
+
+                    optionRows.forEach(function(row) {
+
+                        row.style.display = "block";
+
+                    });
+
+
+                    optionInputs.forEach(function(input) {
+
+                        input.readOnly = false;
+
+                    });
+
+                }
+
+
+                // True / False
+
+                else if (type === "1") {
+
+                    multipleChoiceHelp.style.display = "none";
+
+                    trueFalseHelp.style.display = "block";
+
+
+                    optionRows.forEach(function(row, index) {
+
+                        if (index < 2) {
+
+                            row.style.display = "block";
+
+                        }
+                        else {
+
+                            row.style.display = "none";
+
+                        }
+
+                    });
+
+
+                    if (optionInputs.length >= 2) {
+
+                        optionInputs[0].value = "True";
+
+                        optionInputs[1].value = "False";
+
+                        optionInputs[0].readOnly = true;
+
+                        optionInputs[1].readOnly = true;
+
+                    }
+
+
+                    for (let i = 2;
+                        i < correctCheckboxes.length;
+                        i++) {
+
+                        correctCheckboxes[i].checked = false;
+
+                    }
+
+                }
+
+
+                // No type selected
+
+                else {
+
+                    multipleChoiceHelp.style.display = "block";
+
+                    trueFalseHelp.style.display = "none";
+
+
+                    optionRows.forEach(function(row) {
+
+                        row.style.display = "block";
+
+                    });
+
+
+                    optionInputs.forEach(function(input) {
+
+                        input.readOnly = false;
+
+                    });
+
+                }
+
+            }
+
+
+            // Change question type
+
+            questionType.addEventListener(
+                "change",
+                updateQuestionType
+            );
+
+
+            // Only one correct answer
+
+            correctCheckboxes.forEach(function(checkbox) {
+
+                checkbox.addEventListener(
+                    "change",
+                    function() {
+
+                        if (this.checked) {
+
+                            correctCheckboxes.forEach(
+                                function(other) {
+
+                                    if (other !== checkbox) {
+
+                                        other.checked = false;
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+            // Initialize
+
+            updateQuestionType();
+
+        });
+
+    </script>
+}

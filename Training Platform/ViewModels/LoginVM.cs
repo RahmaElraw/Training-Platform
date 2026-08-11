@@ -6,7 +6,7 @@ namespace Training_Platform.ViewModels
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Email Or Username")]
+        [Display(Name = "Email Or Full Name")]
 
         public string EmailOrUserName { get; set; } = string.Empty;
         [Required]

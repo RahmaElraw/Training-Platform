@@ -10,16 +10,19 @@ namespace Training_Platform.Services
     {
         Register,
         ResendConfirmation,
+        ForgotPassword
     }
     public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
-
-        public AccountService(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        private readonly IRepository<ApplicationUserOTP> _applicationUserOtpRepository;
+        public AccountService(UserManager<ApplicationUser> userManager, IEmailSender emailSender,
+             IRepository<ApplicationUserOTP> applicationUserOtpRepository)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _applicationUserOtpRepository = applicationUserOtpRepository;
         }
         public bool IsLogined(ClaimsPrincipal User)
         {
@@ -47,10 +50,23 @@ namespace Training_Platform.Services
                     }
                     break;
 
-                case EmailType.ResendConfirmation: 
+                case EmailType.ResendConfirmation:
                     {
                         subject = "Resend email confirmation";
                         message = $"Please confirm your account by clicking this link: <a href='{link}'>Confirm Email</a>";
+                    }
+                    break;
+                case EmailType.ForgotPassword:
+                    {
+                        var otp = new Random().Next(1000, 9999).ToString();
+                      await _applicationUserOtpRepository.AddAsync(new()
+                        {
+                            OTP=otp,
+                            ApplicationUserId= user.Id,
+                        });
+                        await _applicationUserOtpRepository.CommitAsync();
+                        subject = "Reset your password";
+                        message = $"Use this Otp: {otp} to reset your password.";
                     }
                     break;
             }

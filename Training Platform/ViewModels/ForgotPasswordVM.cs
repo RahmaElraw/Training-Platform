@@ -2,7 +2,7 @@
 
 namespace Training_Platform.ViewModels
 {
-    public class ResendEmailConfirmationVM
+    public class ForgotPasswordVM
     {
         public int Id { get; set; }
         [Required]

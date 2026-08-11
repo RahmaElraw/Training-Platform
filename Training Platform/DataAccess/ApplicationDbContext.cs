@@ -25,6 +25,8 @@ namespace Training_Platform.DataAccess
         public DbSet<QuizResult> QuizResults { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ApplicationUserOTP> ApplicationUserOTPs { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

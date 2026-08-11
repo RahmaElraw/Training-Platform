@@ -1,26 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewEngines;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.ComponentModel.DataAnnotations;
 
 namespace Training_Platform.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser<int>
     {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string UserName { get; set; }
-        [Required]
-        [MaxLength(100)]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        [MaxLength(20)]
-        public string PhoneNumber { get; set; }
-        [Required]
-        public string Password { get; set; }
+       
+      
         public string? ProfileImage { get; set; }
         public bool IsApproved { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }= DateTime.UtcNow;
 
         public ICollection<Course> CoursesCreated { get; set; } = new List<Course>();
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();

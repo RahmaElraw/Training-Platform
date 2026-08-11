@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Training_Platform.Areas.Admin.Controllers;
@@ -12,13 +13,17 @@ namespace Training_Platform.Areas.Identity.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
-        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, IEmailSender emailSender,IAccountService accountService)
+        private readonly IRepository<ApplicationUserOTP> _applicationUserOtpRepository;
+
+        public AccountController(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager, IEmailSender emailSender,IAccountService accountService,
+            IRepository<ApplicationUserOTP> applicationUserOtpRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _accountService = accountService;
-
+            _applicationUserOtpRepository = applicationUserOtpRepository;
         }
 
 
@@ -27,7 +32,7 @@ namespace Training_Platform.Areas.Identity.Controllers
         { 
             if (_accountService.IsLogined(User))
             {
-                return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Admin_Area });
+                return RedirectToAction(nameof(Profile));
             }
 
 
@@ -41,6 +46,42 @@ namespace Training_Platform.Areas.Identity.Controllers
             {
                 return View(registerVM);
             }
+
+            string? profileImageFileName = null;
+
+            if (registerVM.ProfileImageFile is not null && registerVM.ProfileImageFile.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+                var extension = Path.GetExtension(registerVM.ProfileImageFile.FileName).ToLowerInvariant();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError(nameof(registerVM.ProfileImageFile), "Only .jpg, .jpeg, .png, and .webp files are allowed.");
+                    return View(registerVM);
+                }
+
+                if (registerVM.ProfileImageFile.Length > 2 * 1024 * 1024)
+                {
+                    ModelState.AddModelError(nameof(registerVM.ProfileImageFile), "Image size must not exceed 2MB.");
+                    return View(registerVM);
+                }
+
+                profileImageFileName = $"{Guid.NewGuid()}{extension}";
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "profiles");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                var filePath = Path.Combine(folderPath, profileImageFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await registerVM.ProfileImageFile.CopyToAsync(stream);
+                }
+            }
+
             ApplicationUser user = new()
             {
                 UserName = registerVM.Username,
@@ -48,7 +89,10 @@ namespace Training_Platform.Areas.Identity.Controllers
                 FirstName = registerVM.FName,
                 LastName = registerVM.LName,
                 Address = registerVM.Address,
+                PhoneNumber = registerVM.PhoneNumber,
+                ProfileImage = profileImageFileName,
             };
+
             var result = await _userManager.CreateAsync(user, registerVM.Password);
             if (!result.Succeeded)
             {
@@ -58,9 +102,8 @@ namespace Training_Platform.Areas.Identity.Controllers
                     return View(registerVM);
                 }
             }
-            // send email confirmation 
-            await _accountService.SendEmailAsync(user, Url, Request);
 
+            await _accountService.SendEmailAsync(user, Url, Request);
 
             TempData["success"] = "Account created successfully. Please check your email to confirm your account.";
 
@@ -103,9 +146,17 @@ namespace Training_Platform.Areas.Identity.Controllers
             {
                 return View(loginVM);
             }
-           var user = await _userManager.FindByEmailAsync(loginVM.EmailOrUserName) ?? await _userManager.FindByNameAsync(loginVM.EmailOrUserName);
+            var user = await _userManager.FindByEmailAsync(loginVM.EmailOrUserName);//?? await _userManager.FindByNameAsync(loginVM.EmailOrUserName);
 
-           if(user is null)
+            if (user is null)
+            {
+                var searchTerm = loginVM.EmailOrUserName.Trim();
+
+                user = await _userManager.Users
+                    .FirstOrDefaultAsync(u => (u.FirstName + " " + u.LastName) == searchTerm);
+            }
+
+            if (user is null)
             {
                 ModelState.AddModelError(nameof(loginVM.EmailOrUserName), "Invalid Username or Email.");
                 ModelState.AddModelError(nameof(loginVM.Password), "Invalid Password.");
@@ -132,7 +183,7 @@ namespace Training_Platform.Areas.Identity.Controllers
 
             TempData["success"] = $"Login successful. Welcome, {user.FirstName} {user.LastName}";
 
-            return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new {area= SD.Admin_Area} );
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpGet]

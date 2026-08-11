@@ -5,28 +5,31 @@
     Layout = "_AuthLayout";
 }
 
-<h2>Resend Confirmation</h2>
-<p class="subtitle">Enter your email or username to resend the confirmation link</p>
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Resend Confirmation</h2>
+    <p class="text-muted mb-0">Enter your email to resend the confirmation link</p>
+</div>
 
 <form asp-action="ResendEmailConfirmation" method="post">
 
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
     <div class="mb-4">
-        <label asp-for="EmailOrUserName" class="form-label"></label>
+        <label asp-for="Email" class="form-label"></label>
         <div class="input-icon">
             <i class="bi bi-envelope"></i>
-            <input asp-for="EmailOrUserName" class="form-control" placeholder="Email or Username" />
+            <input asp-for="Email" class="form-control" placeholder="you@example.com" type="email" />
         </div>
-        <span asp-validation-for="EmailOrUserName" class="text-danger"></span>
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="d-grid">
         <input type="submit" value="Resend Confirmation" class="btn btn-primary btn-lg" />
     </div>
 
-    <div class="switch-link">
-        Remembered your password? <a asp-action="Login">Login</a>
+    <div class="text-center mt-3">
+        <span class="text-muted">Remembered your password?</span>
+        <a asp-action="Login" class="text-primary text-decoration-none fw-semibold">Login</a>
     </div>
 
 </form>
@@ -36,5 +39,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <partial name="_NotificationPartial" />
-
 }

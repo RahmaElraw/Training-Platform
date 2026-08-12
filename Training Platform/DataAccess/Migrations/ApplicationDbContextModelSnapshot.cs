@@ -269,7 +269,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ApplicationUserOTPs");
+                    b.ToTable("ApplicationUserOTPs", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Category", b =>
@@ -291,7 +291,7 @@ namespace Training_Platform.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Certificate", b =>
@@ -322,7 +322,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Certificates");
+                    b.ToTable("Certificates", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Course", b =>
@@ -370,7 +370,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.CourseMaterial", b =>
@@ -397,7 +397,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("LessonId");
 
-                    b.ToTable("CourseMaterials");
+                    b.ToTable("CourseMaterials", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Enrollment", b =>
@@ -426,7 +426,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Enrollments");
+                    b.ToTable("Enrollments", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Lesson", b =>
@@ -460,7 +460,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lessons", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Question", b =>
@@ -489,7 +489,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("QuizId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.QuestionOption", b =>
@@ -515,7 +515,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionOptions");
+                    b.ToTable("QuestionOptions", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Quiz", b =>
@@ -544,7 +544,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizzes", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.QuizResult", b =>
@@ -576,7 +576,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("QuizResults");
+                    b.ToTable("QuizResults", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Review", b =>
@@ -609,7 +609,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Training_Platform.Models.UserProgress", b =>
@@ -638,7 +638,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserProgresses");
+                    b.ToTable("UserProgresses", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

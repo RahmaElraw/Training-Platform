@@ -4,16 +4,18 @@ namespace Training_Platform.ViewModels
 {
     public class UserProgressVM
     {
-        public int Id { get; set; }
-
-        public bool IsCompleted { get; set; }
-
-        public DateTime? CompletedAt { get; set; }
-
-        [Required]
         public int UserId { get; set; }
 
-        [Required]
-        public int LessonId { get; set; }
+        public string UserName { get; set; } = string.Empty;
+
+        public int CourseId { get; set; }
+
+        public string CourseTitle { get; set; } = string.Empty;
+
+        public int TotalLessons { get; set; }
+
+        public int CompletedLessons { get; set; }
+
+        public int ProgressPercentage { get; set; }
     }
 }

@@ -130,6 +130,7 @@ namespace Training_Platform.Services
 
             return new QuizResultViewModel
             {
+                ResultId = result.Id,
                 QuizTitle = result.Quiz.Title,
                 Score = result.Score,
                 IsPassed = result.IsPassed,
@@ -152,6 +153,7 @@ namespace Training_Platform.Services
 
             return results.Select(r => new QuizResultViewModel
             {
+                ResultId = r.Id,
                 QuizTitle = r.Quiz.Title,
                 Score = r.Score,
                 IsPassed = r.IsPassed,

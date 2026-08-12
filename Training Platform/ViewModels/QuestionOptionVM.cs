@@ -12,8 +12,7 @@ namespace Training_Platform.ViewModels
 
         public bool IsCorrect { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue)]
+        
         public int QuestionId { get; set; }
     }
 }

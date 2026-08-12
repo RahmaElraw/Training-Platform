@@ -20,6 +20,6 @@ namespace Training_Platform.ViewModels
         [Required]
         public int QuizId { get; set; }
         public List<QuestionOptionVM> QuestionOptions { get; set; }
-        = new List<QuestionOptionVM>();
+            = new List<QuestionOptionVM>();
     }
 }

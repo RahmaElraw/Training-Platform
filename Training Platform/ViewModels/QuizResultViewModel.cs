@@ -2,6 +2,7 @@
 {
     public class QuizResultViewModel
     {
+        public int ResultId { get; set; }
         public string QuizTitle { get; set; } = string.Empty;
 
         public int Score { get; set; }

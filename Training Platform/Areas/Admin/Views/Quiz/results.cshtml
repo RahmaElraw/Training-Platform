@@ -1,0 +1,75 @@
+﻿@model IEnumerable<QuizResultViewModel>
+
+@{
+    ViewData["Title"] = "My Quiz Results";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        My Quiz Results
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You haven't completed any quizzes yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var result in Model)
+                    {
+                        <tr>
+                            <td>
+                                @result.QuizTitle
+                            </td>
+
+                            <td>
+                                @result.Score%
+                            </td>
+
+                            <td>
+                                @if (result.IsPassed)
+                                {
+                                    <span class="badge bg-success">
+                                        Passed
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Failed
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @result.SubmittedAt.ToLocalTime()
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+
+</div>

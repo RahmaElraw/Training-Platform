@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq.Expressions;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -7,376 +8,134 @@ namespace Training_Platform.Areas.Admin.Controllers
     public class UserProgressesController : Controller
     {
         private readonly IRepository<UserProgress> _userProgressRepository;
-        private readonly IRepository<ApplicationUser> _userRepository;
         private readonly IRepository<Lesson> _lessonRepository;
-
-        private const int PageSize = 6;
+        private readonly IRepository<Course> _courseRepository;
 
         public UserProgressesController(
             IRepository<UserProgress> userProgressRepository,
-            IRepository<ApplicationUser> userRepository,
-            IRepository<Lesson> lessonRepository)
+            IRepository<Lesson> lessonRepository,
+            IRepository<Course> courseRepository)
         {
             _userProgressRepository = userProgressRepository;
-            _userRepository = userRepository;
             _lessonRepository = lessonRepository;
+            _courseRepository = courseRepository;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index(
             string? query,
-            int page = 1)
+            CancellationToken cancellationToken = default)
         {
-            var progresses =
-                await _userProgressRepository.GetAsync(
-                    includes:
-                    [
-                        p => p.User,
-                        p => p.Lesson,
-                        p => p.Lesson.Course
-                    ],
-                    tracked: false);
+            // Get user progress
+            var progress = await _userProgressRepository.GetAsync(
+                includes: new Expression<Func<UserProgress, object>>[]
+                {
+                    p => p.User,
+                    p => p.Lesson
+                },
+                tracked: false,
+                cancellationToken: cancellationToken
+            );
 
+            // Get all lessons
+            var lessons = await _lessonRepository.GetAsync(
+                tracked: false,
+                cancellationToken: cancellationToken
+            );
+
+            // Get all courses
+            var courses = await _courseRepository.GetAsync(
+                tracked: false,
+                cancellationToken: cancellationToken
+            );
+
+            // Group lessons by course
+            var lessonsPerCourse = lessons
+                .GroupBy(l => l.CourseId)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Count()
+                );
+
+            // Group progress by User + Course
+            var result = progress
+                .GroupBy(p => new
+                {
+                    p.UserId,
+                    p.User.UserName,
+                    CourseId = p.Lesson.CourseId
+                })
+                .Select(g =>
+                {
+                    var courseId = g.Key.CourseId;
+
+                    var totalLessons =
+                        lessonsPerCourse.TryGetValue(
+                            courseId,
+                            out var total)
+                            ? total
+                            : 0;
+
+                    // Distinct lessons to avoid counting
+                    // the same lesson twice
+                    var completedLessons = g
+                        .Where(p => p.IsCompleted)
+                        .Select(p => p.LessonId)
+                        .Distinct()
+                        .Count();
+
+                    var percentage = totalLessons == 0
+                        ? 0
+                        : (int)Math.Round(
+                            completedLessons /
+                            (double)totalLessons * 100
+                        );
+
+                    var course = courses.FirstOrDefault(
+                        c => c.Id == courseId);
+
+                    return new UserProgressVM
+                    {
+                        UserId = g.Key.UserId,
+
+                        UserName =
+                            g.Key.UserName ?? "Unknown User",
+
+                        CourseId = courseId,
+
+                        CourseTitle =
+                            course?.Title ?? "Unknown Course",
+
+                        TotalLessons = totalLessons,
+
+                        CompletedLessons = completedLessons,
+
+                        ProgressPercentage = percentage
+                    };
+                });
+
+            // Search
             if (!string.IsNullOrWhiteSpace(query))
             {
                 query = query.Trim();
 
-                progresses = progresses.Where(p =>
-                    (p.User.UserName != null &&
-                     p.User.UserName.Contains(
-                         query,
-                         StringComparison.OrdinalIgnoreCase))
-                    ||
-                    p.Lesson.Title.Contains(
+                result = result.Where(x =>
+                    x.UserName.Contains(
                         query,
-                        StringComparison.OrdinalIgnoreCase));
+                        StringComparison.OrdinalIgnoreCase)
+                    ||
+                    x.CourseTitle.Contains(
+                        query,
+                        StringComparison.OrdinalIgnoreCase)
+                );
             }
 
-            progresses = progresses
-                .OrderBy(p => p.User.UserName)
-                .ThenBy(p => p.Lesson.OrderNumber);
-
-            int totalCount = progresses.Count();
-
-            var model = new UserProgressWithRelatedVM
-            {
-                UserProgresses = progresses
-                    .Skip((page - 1) * PageSize)
-                    .Take(PageSize),
-
-                CurrentPage = page,
-
-                TotalPages = (int)Math.Ceiling(
-                    totalCount / (double)PageSize),
-
-                Query = query
-            };
+            var model = result
+                .OrderBy(x => x.UserName)
+                .ThenBy(x => x.CourseTitle)
+                .ToList();
 
             return View(model);
-        }
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            await LoadProgressData();
-
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserProgressVM model)
-        {
-            if (!ModelState.IsValid)
-            {
-                await LoadProgressData(model);
-                return View(model);
-            }
-            var user = await _userRepository.GetOneAsync(
-                u => u.Id == model.UserId);
-
-            if (user == null)
-            {
-                ModelState.AddModelError(
-                    nameof(model.UserId),
-                    "Selected user does not exist.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-            var lesson = await _lessonRepository.GetOneAsync(
-                l => l.Id == model.LessonId);
-
-            if (lesson == null)
-            {
-                ModelState.AddModelError(
-                    nameof(model.LessonId),
-                    "Selected lesson does not exist.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-            var exists =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.UserId == model.UserId
-                         && p.LessonId == model.LessonId);
-
-            if (exists != null)
-            {
-                ModelState.AddModelError(
-                    string.Empty,
-                    "Progress for this user and lesson already exists.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-
-
-            var progress = new UserProgress
-            {
-                UserId = model.UserId,
-
-                LessonId = model.LessonId,
-
-                IsCompleted = model.IsCompleted,
-
-                CompletedAt = model.IsCompleted
-                    ? DateTime.UtcNow
-                    : null
-            };
-
-
-            await _userProgressRepository.AddAsync(progress);
-
-
-            if (await _userProgressRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "User progress created successfully.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            TempData["Error"] =
-                "Something went wrong.";
-
-            await LoadProgressData(model);
-
-            return View(model);
-        }
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var progress =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.Id == id);
-
-            if (progress == null)
-                return NotFound();
-
-
-            var model = new UserProgressVM
-            {
-                Id = progress.Id,
-
-                UserId = progress.UserId,
-
-                LessonId = progress.LessonId,
-
-                IsCompleted = progress.IsCompleted,
-
-                CompletedAt = progress.CompletedAt
-            };
-
-
-            await LoadProgressData(model);
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserProgressVM model)
-        {
-            if (!ModelState.IsValid)
-            {
-                await LoadProgressData(model);
-                return View(model);
-            }
-
-
-            var progress =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.Id == model.Id);
-
-            if (progress == null)
-                return NotFound();
-
-            var user = await _userRepository.GetOneAsync(
-                u => u.Id == model.UserId);
-
-            if (user == null)
-            {
-                ModelState.AddModelError(
-                    nameof(model.UserId),
-                    "Selected user does not exist.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-            var lesson = await _lessonRepository.GetOneAsync(
-                l => l.Id == model.LessonId);
-
-            if (lesson == null)
-            {
-                ModelState.AddModelError(
-                    nameof(model.LessonId),
-                    "Selected lesson does not exist.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-            var exists =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.UserId == model.UserId
-                         && p.LessonId == model.LessonId
-                         && p.Id != model.Id);
-
-            if (exists != null)
-            {
-                ModelState.AddModelError(
-                    string.Empty,
-                    "Progress for this user and lesson already exists.");
-
-                await LoadProgressData(model);
-                return View(model);
-            }
-
-
-            progress.UserId =
-                model.UserId;
-
-            progress.LessonId =
-                model.LessonId;
-
-            progress.IsCompleted =
-                model.IsCompleted;
-
-            if (model.IsCompleted)
-            {
-                progress.CompletedAt =
-                    progress.CompletedAt
-                    ?? DateTime.UtcNow;
-            }
-            else
-            {
-                progress.CompletedAt = null;
-            }
-
-
-            _userProgressRepository.Update(progress);
-
-
-            if (await _userProgressRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "User progress updated successfully.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            TempData["Error"] =
-                "Something went wrong.";
-
-            await LoadProgressData(model);
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var progress =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.Id == id);
-
-            if (progress == null)
-                return NotFound();
-
-
-            _userProgressRepository.Delete(progress);
-
-
-            if (await _userProgressRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "User progress deleted successfully.";
-            }
-            else
-            {
-                TempData["Error"] =
-                    "Something went wrong.";
-            }
-
-
-            return RedirectToAction(nameof(Index));
-        }
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            var progress =
-                await _userProgressRepository.GetOneAsync(
-                    p => p.Id == id,
-                    includes:
-                    [
-                        p => p.User,
-                        p => p.Lesson,
-                        p => p.Lesson.Course
-                    ]);
-
-
-            if (progress == null)
-                return NotFound();
-
-
-            return View(progress);
-        }
-        private async Task LoadProgressData(
-            UserProgressVM? model = null)
-        {
-            var users =
-                await _userRepository.GetAsync(
-                    tracked: false);
-
-            var lessons =
-                await _lessonRepository.GetAsync(
-                    includes:
-                    [
-                        l => l.Course
-                    ],
-                    tracked: false);
-
-
-            ViewBag.Users =
-                new SelectList(
-                    users.OrderBy(u => u.UserName),
-                    "Id",
-                    "UserName",
-                    model?.UserId);
-
-
-            ViewBag.Lessons =
-                new SelectList(
-                    lessons
-                        .OrderBy(l => l.Course.Title)
-                        .ThenBy(l => l.OrderNumber)
-                        .Select(l => new
-                        {
-                            l.Id,
-                            DisplayName =
-                                $"{l.Course.Title} - {l.OrderNumber}. {l.Title}"
-                        }),
-                    "Id",
-                    "DisplayName",
-                    model?.LessonId);
         }
     }
 }

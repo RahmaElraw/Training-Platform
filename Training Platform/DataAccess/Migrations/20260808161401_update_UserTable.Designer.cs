@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Training_Platform.DataAccess;
 
 #nullable disable
 
-namespace Training_Platform.Migrations
+namespace Training_Platform.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260808161401_update_UserTable")]
+    partial class update_UserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,37 +244,6 @@ namespace Training_Platform.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Training_Platform.Models.ApplicationUserOTP", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpireAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OTP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("ApplicationUserOTPs", (string)null);
-                });
-
             modelBuilder.Entity("Training_Platform.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -291,7 +263,7 @@ namespace Training_Platform.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Certificate", b =>
@@ -322,7 +294,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Certificates", (string)null);
+                    b.ToTable("Certificates");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Course", b =>
@@ -370,7 +342,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.CourseMaterial", b =>
@@ -397,7 +369,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("LessonId");
 
-                    b.ToTable("CourseMaterials", (string)null);
+                    b.ToTable("CourseMaterials");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Enrollment", b =>
@@ -426,7 +398,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Enrollments", (string)null);
+                    b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Lesson", b =>
@@ -460,7 +432,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Lessons", (string)null);
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Question", b =>
@@ -489,7 +461,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("QuizId");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.QuestionOption", b =>
@@ -515,7 +487,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionOptions", (string)null);
+                    b.ToTable("QuestionOptions");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Quiz", b =>
@@ -544,7 +516,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Quizzes", (string)null);
+                    b.ToTable("Quizzes");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.QuizResult", b =>
@@ -576,7 +548,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("QuizResults", (string)null);
+                    b.ToTable("QuizResults");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Review", b =>
@@ -609,7 +581,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.UserProgress", b =>
@@ -638,7 +610,7 @@ namespace Training_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserProgresses", (string)null);
+                    b.ToTable("UserProgresses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -690,17 +662,6 @@ namespace Training_Platform.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Training_Platform.Models.ApplicationUserOTP", b =>
-                {
-                    b.HasOne("Training_Platform.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Training_Platform.Models.Certificate", b =>

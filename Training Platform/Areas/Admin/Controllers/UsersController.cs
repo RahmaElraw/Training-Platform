@@ -141,7 +141,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 Email = vm.Email,
                 PhoneNumber = vm.PhoneNumber,
                 IsApproved = vm.IsApproved,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, vm.Password);

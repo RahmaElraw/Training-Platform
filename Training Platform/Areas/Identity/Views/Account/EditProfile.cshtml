@@ -1,0 +1,151 @@
+﻿@model Training_Platform.ViewModels.ProfileVM
+
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = "_AuthLayout";
+}
+
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Edit Profile</h2>
+    <p class="text-muted mb-0">Update your personal information</p>
+</div>
+
+<form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="text-center mb-4">
+        @if (!string.IsNullOrEmpty(Model.ProfileImage))
+        {
+            <img src="~/images/profiles/@Model.ProfileImage" class="profile-avatar-img mx-auto mb-2" alt="Profile picture" id="previewImg" />
+        }
+        else
+        {
+            <div class="profile-avatar mx-auto mb-2" id="previewAvatar">
+                @($"{Model.FirstName?.FirstOrDefault()}{Model.LastName?.FirstOrDefault()}".ToUpper())
+            </div>
+            <img src="" class="profile-avatar-img mx-auto mb-2 d-none" id="previewImg" alt="Profile picture" />
+        }
+
+        <div>
+            <label for="ProfileImageFile" class="text-primary text-decoration-none fw-semibold" style="cursor: pointer; font-size: 0.85rem;">
+                Change Photo
+            </label>
+            <input type="file" asp-for="ProfileImageFile" id="ProfileImageFile" accept=".jpg,.jpeg,.png,.webp" class="d-none" onchange="previewImage(event)" />
+        </div>
+        <span asp-validation-for="ProfileImageFile" class="text-danger d-block"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <div class="input-icon">
+            <i class="bi bi-envelope"></i>
+            <input asp-for="Email" class="form-control" readonly disabled />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Username" class="form-label"></label>
+        <div class="input-icon">
+            <i class="bi bi-at"></i>
+            <input asp-for="Username" class="form-control" />
+        </div>
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <div class="input-icon">
+                <i class="bi bi-person"></i>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <div class="input-icon">
+                <i class="bi bi-person"></i>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <div class="input-icon">
+            <i class="bi bi-telephone"></i>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="Address" class="form-label"></label>
+        <div class="input-icon">
+            <i class="bi bi-geo-alt"></i>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="d-grid">
+        <input type="submit" value="Save Changes" class="btn btn-primary btn-lg" />
+    </div>
+
+    <div class="text-center mt-3">
+        <a asp-action="Profile" class="text-primary text-decoration-none fw-semibold">Back to Profile</a>
+    </div>
+
+</form>
+
+<style>
+    .profile-avatar {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4b6cff 0%, #2f3fb8 100%);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .profile-avatar-img {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #eceef3;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <partial name="_NotificationPartial" />
+
+    <script>
+        function previewImage(event) {
+            const img = document.getElementById('previewImg');
+            const avatar = document.getElementById('previewAvatar');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.classList.remove('d-none');
+                    if (avatar) avatar.classList.add('d-none');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+}

@@ -27,16 +27,6 @@
     <script src="~/js/admin/config.js"></script>
     <script src="~/js/admin/simplebar/simplebar.min.js"></script>
 
-    <style>
-            #toast-container > .toast.toast-success {
-                background-color: #28a745 !important;
-                color: #fff !important;
-            }
-
-                #toast-container > .toast.toast-success .toast-message {
-                    color: #fff !important;
-                }
-    </style>>
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
@@ -141,7 +131,7 @@
                         </a>
                         <ul class="nav collapse show flex-column gap-2" id="dashboard">
                             <li class="nav-item">
-                                <a class="nav-link active" href="https://localhost:7069/Admin/Home/Index">
+                                <a class="nav-link active" href="/Admin/Home/Index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Default</span>
                                     </div>
@@ -149,50 +139,36 @@
                                 <!-- more inner pages-->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="https://localhost:7069/Admin/Categories/index">
+                                <a class="nav-link" href="/Admin/Categories/index">
                         <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Categories</span>
                         </div>
                       </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Courses/index">
+                    <li class="nav-item"><a class="nav-link" href="/Admin/Courses/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Courses</span>
                         </div>
                       </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Lessons/index">
+                    <li class="nav-item"><a class="nav-link" href="/Admin/Lessons/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Lessons</span>
                         </div>
                       </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Enrollments/index">
+                    <li class="nav-item"><a class="nav-link" href="/Admin/Enrollments/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Enrollments</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="dashboard/analytics.html">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Trainers</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="dashboard/analytics.html">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Trainees</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Quizzes/index">
+                    <li class="nav-item"><a class="nav-link" href="/Admin/Quizzes/index">
                 <div class="d-flex align-items-center">
                     <span class="nav-link-text ps-1">Quizzes</span>
                 </div>
                </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://localhost:7069/Admin/Questions/index">
+                    <li class="nav-item"><a class="nav-link" href="Admin/Questions/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Questions</span>
                         </div>
@@ -200,7 +176,7 @@
                     </li>
                     
                             <li class="nav-item">
-                                <a class="nav-link" href="https://localhost:7069/Admin/Reviews/index">
+                                <a class="nav-link" href="/Admin/Reviews/index">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-text ps-1">Courses Review</span>
                         </div>
@@ -209,7 +185,7 @@
                     
                                 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="https://localhost:7069/Admin/Users/index">
+                                        <a class="nav-link" href="/Admin/Users/index">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-text ps-1">Users Management</span>
                                             </div>
@@ -217,14 +193,14 @@
                                     </li>
                                     
                                     <li class="nav-item">
-                                <a class="nav-link" href="https://localhost:7069/Admin/UserProgresses/index">
+                                <a class="nav-link" href="/Admin/UserProgresses/index">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-text ps-1">Users Progress</span>
                                             </div>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="https://localhost:7069/Admin/Certificates/index">
+                                        <a class="nav-link" href="/Admin/Certificates/index">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-text ps-1">Users Certificates</span>
                                             </div>
@@ -243,10 +219,12 @@
                     <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation">
                         <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
                     </button>
-                    <a class="navbar-brand me-1 me-sm-3" href="index.html">
+                    <a class="navbar-brand me-1 me-sm-3" href="/Admin/Home/Index">
                         <div class="d-flex align-items-center">
-                            <img class="me-2" src="assets/img/icons/spot-illustrations/falcon.png" alt="" width="40" />
-                            <span class="font-sans-serif">falcon</span>
+                    <div class="avatar avatar-xl">
+                        <img class="rounded-circle" src="~/images/logo.png" alt="" />
+                    </div>
+                            <span class="font-sans-serif">Training Platform</span>
                         </div>
                     </a>
 

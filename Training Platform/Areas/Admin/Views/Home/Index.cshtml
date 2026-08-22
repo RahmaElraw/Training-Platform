@@ -1,182 +1,191 @@
 ﻿@model Training_Platform.ViewModels.AdminDashboardVM
 
-@{
-    ViewData["Title"] = "Dashboard";
-}
+<div class="row g-3 mb-3">
 
-<div class="container-fluid">
-    <div class="row g-3 mb-3">
+    <!-- Trainees -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card overflow-hidden h-100">
+            <div class="bg-holder bg-card"
+                 style="background-image:url('@Url.Content("~/assets/img/icons/spot-illustrations/corner-1.png")');">
+            </div>
 
-        <!-- Trainees -->
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card"
-                     style="background-image:url(../assets/img/icons/spot-illustrations/corner-1.png);">
-                </div>
-
-                <div class="card-body position-relative">
-                    <h6 class="mb-2">
-                        Trainees
-                        <span class="badge badge-soft-warning rounded-pill ms-2">
-                            Users
-                        </span>
-                    </h6>
-
-                    <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning">
-                        @Model.TraineesCount
-                    </div>
-
-                    <span class="fw-semi-bold fs--1 text-nowrap">
-                        Total Trainees
+            <div class="card-body position-relative">
+                <h6 class="mb-2">
+                    Trainees
+                    <span class="badge badge-soft-warning rounded-pill ms-2">
+                        Users
                     </span>
+                </h6>
+
+                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning">
+                    @Model.TraineesCount
                 </div>
+
+                <span class="fw-semi-bold fs--1 text-nowrap">
+                    Total Trainees
+                </span>
             </div>
         </div>
-
-
-        <!-- Trainers -->
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card"
-                     style="background-image:url(../assets/img/icons/spot-illustrations/corner-2.png);">
-                </div>
-
-                <div class="card-body position-relative">
-                    <h6 class="mb-2">
-                        Trainers
-                        <span class="badge badge-soft-info rounded-pill ms-2">
-                            Users
-                        </span>
-                    </h6>
-
-                    <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info">
-                        @Model.TrainersCount
-                    </div>
-
-                    <span class="fw-semi-bold fs--1 text-nowrap">
-                        Total Trainers
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Categories -->
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card"
-                     style="background-image:url(../assets/img/icons/spot-illustrations/corner-1.png);">
-                </div>
-
-                <div class="card-body position-relative">
-                    <h6 class="mb-2">
-                        Categories
-                        <span class="badge badge-soft-success rounded-pill ms-2">
-                            Courses
-                        </span>
-                    </h6>
-
-                    <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-success">
-                        @Model.CategoriesCount
-                    </div>
-
-                    <span class="fw-semi-bold fs--1 text-nowrap">
-                        Total Categories
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Courses -->
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card"
-                     style="background-image:url(../assets/img/icons/spot-illustrations/corner-2.png);">
-                </div>
-
-                <div class="card-body position-relative">
-                    <h6 class="mb-2">
-                        Courses
-                        <span class="badge badge-soft-primary rounded-pill ms-2">
-                            Learning
-                        </span>
-                    </h6>
-
-                    <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-primary">
-                        @Model.CoursesCount
-                    </div>
-
-                    <span class="fw-semi-bold fs--1 text-nowrap">
-                        Total Courses
-                    </span>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 
-    <!-- Welcome / Dashboard Content -->
-    <div class="row g-3 mb-3">
+    <!-- Trainers -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card overflow-hidden h-100">
+            <div class="bg-holder bg-card"
+                 style="background-image:url('@Url.Content("~/assets/img/icons/spot-illustrations/corner-2.png")');">
+            </div>
 
-        <div class="col-lg-8">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h5 class="mb-0">Training Platform Dashboard</h5>
+            <div class="card-body position-relative">
+                <h6 class="mb-2">
+                    Trainers
+                    <span class="badge badge-soft-info rounded-pill ms-2">
+                        Users
+                    </span>
+                </h6>
+
+                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info">
+                    @Model.TrainersCount
                 </div>
 
-                <div class="card-body">
-                    <p class="mb-0">
-                        Welcome to the Training Platform Admin Dashboard.
-                        From here you can manage trainees, trainers, courses,
-                        categories and other platform data.
-                    </p>
-                </div>
+                <span class="fw-semi-bold fs--1 text-nowrap">
+                    Total Trainers
+                </span>
             </div>
         </div>
+    </div>
 
 
-        <div class="col-lg-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h5 class="mb-0">Quick Overview</h5>
+    <!-- Categories -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card overflow-hidden h-100">
+            <div class="bg-holder bg-card"
+                 style="background-image:url('@Url.Content("~/assets/img/icons/spot-illustrations/corner-1.png")');">
+            </div>
+
+            <div class="card-body position-relative">
+                <h6 class="mb-2">
+                    Categories
+                    <span class="badge badge-soft-success rounded-pill ms-2">
+                        Courses
+                    </span>
+                </h6>
+
+                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-success">
+                    @Model.CategoriesCount
                 </div>
 
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Trainees</span>
-                        <span class="fw-bold">
-                            @Model.TraineesCount
-                        </span>
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Trainers</span>
-                        <span class="fw-bold">
-                            @Model.TrainersCount
-                        </span>
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Categories</span>
-                        <span class="fw-bold">
-                            @Model.CategoriesCount
-                        </span>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <span>Courses</span>
-                        <span class="fw-bold">
-                            @Model.CoursesCount
-                        </span>
-                    </div>
-
-                </div>
+                <span class="fw-semi-bold fs--1 text-nowrap">
+                    Total Categories
+                </span>
             </div>
         </div>
+    </div>
 
+
+    <!-- Courses -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card overflow-hidden h-100">
+            <div class="bg-holder bg-card"
+                 style="background-image:url('@Url.Content("~/assets/img/icons/spot-illustrations/corner-2.png")');">
+            </div>
+
+            <div class="card-body position-relative">
+                <h6 class="mb-2">
+                    Courses
+                    <span class="badge badge-soft-primary rounded-pill ms-2">
+                        Learning
+                    </span>
+                </h6>
+
+                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-primary">
+                    @Model.CoursesCount
+                </div>
+
+                <span class="fw-semi-bold fs--1 text-nowrap">
+                    Total Courses
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Welcome Section -->
+<div class="row g-3">
+
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Training Platform Dashboard</h5>
+            </div>
+
+            <div class="card-body">
+                <h5 class="mb-3">
+                    Welcome to Training Platform
+                </h5>
+
+                <p class="mb-0 text-700">
+                    Manage your training platform, courses, trainers,
+                    trainees and learning content from the dashboard.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Quick Overview -->
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Overview</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-700">
+                        Trainees
+                    </span>
+
+                    <span class="badge badge-soft-warning fs--1">
+                        @Model.TraineesCount
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-700">
+                        Trainers
+                    </span>
+
+                    <span class="badge badge-soft-info fs--1">
+                        @Model.TrainersCount
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-700">
+                        Categories
+                    </span>
+
+                    <span class="badge badge-soft-success fs--1">
+                        @Model.CategoriesCount
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-700">
+                        Courses
+                    </span>
+
+                    <span class="badge badge-soft-primary fs--1">
+                        @Model.CoursesCount
+                    </span>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </div>

@@ -39,11 +39,4 @@
     <Folder Include="wwwroot\js\trainer\" />
   </ItemGroup>
 
-
-  
-
-  <ItemGroup>
-    <None Include="E:\Data_My Courses\.Netcourse\Data\Lec_24\reops-template\falcon-v3.14.0\public\vendors\simplebar\simplebar.min.js" Link="wwwroot\js\admin\simplebar.min.js" />
-  </ItemGroup>
-
 </Project>

@@ -16,19 +16,14 @@
                  class="text-danger mb-3">
             </div>
 
-
             <div class="row">
 
                 <!-- User -->
-
                 <div class="col-md-6 mb-3">
 
-                    <label asp-for="UserId"
-                           class="form-label">
-
+                    <label asp-for="UserId" class="form-label">
                         Trainee
                         <span class="text-danger">*</span>
-
                     </label>
 
                     <select asp-for="UserId"
@@ -47,17 +42,12 @@
 
                 </div>
 
-
                 <!-- Course -->
-
                 <div class="col-md-6 mb-3">
 
-                    <label asp-for="CourseId"
-                           class="form-label">
-
+                    <label asp-for="CourseId" class="form-label">
                         Course
                         <span class="text-danger">*</span>
-
                     </label>
 
                     <select asp-for="CourseId"
@@ -77,47 +67,6 @@
                 </div>
 
             </div>
-
-
-            <!-- Enrollment Date -->
-
-            <div class="mb-3">
-
-                <label asp-for="EnrollmentDate"
-                       class="form-label">
-
-                    Enrollment Date
-                    <span class="text-danger">*</span>
-
-                </label>
-
-                <input asp-for="EnrollmentDate"
-                       type="datetime-local"
-                       class="form-control" />
-
-                <span asp-validation-for="EnrollmentDate"
-                      class="text-danger">
-                </span>
-
-            </div>
-
-
-            <!-- Completed -->
-
-            <div class="form-check mb-3">
-
-                <input asp-for="IsCompleted"
-                       class="form-check-input" />
-
-                <label asp-for="IsCompleted"
-                       class="form-check-label">
-
-                    Completed
-
-                </label>
-
-            </div>
-
 
             <div class="d-flex gap-2">
 
@@ -143,7 +92,6 @@
     </div>
 
 </div>
-
 
 @section Scripts
 {

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Training_Platform.Models;
-using Training_Platform.Repositories.IRepositories;
-using Training_Platform.ViewModels;
+
 
 namespace Training_Platform.Areas.Admin.Controllers
 {

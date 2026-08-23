@@ -7,13 +7,16 @@ namespace Training_Platform.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRepository<Course> _courseRepository;
         //private readonly RoleManager<IdentityRole<int>> _roleManager;
 
         public UsersController(
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+             IRepository<Course> courseRepository)
             //RoleManager<IdentityRole<int>> roleManager)
         {
             _userManager = userManager;
+            _courseRepository = courseRepository;
             //_roleManager = roleManager;
         }
 
@@ -80,24 +83,29 @@ namespace Training_Platform.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(
-        int id,
-        CancellationToken cancellationToken = default)
+        public async Task<IActionResult> ToggleStatus(
+    int id,
+    CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
 
-            if (user is null)
+            if (user == null)
                 return NotFound();
 
-            var result = await _userManager.DeleteAsync(user);
+            user.IsApproved = !user.IsApproved;
 
-            if (!result.Succeeded)
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
             {
-                TempData["error_notification"] = "Failed to delete user.";
-                return RedirectToAction(nameof(Index));
+                TempData["Success"] = user.IsApproved
+                    ? "User activated successfully."
+                    : "User deactivated successfully.";
             }
-
-            TempData["success_notification"] = "User deleted successfully.";
+            else
+            {
+                TempData["Error"] = "Something went wrong.";
+            }
 
             return RedirectToAction(nameof(Index));
         }

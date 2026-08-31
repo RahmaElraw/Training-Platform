@@ -9,7 +9,13 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Lesson> _lessonRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<CourseMaterial> _courseMaterialRepository;
+
         private const int PageSize = 6;
+
+        private const string SuccessMessage = "Lessons.Success";
+        private const string ErrorMessage = "Lessons.Error";
+        private const string WarningMessage = "Lessons.Warning";
+        private const string InfoMessage = "Lessons.Info";
 
         public LessonsController(
             IRepository<Lesson> lessonRepository,
@@ -20,11 +26,15 @@ namespace Training_Platform.Areas.Admin.Controllers
             _courseRepository = courseRepository;
             _courseMaterialRepository = courseMaterialRepository;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index(
             string? query,
             int page = 1)
         {
+            if (page < 1)
+                page = 1;
+
             var lessons = await _lessonRepository.GetAsync(
                 includes:
                 [
@@ -50,22 +60,29 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             int totalCount = lessons.Count();
 
+            int totalPages = (int)Math.Ceiling(
+                totalCount / (double)PageSize);
+
+            if (totalPages > 0 && page > totalPages)
+                page = totalPages;
+
             var model = new LessonWithRelatedVM
             {
                 Lessons = lessons
                     .Skip((page - 1) * PageSize)
-                    .Take(PageSize),
+                    .Take(PageSize)
+                    .ToList(),
 
                 CurrentPage = page,
 
-                TotalPages = (int)Math.Ceiling(
-                    totalCount / (double)PageSize),
+                TotalPages = totalPages,
 
                 Query = query
             };
 
             return View(model);
         }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -73,6 +90,8 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             return View();
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LessonVM model)
@@ -84,7 +103,6 @@ namespace Training_Platform.Areas.Admin.Controllers
             }
 
 
-            // Check Course
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == model.CourseId);
 
@@ -97,9 +115,12 @@ namespace Training_Platform.Areas.Admin.Controllers
                 await LoadLessonData(model);
                 return View(model);
             }
+
+
             var orderExists = await _lessonRepository.GetOneAsync(
-                l => l.CourseId == model.CourseId
-                     && l.OrderNumber == model.OrderNumber);
+                l =>
+                    l.CourseId == model.CourseId &&
+                    l.OrderNumber == model.OrderNumber);
 
             if (orderExists != null)
             {
@@ -129,22 +150,26 @@ namespace Training_Platform.Areas.Admin.Controllers
             await _lessonRepository.AddAsync(lesson);
 
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            var result = await _lessonRepository.CommitAsync();
+
+            if (result > 0)
             {
-                TempData["Success"] =
+                TempData[SuccessMessage] =
                     "Lesson created successfully.";
 
                 return RedirectToAction(nameof(Index));
             }
 
 
-            TempData["Error"] =
-                "Something went wrong.";
+            TempData[ErrorMessage] =
+                "Something went wrong while creating the lesson.";
 
             await LoadLessonData(model);
 
             return View(model);
         }
+
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -157,6 +182,7 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (lesson == null)
                 return NotFound();
+
 
             var model = new LessonVM
             {
@@ -175,10 +201,13 @@ namespace Training_Platform.Areas.Admin.Controllers
                 CourseMaterials = lesson.CourseMaterials
             };
 
+
             await LoadLessonData(model);
 
             return View(model);
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(LessonVM model)
@@ -195,6 +224,8 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (lesson == null)
                 return NotFound();
+
+
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == model.CourseId);
 
@@ -207,10 +238,13 @@ namespace Training_Platform.Areas.Admin.Controllers
                 await LoadLessonData(model);
                 return View(model);
             }
+
+
             var orderExists = await _lessonRepository.GetOneAsync(
-                l => l.CourseId == model.CourseId
-                     && l.OrderNumber == model.OrderNumber
-                     && l.Id != model.Id);
+                l =>
+                    l.CourseId == model.CourseId &&
+                    l.OrderNumber == model.OrderNumber &&
+                    l.Id != model.Id);
 
             if (orderExists != null)
             {
@@ -241,22 +275,25 @@ namespace Training_Platform.Areas.Admin.Controllers
             _lessonRepository.Update(lesson);
 
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            var result = await _lessonRepository.CommitAsync();
+
+            if (result > 0)
             {
-                TempData["Success"] =
+                TempData[SuccessMessage] =
                     "Lesson updated successfully.";
 
                 return RedirectToAction(nameof(Index));
             }
 
 
-            TempData["Error"] =
-                "Something went wrong.";
+            TempData[ErrorMessage] =
+                "Something went wrong while updating the lesson.";
 
             await LoadLessonData(model);
 
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -274,18 +311,18 @@ namespace Training_Platform.Areas.Admin.Controllers
                 return NotFound();
 
 
-            if (lesson.CourseMaterials.Count > 0)
+            if (lesson.CourseMaterials.Any())
             {
-                TempData["Error"] =
+                TempData[ErrorMessage] =
                     "Cannot delete lesson because it has course materials.";
 
                 return RedirectToAction(nameof(Index));
             }
 
 
-            if (lesson.UserProgresses.Count > 0)
+            if (lesson.UserProgresses.Any())
             {
-                TempData["Error"] =
+                TempData[ErrorMessage] =
                     "Cannot delete lesson because it has user progress records.";
 
                 return RedirectToAction(nameof(Index));
@@ -295,20 +332,23 @@ namespace Training_Platform.Areas.Admin.Controllers
             _lessonRepository.Delete(lesson);
 
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            var result = await _lessonRepository.CommitAsync();
+
+            if (result > 0)
             {
-                TempData["Success"] =
+                TempData[SuccessMessage] =
                     "Lesson deleted successfully.";
             }
             else
             {
-                TempData["Error"] =
-                    "Something went wrong.";
+                TempData[ErrorMessage] =
+                    "Something went wrong while deleting the lesson.";
             }
 
 
             return RedirectToAction(nameof(Index));
         }
+
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -328,6 +368,174 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             return View(lesson);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMaterial(
+            CourseMaterialVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] =
+                    "Please enter valid material data.";
+
+                return RedirectToAction(
+                    nameof(Details),
+                    new { id = model.LessonId });
+            }
+
+
+            var lesson = await _lessonRepository.GetOneAsync(
+                l => l.Id == model.LessonId);
+
+            if (lesson == null)
+            {
+                TempData[ErrorMessage] =
+                    "The selected lesson does not exist.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            var material = new CourseMaterial
+            {
+                Title = model.Title.Trim(),
+
+                Url = model.Url.Trim(),
+
+                LessonId = model.LessonId
+            };
+
+
+            await _courseMaterialRepository.AddAsync(material);
+
+
+            var result =
+                await _courseMaterialRepository.CommitAsync();
+
+
+            if (result > 0)
+            {
+                TempData[SuccessMessage] =
+                    "Course material added successfully.";
+            }
+            else
+            {
+                TempData[ErrorMessage] =
+                    "Something went wrong while adding the material.";
+            }
+
+
+            return RedirectToAction(
+                nameof(Details),
+                new { id = model.LessonId });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditMaterial(int id)
+        {
+            var material =
+                await _courseMaterialRepository.GetOneAsync(
+                    m => m.Id == id);
+
+            if (material == null)
+                return NotFound();
+
+
+            var model = new CourseMaterialVM
+            {
+                Id = material.Id,
+
+                Title = material.Title ?? string.Empty,
+
+                Url = material.Url,
+
+                LessonId = material.LessonId
+            };
+
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMaterial(
+            CourseMaterialVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var material = await _courseMaterialRepository
+                .GetOneAsync(m => m.Id == model.Id);
+
+            if (material == null)
+                return NotFound();
+
+            material.Title = model.Title.Trim();
+            material.Url = model.Url.Trim();
+
+            _courseMaterialRepository.Update(material);
+
+            var result =
+                await _courseMaterialRepository.CommitAsync();
+
+            if (result > 0)
+            {
+                TempData[SuccessMessage] =
+                    "Course material updated successfully.";
+
+                return RedirectToAction(
+                    nameof(Details),
+                    new { id = material.LessonId });
+            }
+
+            TempData[ErrorMessage] =
+                "Something went wrong while updating the material.";
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteMaterial(int id)
+        {
+            var material =
+                await _courseMaterialRepository.GetOneAsync(
+                    m => m.Id == id);
+
+            if (material == null)
+                return NotFound();
+
+
+            int lessonId = material.LessonId;
+
+
+            _courseMaterialRepository.Delete(material);
+
+
+            var result =
+                await _courseMaterialRepository.CommitAsync();
+
+
+            if (result > 0)
+            {
+                TempData[SuccessMessage] =
+                    "Course material deleted successfully.";
+            }
+            else
+            {
+                TempData[ErrorMessage] =
+                    "Something went wrong while deleting the material.";
+            }
+
+
+            return RedirectToAction(
+                nameof(Details),
+                new { id = lessonId });
+        }
+
         private async Task LoadLessonData(
             LessonVM? model = null)
         {
@@ -342,146 +550,6 @@ namespace Training_Platform.Areas.Admin.Controllers
                     "Id",
                     "Title",
                     model?.CourseId);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddMaterial(
-            CourseMaterialVM model)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["Error"] =
-                    "Please enter valid material data.";
-
-                return RedirectToAction(
-                    nameof(Details),
-                    new { id = model.LessonId });
-            }
-
-            var lesson = await _lessonRepository.GetOneAsync(
-                l => l.Id == model.LessonId);
-
-            if (lesson == null)
-                return NotFound();
-
-            var material = new CourseMaterial
-            {
-                Title = model.Title.Trim(),
-                Url = model.Url.Trim(),
-                LessonId = model.LessonId
-            };
-
-            await _courseMaterialRepository.AddAsync(material);
-
-            if (await _courseMaterialRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "Course material added successfully.";
-            }
-            else
-            {
-                TempData["Error"] =
-                    "Something went wrong.";
-            }
-
-            return RedirectToAction(
-                nameof(Details),
-                new { id = model.LessonId });
-        }
-        [HttpGet]
-        public async Task<IActionResult> EditMaterial(int id)
-        {
-            var material =
-                await _courseMaterialRepository.GetOneAsync(
-                    m => m.Id == id);
-
-            if (material == null)
-                return NotFound();
-
-            var model = new CourseMaterialVM
-            {
-                Id = material.Id,
-                Title = material.Title ?? string.Empty,
-                Url = material.Url,
-                LessonId = material.LessonId
-            };
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMaterial(
-            CourseMaterialVM model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var material =
-                await _courseMaterialRepository.GetOneAsync(
-                    m => m.Id == model.Id);
-
-            if (material == null)
-                return NotFound();
-
-            var lesson =
-                await _lessonRepository.GetOneAsync(
-                    l => l.Id == model.LessonId);
-
-            if (lesson == null)
-                return NotFound();
-
-            material.Title = model.Title.Trim();
-
-            material.Url = model.Url.Trim();
-
-            material.LessonId = model.LessonId;
-
-            _courseMaterialRepository.Update(material);
-
-            if (await _courseMaterialRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "Course material updated successfully.";
-
-                return RedirectToAction(
-                    nameof(Details),
-                    new { id = model.LessonId });
-            }
-
-            TempData["Error"] =
-                "Something went wrong.";
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteMaterial(int id)
-        {
-            var material =
-                await _courseMaterialRepository.GetOneAsync(
-                    m => m.Id == id);
-
-            if (material == null)
-                return NotFound();
-
-            int lessonId = material.LessonId;
-
-            _courseMaterialRepository.Delete(material);
-
-            if (await _courseMaterialRepository.CommitAsync() > 0)
-            {
-                TempData["Success"] =
-                    "Course material deleted successfully.";
-            }
-            else
-            {
-                TempData["Error"] =
-                    "Something went wrong.";
-            }
-
-            return RedirectToAction(
-                nameof(Details),
-                new { id = lessonId });
         }
     }
 }

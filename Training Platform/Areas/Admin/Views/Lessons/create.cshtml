@@ -1,9 +1,12 @@
 ﻿@model Training_Platform.ViewModels.LessonVM
 
-<div class="card">
+<div class="card shadow-sm">
 
     <div class="card-header">
-        <h5 class="mb-0">Create Lesson</h5>
+        <h5 class="mb-0">
+            <i class="fas fa-plus-circle me-1"></i>
+            Create Lesson
+        </h5>
     </div>
 
     <div class="card-body">
@@ -13,7 +16,8 @@
             @Html.AntiForgeryToken()
 
             <div asp-validation-summary="ModelOnly"
-                 class="text-danger mb-3">
+                 class="alert alert-danger"
+                 role="alert">
             </div>
 
 
@@ -21,8 +25,7 @@
 
             <div class="mb-3">
 
-                <label asp-for="Title"
-                       class="form-label">
+                <label asp-for="Title" class="form-label">
                     Title
                     <span class="text-danger">*</span>
                 </label>
@@ -42,16 +45,14 @@
 
             <div class="mb-3">
 
-                <label asp-for="Description"
-                       class="form-label">
+                <label asp-for="Description" class="form-label">
                     Description
                 </label>
 
                 <textarea asp-for="Description"
                           class="form-control"
                           rows="4"
-                          placeholder="Enter lesson description">
-                </textarea>
+                          placeholder="Enter lesson description"></textarea>
 
                 <span asp-validation-for="Description"
                       class="text-danger">
@@ -60,17 +61,17 @@
             </div>
 
 
-            <!-- Video URL -->
+            <!-- Video -->
 
             <div class="mb-3">
 
-                <label asp-for="VideoUrl"
-                       class="form-label">
+                <label asp-for="VideoUrl" class="form-label">
                     Video URL
                     <span class="text-danger">*</span>
                 </label>
 
                 <input asp-for="VideoUrl"
+                       type="url"
                        class="form-control"
                        placeholder="https://..." />
 
@@ -87,12 +88,9 @@
 
                 <div class="col-md-6 mb-3">
 
-                    <label asp-for="CourseId"
-                           class="form-label">
-
+                    <label asp-for="CourseId" class="form-label">
                         Course
                         <span class="text-danger">*</span>
-
                     </label>
 
                     <select asp-for="CourseId"
@@ -112,16 +110,13 @@
                 </div>
 
 
-                <!-- Order Number -->
+                <!-- Order -->
 
                 <div class="col-md-6 mb-3">
 
-                    <label asp-for="OrderNumber"
-                           class="form-label">
-
+                    <label asp-for="OrderNumber" class="form-label">
                         Order Number
                         <span class="text-danger">*</span>
-
                     </label>
 
                     <input asp-for="OrderNumber"
@@ -138,7 +133,9 @@
             </div>
 
 
-            <div class="d-flex gap-2">
+            <!-- Buttons -->
+
+            <div class="d-flex gap-2 mt-3">
 
                 <button type="submit"
                         class="btn btn-primary">
@@ -151,6 +148,7 @@
                 <a asp-action="Index"
                    class="btn btn-secondary">
 
+                    <i class="fas fa-arrow-left me-1"></i>
                     Cancel
 
                 </a>
@@ -160,7 +158,6 @@
         </form>
 
     </div>
-
 </div>
 
 

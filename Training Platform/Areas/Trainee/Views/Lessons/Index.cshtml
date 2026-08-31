@@ -1,0 +1,201 @@
+﻿@model Training_Platform.ViewModels.Trainee.LessonListVM
+
+@{
+    ViewData["Title"] = "Lessons & Quizzes";
+}
+
+<div class="container-fluid py-3">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">
+                @Model.Course.Title
+            </h3>
+            <p class="text-600 mb-0">
+                Course Lessons & Quizzes
+            </p>
+        </div>
+
+        <a asp-controller="Courses"
+           asp-action="Details"
+           asp-route-id="@Model.Course.Id"
+           class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>
+            Course Details
+        </a>
+    </div>
+
+    <!-- Lessons Section -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-book-open me-2 text-primary"></i>Lessons
+            </h5>
+            <span class="text-600">
+                @Model.Lessons.Count Lessons
+            </span>
+        </div>
+
+        <div class="card-body">
+            @if (Model.Lessons.Any())
+            {
+                <div class="list-group">
+                    @foreach (var lesson in Model.Lessons)
+                    {
+                        <a asp-action="Details"
+                           asp-route-id="@lesson.Id"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        @if (lesson.IsCompleted)
+                                        {
+                                            <span class="badge bg-success rounded-circle p-2">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary rounded-circle p-2">
+                                                @lesson.OrderNumber
+                                            </span>
+                                        }
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">
+                                            @lesson.OrderNumber. @lesson.Title
+                                        </h6>
+                                        @if (!string.IsNullOrWhiteSpace(lesson.Description))
+                                        {
+                                            <small class="text-600">
+                                                @lesson.Description
+                                            </small>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div>
+                                    @if (lesson.IsCompleted)
+                                    {
+                                        <span class="badge bg-success">Completed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-primary">Start</span>
+                                    }
+                                    <i class="fas fa-chevron-right ms-2"></i>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <i class="fas fa-book-open fa-2x text-500 mb-2"></i>
+                    <h6 class="mb-0">No lessons available for this course.</h6>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Quizzes Section -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-file-alt me-2 text-warning"></i>Quizzes (Required &ge; 70% to Pass)
+            </h5>
+            <span class="text-600">
+                @Model.Quizzes.Count Quizzes
+            </span>
+        </div>
+
+        <div class="card-body">
+            @if (Model.Quizzes.Any())
+            {
+                <div class="list-group">
+                    @foreach (var quiz in Model.Quizzes)
+                    {
+                        if (quiz.HasAttempted)
+                        {
+                            <a asp-area="Trainee"
+                               asp-controller="Quizzes"
+                               asp-action="Result"
+                               asp-route-id="@quiz.LatestResultId"
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            @if (quiz.IsPassed)
+                                            {
+                                                <span class="badge bg-success rounded-circle p-2">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger rounded-circle p-2">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            }
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">
+                                                @quiz.Title
+                                            </h6>
+                                            <small class="fw-bold @(quiz.IsPassed ? "text-success" : "text-danger")">
+                                                Score: @quiz.BestScorePercentage%
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <span class="badge bg-info text-white">View Result</span>
+                                        <i class="fas fa-chevron-right ms-2"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-area="Trainee"
+                               asp-controller="Quizzes"
+                               asp-action="Take"
+                               asp-route-id="@quiz.Id"
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <span class="badge bg-warning rounded-circle p-2 text-dark">
+                                                <i class="fas fa-question"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">
+                                                @quiz.Title
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <span class="badge bg-warning text-dark">Take Quiz</span>
+                                        <i class="fas fa-chevron-right ms-2"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <i class="fas fa-file-alt fa-2x text-500 mb-2"></i>
+                    <h6 class="mb-0">No quizzes available for this course.</h6>
+                </div>
+            }
+        </div>
+    </div>
+</div>

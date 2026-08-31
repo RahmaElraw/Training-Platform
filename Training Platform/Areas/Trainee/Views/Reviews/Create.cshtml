@@ -1,0 +1,67 @@
+﻿@model Training_Platform.ViewModels.Trainee.ReviewCreateVM
+
+@{
+    ViewData["Title"] = "Write a Review";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+                        <i class="fas fa-star fa-3x text-warning mb-3"></i>
+                        <h4>Rate this Course</h4>
+                        <p class="text-muted">@Model.CourseTitle</p>
+                    </div>
+
+                    <form asp-action="Create" method="post">
+                        <input type="hidden" asp-for="CourseId" />
+                        <input type="hidden" asp-for="CourseTitle" />
+
+                        <!-- Rating Selection -->
+                        <div class="mb-4">
+                            <label asp-for="Rating" class="form-label fw-bold">Your Rating</label>
+                            <select asp-for="Rating" class="form-select border-primary cursor-pointer">
+                                <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ - Very Good</option>
+                                <option value="3">⭐⭐⭐ - Good</option>
+                                <option value="2">⭐⭐ - Fair</option>
+                                <option value="1">⭐ - Poor</option>
+                            </select>
+                            <span asp-validation-for="Rating" class="text-danger"></span>
+                        </div>
+
+                        <!-- Comment Area -->
+                        <div class="mb-4">
+                            <label asp-for="Comment" class="form-label fw-bold">Your Feedback (Optional)</label>
+                            <textarea asp-for="Comment"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="What did you like about this course? How can it be improved?"></textarea>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CourseId" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-1"></i> Back to Course
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                Submit Review <i class="fas fa-paper-plane ms-1"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

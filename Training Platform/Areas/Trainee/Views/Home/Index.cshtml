@@ -1,0 +1,193 @@
+﻿@model Training_Platform.ViewModels.Trainee.TraineeDashboardVM
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid py-3">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h3 class="mb-1">Welcome back!</h3>
+        <p class="text-600 mb-0">
+            Here's an overview of your learning progress.
+        </p>
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+
+        <!-- Enrollments -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-600 mb-2">
+                                My Enrollments
+                            </h6>
+
+                            <h3 class="mb-0">
+                                @Model.TotalEnrollments
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-primary">
+                            <i class="fas fa-book"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Completed -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-600 mb-2">
+                                Completed Courses
+                            </h6>
+
+                            <h3 class="mb-0">
+                                @Model.CompletedCourses
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- In Progress -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-600 mb-2">
+                                In Progress
+                            </h6>
+
+                            <h3 class="mb-0">
+                                @Model.InProgressCourses
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-warning">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Certificates -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-600 mb-2">
+                                Certificates
+                            </h6>
+
+                            <h3 class="mb-0">
+                                @Model.TotalCertificates
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-info">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Course Progress Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h5 class="mb-0">Course Progress</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" class="ps-4">Course</th>
+                                <th scope="col">Completed Lessons</th>
+                                <th scope="col" class="pe-4" style="min-width: 280px;">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.CourseProgresses != null && Model.CourseProgresses.Any())
+                            {
+                                foreach (var item in Model.CourseProgresses)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-semibold">
+                                            @item.CourseTitle
+                                        </td>
+                                        <td>
+                                            @item.CompletedLessons / @item.TotalLessons
+                                        </td>
+                                        <td class="pe-4">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="progress flex-grow-1" style="height: 6px;">
+                                                    <div class="progress-bar bg-primary"
+                                                         role="progressbar"
+                                                         style="width: @(item.ProgressPercentage)%;"
+                                                         aria-valuenow="@item.ProgressPercentage"
+                                                         aria-valuemin="0"
+                                                         aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <span class="small fw-bold text-muted" style="min-width: 40px; text-align: right;">
+                                                    @(item.ProgressPercentage)%
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-muted">
+                                        No course progress records found.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

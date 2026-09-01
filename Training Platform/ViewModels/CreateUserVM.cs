@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Training_Platform.ViewModels
 {
@@ -16,8 +17,11 @@ namespace Training_Platform.ViewModels
 
         public bool IsApproved { get; set; }
 
-        //public string SelectedRole { get; set; } = string.Empty;
+        public string SelectedRole { get; set; } = string.Empty;
 
-        //public IEnumerable<SelectListItem>? Roles { get; set; }
+        public IEnumerable<SelectListItem>? Roles { get; set; }
+
+        public IFormFile? ProfileImageFile { get; set; }
     }
 }
+

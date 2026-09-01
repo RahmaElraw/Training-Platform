@@ -130,13 +130,13 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             var enrollment = new Enrollment
             {
-                EnrollmentDate = DateTime.UtcNow,
+                EnrollmentDate = model.EnrollmentDate,
 
                 UserId = model.UserId,
 
                 CourseId = model.CourseId,
 
-                IsCompleted = false
+                IsCompleted = model.IsCompleted
             };
 
 
@@ -162,18 +162,31 @@ namespace Training_Platform.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var enrollment = await _enrollmentRepository.GetOneAsync(
-                e => e.Id == id);
+            var enrollment =
+                await _enrollmentRepository.GetOneAsync(
+                    e => e.Id == id);
 
             if (enrollment == null)
                 return NotFound();
 
+
             var model = new EnrollmentVM
             {
                 Id = enrollment.Id,
-                UserId = enrollment.UserId,
-                CourseId = enrollment.CourseId
+
+                EnrollmentDate =
+                    enrollment.EnrollmentDate,
+
+                UserId =
+                    enrollment.UserId,
+
+                CourseId =
+                    enrollment.CourseId,
+
+                IsCompleted =
+                    enrollment.IsCompleted
             };
+
 
             await LoadEnrollmentData(model);
 
@@ -235,11 +248,19 @@ namespace Training_Platform.Areas.Admin.Controllers
                 return View(model);
             }
 
+
+            enrollment.EnrollmentDate =
+                model.EnrollmentDate;
+
             enrollment.UserId =
                 model.UserId;
 
             enrollment.CourseId =
                 model.CourseId;
+
+            enrollment.IsCompleted =
+                model.IsCompleted;
+
 
             _enrollmentRepository.Update(enrollment);
 

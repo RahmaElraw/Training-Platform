@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class UserProgressesController : Controller
     {
         private readonly IRepository<UserProgress> _userProgressRepository;

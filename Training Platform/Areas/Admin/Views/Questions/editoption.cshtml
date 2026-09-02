@@ -5,7 +5,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            Edit Question Option
+            @Localizer["EditQuestionOption"]
         </h5>
 
         <a asp-action="Edit"
@@ -13,7 +13,7 @@
            class="btn btn-secondary btn-sm">
 
             <i class="fas fa-arrow-left me-1"></i>
-            Back to Question
+            @Localizer["BackToQuestion"]
 
         </a>
 
@@ -50,7 +50,7 @@
                 <label asp-for="OptionText"
                        class="form-label">
 
-                    Option Text
+                    @Localizer["OptionText"]
                     <span class="text-danger">*</span>
 
                 </label>
@@ -59,7 +59,7 @@
                           class="form-control"
                           rows="3"
                           maxlength="500"
-                          placeholder="Enter option text..."></textarea>
+                          placeholder="@Localizer["EnterOptionTextPlaceholder"]"></textarea>
 
                 <span asp-validation-for="OptionText"
                       class="text-danger">
@@ -79,13 +79,13 @@
                 <label asp-for="IsCorrect"
                        class="form-check-label">
 
-                    Correct Answer
+                    @Localizer["CorrectAnswer"]
 
                 </label>
 
                 <div class="form-text">
 
-                    Check this option if it is the correct answer.
+                    @Localizer["CheckThisOptionIfCorrect"]
 
                 </div>
 
@@ -100,7 +100,7 @@
                         class="btn btn-primary">
 
                     <i class="fas fa-save me-1"></i>
-                    Save Changes
+                    @Localizer["SaveChanges"]
 
                 </button>
 
@@ -110,7 +110,7 @@
                    class="btn btn-secondary">
 
                     <i class="fas fa-arrow-left me-1"></i>
-                    Cancel
+                    @Localizer["Cancel"]
 
                 </a>
 

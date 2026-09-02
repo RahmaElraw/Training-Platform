@@ -32,7 +32,7 @@
         <div class="row align-items-center">
 
             <div class="col">
-                <h5 class="mb-0">All Reviews</h5>
+                <h5 class="mb-0">@Localizer["AllReviews"]</h5>
             </div>
 
             <div class="col-auto">
@@ -44,7 +44,7 @@
                         <input name="query"
                                value="@Model.Query"
                                class="form-control form-control-sm"
-                               placeholder="Search..." />
+                               placeholder="@Localizer["SearchPlaceholder"]" />
 
                         <button class="btn btn-primary btn-sm">
 
@@ -67,7 +67,7 @@
         {
             <div class="alert alert-warning text-center mb-0">
 
-                No reviews found.
+                @Localizer["NoReviewsFound"]
 
             </div>
         }
@@ -81,17 +81,17 @@
 
                         <tr>
 
-                            <th>Course</th>
+                            <th>@Localizer["Course"]</th>
 
-                            <th>User</th>
+                            <th>@Localizer["User"]</th>
 
-                            <th>Rating</th>
+                            <th>@Localizer["Rating"]</th>
 
-                            <th>Comment</th>
+                            <th>@Localizer["Comment"]</th>
 
-                            <th>Date</th>
+                            <th>@Localizer["Date"]</th>
 
-                            <th class="text-center">Actions</th>
+                            <th class="text-center">@Localizer["Actions"]</th>
 
                         </tr>
 
@@ -184,14 +184,14 @@
                                                 class="btn btn-secondary"
                                                 data-bs-dismiss="modal">
 
-                                            Cancel
+                                            @Localizer["Cancel"]
 
                                         </button>
 
                                         <button type="submit"
                                                 class="btn btn-danger">
 
-                                            Delete
+                                            @Localizer["Delete"]
 
                                         </button>
 

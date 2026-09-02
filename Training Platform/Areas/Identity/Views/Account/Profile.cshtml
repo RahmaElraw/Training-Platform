@@ -1,14 +1,14 @@
 ﻿@model Training_Platform.ViewModels.ProfileVM
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = Localizer["Profile"];
     Layout = "_AuthLayout";
 }
 
 <div class="text-center mb-4">
     @if (!string.IsNullOrEmpty(Model.ProfileImage))
     {
-        <img src="~/images/profiles/@Model.ProfileImage" class="profile-avatar-img mx-auto mb-3" alt="Profile picture" />
+        <img src="~/images/profiles/@Model.ProfileImage" class="profile-avatar-img mx-auto mb-3" alt="@Localizer["ProfilePicture"]" />
     }
     else
     {
@@ -26,7 +26,7 @@
             <i class="bi bi-envelope"></i>
         </div>
         <div>
-            <div class="profile-info-label">Email</div>
+            <div class="profile-info-label">@Localizer["Email"]</div>
             <div class="profile-info-value">@Model.Email</div>
         </div>
     </div>
@@ -36,7 +36,7 @@
             <i class="bi bi-telephone"></i>
         </div>
         <div>
-            <div class="profile-info-label">Phone Number</div>
+            <div class="profile-info-label">@Localizer["PhoneNumber"]</div>
             <div class="profile-info-value">@Model.PhoneNumber</div>
         </div>
     </div>
@@ -46,7 +46,7 @@
             <i class="bi bi-geo-alt"></i>
         </div>
         <div>
-            <div class="profile-info-label">Address</div>
+            <div class="profile-info-label">@Localizer["Address"]</div>
             <div class="profile-info-value">@Model.Address</div>
         </div>
     </div>
@@ -54,16 +54,16 @@
 
 <div class="d-grid gap-2 mb-3">
     <a asp-action="EditProfile" class="settings-pill settings-pill-blue">
-        <i class="bi bi-pencil"></i> Edit Profile
+        <i class="bi bi-pencil"></i> @Localizer["EditProfile"]
     </a>
 
     <a asp-action="ChangePassword" class="settings-pill settings-pill-purple">
-        <i class="bi bi-key"></i> Change Password
+        <i class="bi bi-key"></i> @Localizer["ChangePassword"]
     </a>
 
     <form asp-action="Logout" method="post" class="m-0">
         <button type="submit" class="settings-pill settings-pill-red w-100 border-0">
-            <i class="bi bi-box-arrow-right"></i> Logout
+            <i class="bi bi-box-arrow-right"></i> @Localizer["Logout"]
         </button>
     </form>
 </div>

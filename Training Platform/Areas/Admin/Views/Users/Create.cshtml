@@ -3,7 +3,7 @@
 <div class="card">
 
     <div class="card-header">
-        <h5 class="mb-0">Create User</h5>
+        <h5 class="mb-0">@Localizer["CreateUser"]</h5>
     </div>
 
     <div class="card-body">
@@ -30,7 +30,7 @@
             <div class="mb-3">
 
                 <label class="form-label">
-                    Profile Image
+                    @Localizer["ProfileImage"]
                 </label>
 
                 <input type="file"
@@ -50,29 +50,34 @@
                 <input asp-for="ConfirmPassword" type="password" class="form-control" />
             </div>
 
-            <div class="mb-3">
-                @* <label asp-for="SelectedRole" class="form-label"></label> *@
-                <select 
-                @* <select asp-for="SelectedRole" *@
-                        @* asp-items="Model.Roles" *@
-                        class="form-select">
-                    <option value="">Select Role</option>
+            <div class="form-group">
+                <label asp-for="SelectedRole"></label>
+
+                <select asp-for="SelectedRole"
+                        asp-items="Model.Roles"
+                        class="form-control">
+
+                    <option value="">@Localizer["SelectRole"]</option>
+
                 </select>
+
+                <span asp-validation-for="SelectedRole"
+                      class="text-danger"></span>
             </div>
 
             <div class="form-check mb-4">
                 <input asp-for="IsApproved" class="form-check-input" />
                 <label asp-for="IsApproved" class="form-check-label">
-                    Approved
+                    @Localizer["Approved"]
                 </label>
             </div>
 
             <button class="btn btn-primary">
-                Create
+                @Localizer["Create"]
             </button>
 
             <a asp-action="Index" class="btn btn-secondary">
-                Cancel
+                @Localizer["Cancel"]
             </a>
 
         </form>

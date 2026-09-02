@@ -1,29 +1,29 @@
 ﻿@model Training_Platform.ViewModels.QuizResultViewModel
 
-<h2>Quiz Result</h2>
+<h2>@Localizer["QuizResult"]</h2>
 
 <h3>@Model.QuizTitle</h3>
 
 <div>
-    <strong>Score:</strong>
+    <strong>@Localizer["Score"]:</strong>
     @Model.Score%
 </div>
 
 <div>
-    <strong>Status:</strong>
+    <strong>@Localizer["Status"]:</strong>
 
     @if (Model.IsPassed)
     {
-        <span>Passed</span>
+        <span>@Localizer["Passed"]</span>
     }
     else
     {
-        <span>Failed</span>
+        <span>@Localizer["Failed"]</span>
     }
 </div>
 
 <div>
-    <strong>Submitted At:</strong>
+    <strong>@Localizer["SubmittedAt"]:</strong>
     @Model.SubmittedAt
 </div>
 
@@ -31,5 +31,5 @@
 
 <a asp-controller="Quiz"
    asp-action="MyResults">
-    My Results
+    @Localizer["MyResults"]
 </a>

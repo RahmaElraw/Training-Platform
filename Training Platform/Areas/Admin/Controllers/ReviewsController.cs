@@ -4,6 +4,8 @@ using Training_Platform.Models;
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class ReviewsController : Controller
     {
         private readonly IRepository<Review> _reviewRepository;

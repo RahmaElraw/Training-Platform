@@ -1,20 +1,20 @@
 ﻿@model Training_Platform.Models.Certificate
 
 @{
-    ViewData["Title"] = "Certificate Details";
+    ViewData["Title"] = Localizer["CertificateDetails"];
 }
 
 <div class="card">
 
     <div class="card-header">
-        <h5 class="mb-0">Certificate Details</h5>
+        <h5 class="mb-0">@Localizer["CertificateDetails"]</h5>
     </div>
 
     <div class="card-body">
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                Certificate Number
+                @Localizer["CertificateNumber"]
             </div>
 
             <div class="col-md-9">
@@ -26,7 +26,7 @@
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                User
+                @Localizer["User"]
             </div>
 
             <div class="col-md-9">
@@ -38,7 +38,7 @@
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                Email
+                @Localizer["Email"]
             </div>
 
             <div class="col-md-9">
@@ -50,7 +50,7 @@
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                Course
+                @Localizer["Course"]
             </div>
 
             <div class="col-md-9">
@@ -62,7 +62,7 @@
 
         <div class="row mb-4">
             <div class="col-md-3 fw-bold">
-                Issue Date
+                @Localizer["IssueDate"]
             </div>
 
             <div class="col-md-9">
@@ -74,13 +74,13 @@
 
             <a asp-action="Index"
                class="btn btn-secondary">
-                Back
+                @Localizer["Back"]
             </a>
 
             <a asp-action="Delete"
                asp-route-id="@Model.Id"
                class="btn btn-danger">
-                Delete
+                @Localizer["Delete"]
             </a>
 
         </div>

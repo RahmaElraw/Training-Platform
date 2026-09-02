@@ -1,7 +1,7 @@
 ﻿@model TakeQuizViewModel
 
 @{
-    ViewData["Title"] = "Take Quiz";
+    ViewData["Title"] = Localizer["TakeQuiz"];
 }
 
 <div class="container mt-4">
@@ -60,7 +60,7 @@
 
         <button type="submit"
                 class="btn btn-primary">
-            Submit Quiz
+            @Localizer["SubmitQuiz"]
         </button>
 
     </form>

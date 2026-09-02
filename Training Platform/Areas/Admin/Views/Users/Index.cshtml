@@ -1,7 +1,7 @@
 ﻿@model Training_Platform.ViewModels.UserWithRelatedVM
 
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = Localizer["Users"];
 }
 
 <div class="card">
@@ -9,12 +9,12 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            Users Management
+            @Localizer["UsersManagement"]
         </h5>
 
         <a asp-action="Create" class="btn btn-primary">
             <i class="fas fa-plus me-1"></i>
-            Add User
+            @Localizer["AddUser"]
         </a>
 
     </div>
@@ -27,12 +27,12 @@
                 <input asp-for="Query"
                        name="query"
                        class="form-control"
-                       placeholder="Search by Username or Email..." />
+                       placeholder="@Localizer["SearchByUsernameOrEmail"]" />
             </div>
 
             <div class="col-md-2">
                 <button class="btn btn-primary">
-                    Search
+                    @Localizer["Search"]
                 </button>
             </div>
 
@@ -44,12 +44,12 @@
 
                 <tr>
 
-                    <th>User Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Approved</th>
-                    <th>Created</th>
-                    <th width="260">Actions</th>
+                    <th>@Localizer["UserName"]</th>
+                    <th>@Localizer["Email"]</th>
+                    <th>@Localizer["Role"]</th>
+                    <th>@Localizer["Approved"]</th>
+                    <th>@Localizer["Created"]</th>
+                    <th width="260">@Localizer["Actions"]</th>
 
                 </tr>
 
@@ -75,13 +75,13 @@
                                 @if (user.User.IsApproved)
                                 {
                                     <span class="badge bg-success">
-                                        Approved
+                                        @Localizer["Approved"]
                                     </span>
                                 }
                                 else
                                 {
                                     <span class="badge bg-danger">
-                                        Pending
+                                        @Localizer["Pending"]
                                     </span>
                                 }
                             </td>
@@ -93,13 +93,13 @@
                                 <a asp-action="Details"
                                    asp-route-id="@user.User.Id"
                                    class="btn btn-info btn-sm">
-                                    Details
+                                    @Localizer["Details"]
                                 </a>
 
                                 <a asp-action="Edit"
                                    asp-route-id="@user.User.Id"
                                    class="btn btn-warning btn-sm">
-                                    Edit
+                                    @Localizer["Edit"]
                                 </a>
 
                                 <br />
@@ -117,7 +117,7 @@
                                                 class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Are you sure you want to deactivate this user?');">
                                             <i class="fas fa-user-slash"></i>
-                                            Make Deactivate
+                                            @Localizer["MakeDeactivate"]
                                         </button>
                                     }
                                     else
@@ -126,7 +126,7 @@
                                                 class="btn btn-success btn-sm"
                                                 onclick="return confirm('Are you sure you want to activate this user?');">
                                             <i class="fas fa-user-check"></i>
-                                            Make Activate
+                                            @Localizer["MakeActivate"]
                                         </button>
                                     }
 
@@ -141,7 +141,7 @@
                 {
                     <tr>
                         <td colspan="5" class="text-center">
-                            No Users Found.
+                            @Localizer["NoUsersFound"]
                         </td>
                     </tr>
                 }

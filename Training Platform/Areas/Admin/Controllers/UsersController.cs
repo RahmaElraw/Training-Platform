@@ -8,16 +8,16 @@ namespace Training_Platform.Areas.Admin.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository<Course> _courseRepository;
-        //private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
 
         public UsersController(
             UserManager<ApplicationUser> userManager,
-             IRepository<Course> courseRepository)
-            //RoleManager<IdentityRole<int>> roleManager)
+             IRepository<Course> courseRepository,
+            RoleManager<IdentityRole<int>> roleManager)
         {
             _userManager = userManager;
             _courseRepository = courseRepository;
-            //_roleManager = roleManager;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index(
@@ -113,35 +113,31 @@ namespace Training_Platform.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            //var vm = new CreateUserVM
-            //{
-            //    //Roles = await _roleManager.
-            //        .Select(r => new SelectListItem
-            //        {
-            //            Value = r.Name!,
-            //            Text = r.Name
-            //        })
-            //        .ToListAsync()
-            //};
+            var vm = new CreateUserVM
+            {
+                Roles = await _roleManager.Roles
+             .Select(r => new SelectListItem
+             {
+                 Value = r.Name!,
+                 Text = r.Name!
+             })
+             .ToListAsync()
+            };
 
-            //return View(vm);
-            return View();
+
+            return View(vm);
+           
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateUserVM vm)
         {
-            //vm.Roles = await _roleManager.Roles
-            //    .Select(r => new SelectListItem
-            //    {
-            //        Value = r.Name!,
-            //        Text = r.Name
-            //    })
-            //    .ToListAsync();
-
-            if (!ModelState.IsValid)
-                return View(vm);
+            vm.Roles = await _roleManager.Roles
+                .Select(r => new SelectListItem { Value = r.Name!, Text = r.Name })
+                .ToListAsync(); 
+            
+            if (!ModelState.IsValid) return View(vm);
 
             var user = new ApplicationUser
             {
@@ -163,7 +159,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            //await _userManager.AddToRoleAsync(user, vm.SelectedRole);
+            await _userManager.AddToRoleAsync(user, vm.SelectedRole);
 
             TempData["success_notification"] = "User created successfully.";
 

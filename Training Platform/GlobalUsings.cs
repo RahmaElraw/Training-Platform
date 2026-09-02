@@ -10,3 +10,5 @@ global using Training_Platform.ViewModels;
 global using Training_Platform.Services.IServices;
 global using Training_Platform.Services;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Authorization;
+

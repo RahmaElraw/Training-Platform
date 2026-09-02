@@ -16,8 +16,9 @@ namespace Training_Platform.ViewModels
 
         public bool IsApproved { get; set; }
 
-        //public string SelectedRole { get; set; } = string.Empty;
+        public string SelectedRole { get; set; } = string.Empty;
 
-        //public IEnumerable<SelectListItem>? Roles { get; set; }
+        public IEnumerable<SelectListItem>? Roles { get; set; } = new List<SelectListItem>();
+
     }
 }

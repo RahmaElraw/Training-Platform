@@ -3,7 +3,7 @@
 <div class="card">
 
     <div class="card-header">
-        <h5 class="mb-0">Edit Enrollment</h5>
+        <h5 class="mb-0">@Localizer["EditEnrollment"]</h5>
     </div>
 
     <div class="card-body">
@@ -26,7 +26,7 @@
                     <label asp-for="UserId"
                            class="form-label">
 
-                        Trainee
+                        @Localizer["Trainee"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -36,7 +36,7 @@
                             class="form-select">
 
                         <option value="">
-                            -- Select Trainee --
+                            @Localizer["SelectTrainee"]
                         </option>
 
                     </select>
@@ -53,7 +53,7 @@
                     <label asp-for="CourseId"
                            class="form-label">
 
-                        Course
+                        @Localizer["Course"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -63,7 +63,7 @@
                             class="form-select">
 
                         <option value="">
-                            -- Select Course --
+                            @Localizer["SelectCourse"]
                         </option>
 
                     </select>
@@ -82,7 +82,7 @@
                 <label asp-for="EnrollmentDate"
                        class="form-label">
 
-                    Enrollment Date
+                    @Localizer["EnrollmentDate"]
                     <span class="text-danger">*</span>
 
                 </label>
@@ -106,7 +106,7 @@
                 <label asp-for="IsCompleted"
                        class="form-check-label">
 
-                    Completed
+                    @Localizer["Completed"]
 
                 </label>
 
@@ -119,14 +119,14 @@
                         class="btn btn-primary">
 
                     <i class="fas fa-save me-1"></i>
-                    Save Changes
+                    @Localizer["SaveChanges"]
 
                 </button>
 
                 <a asp-action="Index"
                    class="btn btn-secondary">
 
-                    Cancel
+                    @Localizer["Cancel"]
 
                 </a>
 

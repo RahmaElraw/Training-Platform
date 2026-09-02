@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Training_Platform.Utilities.DbInitailzers;
+using Training_Platform.Utilities.DbInitializers;
 
 namespace Training_Platform
 {
@@ -9,8 +13,23 @@ namespace Training_Platform
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            var supportedCultures = new[] { "en", "ar" };
+
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture("en")
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            builder.Services.AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(Training_Platform.SharedResource));
+                });
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -24,6 +43,8 @@ namespace Training_Platform
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
             {
                 options.Password.RequiredLength = 8;
@@ -34,19 +55,33 @@ namespace Training_Platform
              .AddEntityFrameworkStores<ApplicationDbContext>()
              .AddDefaultTokenProviders();
 
-    //        builder.Services
-    //.AddAuthentication()
-    //.AddGoogle(options =>
-    //{
-    //    options.ClientId =
-    //        builder.Configuration["Authentication:Google:ClientId"]!;
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
 
-    //    options.ClientSecret =
-    //        builder.Configuration["Authentication:Google:ClientSecret"]!;
-    //});
+
+
+            //        builder.Services
+            //.AddAuthentication()
+            //.AddGoogle(options =>
+            //{
+            //    options.ClientId =
+            //        builder.Configuration["Authentication:Google:ClientId"]!;
+
+            //    options.ClientSecret =
+            //        builder.Configuration["Authentication:Google:ClientSecret"]!;
+            //});
 
 
             var app = builder.Build();
+            app.UseRequestLocalization(localizationOptions);
+
+            var scope = app.Services.CreateScope();
+            var service = scope.ServiceProvider.GetService<IDbInitializer>();
+            service.Initialize();
 
 
 

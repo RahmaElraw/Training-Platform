@@ -29,5 +29,13 @@ namespace Training_Platform.ViewModels
             public string PhoneNumber { get; set; } = string.Empty;
 
             public IFormFile? ProfileImageFile { get; set; }
+
+
+        public DateTime CreatedAt { get; set; }
+        public IList<string> Roles { get; set; } = new List<string>();
+        public int EnrollmentsCount { get; set; }
+        public int CertificatesCount { get; set; }
+        public int ReviewsCount { get; set; }
+        public int CoursesCreatedCount { get; set; }
     }
 }

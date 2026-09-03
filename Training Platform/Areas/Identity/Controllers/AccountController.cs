@@ -259,11 +259,25 @@ namespace Training_Platform.Areas.Identity.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser is null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.Users
+            .Include(u => u.Enrollments)
+            .Include(u => u.Certificates)
+            .Include(u => u.Reviews)
+            .Include(u => u.CoursesCreated)
+            .FirstOrDefaultAsync(u => u.Id == currentUser.Id);
+
             if (user is null)
             {
                 return NotFound();
             }
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             var profileVM = new ProfileVM
             {
@@ -273,7 +287,13 @@ namespace Training_Platform.Areas.Identity.Controllers
                 LastName = user.LastName!,
                 Address = user.Address!,
                 PhoneNumber = user.PhoneNumber!,
-                ProfileImage = user.ProfileImage
+                ProfileImage = user.ProfileImage,
+                CreatedAt = user.CreatedAt,
+                Roles = roles,
+                EnrollmentsCount = user.Enrollments.Count,
+                CertificatesCount = user.Certificates.Count,
+                ReviewsCount = user.Reviews.Count,
+                CoursesCreatedCount = user.CoursesCreated.Count
             };
 
             return View(profileVM);

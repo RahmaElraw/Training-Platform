@@ -17,8 +17,52 @@
         </div>
     }
     <h2 class="fw-bold mb-0">@Model.FirstName @Model.LastName</h2>
-    <p class="text-muted">@@@Model.Username</p>
+    <p class="text-muted mb-1">@@@Model.Username</p>
+    <p class="text-muted small mb-0">
+        <i class="bi bi-calendar3 me-1"></i>@Localizer["MemberSince"] @Model.CreatedAt.ToString("MMMM yyyy")
+    </p>
 </div>
+
+@if (Model.Roles.Contains("Trainee"))
+{
+    <div class="row g-2 mb-4">
+        <div class="col-4">
+            <div class="profile-stat-card">
+                <div class="profile-stat-number">@Model.EnrollmentsCount</div>
+                <div class="profile-stat-label">@Localizer["Courses"]</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="profile-stat-card">
+                <div class="profile-stat-number">@Model.CertificatesCount</div>
+                <div class="profile-stat-label">@Localizer["Certificates"]</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="profile-stat-card">
+                <div class="profile-stat-number">@Model.ReviewsCount</div>
+                <div class="profile-stat-label">@Localizer["Reviews"]</div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.Roles.Contains("Trainer"))
+{
+    <div class="row g-2 mb-4">
+        <div class="col-6">
+            <div class="profile-stat-card">
+                <div class="profile-stat-number">@Model.CoursesCreatedCount</div>
+                <div class="profile-stat-label">@Localizer["CoursesCreated"]</div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="profile-stat-card">
+                <div class="profile-stat-number">@Model.ReviewsCount</div>
+                <div class="profile-stat-label">@Localizer["Reviews"]</div>
+            </div>
+        </div>
+    </div>
+}
 
 <div class="profile-info-card mb-4">
     <div class="profile-info-row">
@@ -89,6 +133,26 @@
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #eceef3;
+    }
+
+    .profile-stat-card {
+        background: #f8f9fc;
+        border-radius: 12px;
+        padding: 14px 8px;
+        text-align: center;
+    }
+
+    .profile-stat-number {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #4b6cff;
+        line-height: 1.2;
+    }
+
+    .profile-stat-label {
+        font-size: 0.72rem;
+        color: #9aa3b5;
+        margin-top: 2px;
     }
 
     .profile-info-card {

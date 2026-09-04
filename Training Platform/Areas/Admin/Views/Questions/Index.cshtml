@@ -6,14 +6,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            All Questions
+            @Localizer["AllQuestions"]
         </h5>
 
         <a asp-action="Create"
            class="btn btn-primary">
 
             <i class="fas fa-plus me-1"></i>
-            Add Question
+            @Localizer["AddQuestion"]
 
         </a>
 
@@ -31,13 +31,13 @@
                        name="query"
                        value="@Model.Query"
                        class="form-control"
-                       placeholder="Search question or quiz..." />
+                       placeholder="@Localizer["SearchQuestionOrQuizPlaceholder"]" />
 
                 <button type="submit"
                         class="btn btn-primary">
 
                     <i class="fas fa-search me-1"></i>
-                    Search
+                    @Localizer["Search"]
 
                 </button>
 
@@ -47,7 +47,7 @@
                        class="btn btn-secondary">
 
                         <i class="fas fa-times me-1"></i>
-                        Clear
+                        @Localizer["Clear"]
 
                     </a>
                 }
@@ -71,14 +71,14 @@
         @if (!string.IsNullOrWhiteSpace(Model.Query))
         {
             <span>
-                No questions found matching
+                @Localizer["NoQuestionsFoundMatching"]
                 "<strong>@Model.Query</strong>".
             </span>
         }
         else
         {
             <span>
-                No questions found.
+                @Localizer["NoQuestionsFound"].
             </span>
         }
 
@@ -108,10 +108,10 @@ else
 
                             <strong>
                                 <i class="fas fa-book me-1"></i>
-                                Quiz:
+                                @Localizer["Quiz"]:
                             </strong>
 
-                            @(item.Quiz?.Title ?? "No Quiz")
+                            @(item.Quiz?.Title ?? Localizer["NoQuiz"].Value)
 
                         </p>
 
@@ -123,7 +123,7 @@ else
 
                             <span>
                                 <strong>
-                                    Mark:
+                                    @Localizer["Mark"]:
                                 </strong>
 
                                 @item.Mark
@@ -134,7 +134,7 @@ else
                             <span>
 
                                 <strong>
-                                    Type:
+                                    @Localizer["Type"]:
                                 </strong>
 
                                 @if (item.QuestionType ==
@@ -143,7 +143,7 @@ else
                                     <span class="badge bg-primary">
 
                                         <i class="fas fa-list me-1"></i>
-                                        Multiple Choice
+                                        @Localizer["MultipleChoice"]
 
                                     </span>
                                 }
@@ -153,7 +153,7 @@ else
                                     <span class="badge bg-info">
 
                                         <i class="fas fa-check-circle me-1"></i>
-                                        True / False
+                                        @Localizer["TrueFalse"]
 
                                     </span>
                                 }
@@ -171,7 +171,7 @@ else
                             <span>
 
                                 <strong>
-                                    Options:
+                                    @Localizer["Options"]:
                                 </strong>
 
                                 <span class="badge bg-secondary">
@@ -198,7 +198,7 @@ else
                                class="btn btn-info text-white">
 
                                 <i class="fas fa-eye me-1"></i>
-                                Details
+                                @Localizer["Details"]
 
                             </a>
 
@@ -210,7 +210,7 @@ else
                                class="btn btn-primary">
 
                                 <i class="fas fa-edit me-1"></i>
-                                Edit
+                                @Localizer["Edit"]
 
                             </a>
 
@@ -228,7 +228,7 @@ else
                                         onclick="return confirm('Are you sure you want to delete this question?');">
 
                                     <i class="fas fa-trash-alt me-1"></i>
-                                    Delete
+                                    @Localizer["Delete"]
 
                                 </button>
 
@@ -250,7 +250,7 @@ else
 <!-- Pagination -->
 @if (Model.TotalPages > 1)
 {
-    <nav aria-label="Questions pagination">
+    <nav aria-label="@Localizer["QuestionsPagination"]">
 
         <ul class="pagination justify-content-center">
 
@@ -267,7 +267,7 @@ else
                        asp-route-query="@Model.Query">
 
                         <i class="fas fa-chevron-left"></i>
-                        Previous
+                        @Localizer["Previous"]
 
                     </a>
                 }
@@ -276,7 +276,7 @@ else
                     <span class="page-link">
 
                         <i class="fas fa-chevron-left"></i>
-                        Previous
+                        @Localizer["Previous"]
 
                     </span>
                 }
@@ -315,7 +315,7 @@ else
                        asp-route-page="@(Model.CurrentPage + 1)"
                        asp-route-query="@Model.Query">
 
-                        Next
+                        @Localizer["Next"]
                         <i class="fas fa-chevron-right"></i>
 
                     </a>
@@ -324,7 +324,7 @@ else
                 {
                     <span class="page-link">
 
-                        Next
+                        @Localizer["Next"]
                         <i class="fas fa-chevron-right"></i>
                     </span>
                 }

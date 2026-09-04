@@ -1,6 +1,11 @@
-﻿namespace Training_Platform.Areas.Admin.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class CertificatesController : Controller
     {
         private readonly IRepository<Certificate> _certificateRepository;

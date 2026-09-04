@@ -1,12 +1,12 @@
-﻿@model Training_Platform.ViewModels.CreateUserVM
+@model Training_Platform.ViewModels.CreateUserVM
 
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = Localizer["CreateUser"];
 }
 
 <div class="card shadow-sm">
     <div class="card-header bg-white py-3">
-        <h5 class="mb-0">Create User</h5>
+        <h5 class="mb-0">@Localizer["CreateUser"]</h5>
     </div>
 
     <div class="card-body">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Profile Image</label>
+                <label class="form-label">@Localizer["ProfileImage"]</label>
                 <input type="file"
                        name="ProfileImageFile"
                        class="form-control"
@@ -53,11 +53,11 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="SelectedRole" class="form-label">Role</label>
+                <label asp-for="SelectedRole" class="form-label"></label>
                 <select asp-for="SelectedRole"
                         asp-items="Model.Roles"
                         class="form-select">
-                    <option value="">Select Role</option>
+                    <option value="">@Localizer["SelectRole"]</option>
                 </select>
                 <span asp-validation-for="SelectedRole" class="text-danger"></span>
             </div>
@@ -65,15 +65,15 @@
             <div class="form-check mb-4">
                 <input asp-for="IsApproved" class="form-check-input" />
                 <label asp-for="IsApproved" class="form-check-label">
-                    Approved
+                    @Localizer["Approved"]
                 </label>
             </div>
 
             <button type="submit" class="btn btn-primary">
-                Create
+                @Localizer["Create"]
             </button>
             <a asp-action="Index" class="btn btn-secondary ms-1">
-                Cancel
+                @Localizer["Cancel"]
             </a>
 
         </form>

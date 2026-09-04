@@ -6,6 +6,8 @@ using Training_Platform.Service.IService;
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class QuizController : Controller
     {
         private readonly IQuizService _quizService;

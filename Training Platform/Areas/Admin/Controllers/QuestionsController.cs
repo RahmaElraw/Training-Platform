@@ -35,7 +35,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 includes:
                 [
                     q => q.Quiz,
-                    q => q.QuestionOptions
+            q => q.QuestionOptions
                 ],
                 tracked: false);
 
@@ -73,9 +73,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                     .Take(PageSize),
 
                 CurrentPage = page,
-
                 TotalPages = totalPages,
-
                 Query = query
             };
 
@@ -274,7 +272,7 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (questionResult <= 0)
             {
-                TempData["Error"] =
+                TempData["error"] =
                     "Something went wrong while creating the question.";
 
                 return await ReturnCreateView(model);
@@ -303,7 +301,7 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (optionResult <= 0)
             {
-                TempData["Error"] =
+                TempData["error"] =
                     "Question was created, but something went wrong while saving the options.";
 
                 return RedirectToAction(
@@ -312,7 +310,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             }
 
 
-            TempData["Success"] =
+            TempData["success"] =
                 "Question and options created successfully.";
 
 
@@ -377,15 +375,11 @@ namespace Training_Platform.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(QuestionVM model)
         {
-            // Make sure the collection is never null
             model.QuestionOptions ??= new List<QuestionOptionVM>();
-
 
             if (!ModelState.IsValid)
             {
-                await LoadQuestionOptions(model);
                 await LoadQuestionData(model);
-
                 return View(model);
             }
 
@@ -408,143 +402,142 @@ namespace Training_Platform.Areas.Admin.Controllers
                     nameof(model.QuizId),
                     "Selected quiz does not exist.");
 
-                await LoadQuestionOptions(model);
                 await LoadQuestionData(model);
-
                 return View(model);
             }
 
-            var options =
-                question.QuestionOptions?.ToList()
-                ?? new List<QuestionOption>();
+            var submittedOptions = model.QuestionOptions
+                .Where(o => !string.IsNullOrWhiteSpace(o.OptionText))
+                .ToList();
 
-            if (!options.Any())
+            if (!submittedOptions.Any())
             {
                 ModelState.AddModelError(
-                    nameof(model.QuestionType),
-                    "Question must have at least one option.");
+                    nameof(model.QuestionOptions),
+                    "Please add at least one option.");
 
-                await LoadQuestionOptions(model);
                 await LoadQuestionData(model);
-
                 return View(model);
             }
-            bool duplicateOptions =
-                options
-                    .GroupBy(
-                        o => o.OptionText.Trim(),
-                        StringComparer.OrdinalIgnoreCase)
-                    .Any(g => g.Count() > 1);
+
+            foreach (var option in submittedOptions)
+            {
+                option.OptionText = option.OptionText.Trim();
+            }
+
+            bool duplicateOptions = submittedOptions
+                .GroupBy(
+                    o => o.OptionText,
+                    StringComparer.OrdinalIgnoreCase)
+                .Any(g => g.Count() > 1);
 
             if (duplicateOptions)
             {
                 ModelState.AddModelError(
-                    nameof(model.QuestionType),
+                    nameof(model.QuestionOptions),
                     "Question options cannot be duplicated.");
 
-                await LoadQuestionOptions(model);
                 await LoadQuestionData(model);
-
                 return View(model);
             }
+
             int correctAnswers =
-                options.Count(o => o.IsCorrect);
+                submittedOptions.Count(o => o.IsCorrect);
+
+            if (correctAnswers == 0)
+            {
+                ModelState.AddModelError(
+                    nameof(model.QuestionOptions),
+                    "Please select one correct answer.");
+
+                await LoadQuestionData(model);
+                return View(model);
+            }
+            if (model.QuestionType == QuestionType.MultipleChoice)
+            {
+                if (submittedOptions.Count < 2)
+                {
+                    ModelState.AddModelError(
+                        nameof(model.QuestionOptions),
+                        "Multiple choice questions must have at least two options.");
+
+                    await LoadQuestionData(model);
+                    return View(model);
+                }
+
+                if (correctAnswers != 1)
+                {
+                    ModelState.AddModelError(
+                        nameof(model.QuestionOptions),
+                        "Multiple choice questions must have exactly one correct answer.");
+
+                    await LoadQuestionData(model);
+                    return View(model);
+                }
+            }
 
             if (model.QuestionType == QuestionType.TrueFalse)
             {
-                if (options.Count != 2)
+                if (submittedOptions.Count != 2)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionType),
+                        nameof(model.QuestionOptions),
                         "True/False questions must have exactly two options.");
 
-                    await LoadQuestionOptions(model);
                     await LoadQuestionData(model);
-
                     return View(model);
                 }
-                bool validTrueFalse =
-                    options.All(o =>
-                        o.OptionText.Trim().Equals(
-                            "True",
-                            StringComparison.OrdinalIgnoreCase)
-                        ||
-                        o.OptionText.Trim().Equals(
-                            "False",
-                            StringComparison.OrdinalIgnoreCase));
+
+                bool validTrueFalse = submittedOptions.All(o =>
+                    o.OptionText.Equals(
+                        "True",
+                        StringComparison.OrdinalIgnoreCase)
+                    ||
+                    o.OptionText.Equals(
+                        "False",
+                        StringComparison.OrdinalIgnoreCase));
 
                 if (!validTrueFalse)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionType),
+                        nameof(model.QuestionOptions),
                         "True/False questions can only contain True and False options.");
 
-                    await LoadQuestionOptions(model);
                     await LoadQuestionData(model);
-
                     return View(model);
                 }
-                bool hasTrue =
-                    options.Any(o =>
-                        o.OptionText.Trim().Equals(
-                            "True",
-                            StringComparison.OrdinalIgnoreCase));
 
-                bool hasFalse =
-                    options.Any(o =>
-                        o.OptionText.Trim().Equals(
-                            "False",
-                            StringComparison.OrdinalIgnoreCase));
+                bool hasTrue = submittedOptions.Any(o =>
+                    o.OptionText.Equals(
+                        "True",
+                        StringComparison.OrdinalIgnoreCase));
 
+                bool hasFalse = submittedOptions.Any(o =>
+                    o.OptionText.Equals(
+                        "False",
+                        StringComparison.OrdinalIgnoreCase));
 
                 if (!hasTrue || !hasFalse)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionType),
+                        nameof(model.QuestionOptions),
                         "True/False questions must contain both True and False.");
 
-                    await LoadQuestionOptions(model);
                     await LoadQuestionData(model);
-
                     return View(model);
                 }
+
                 if (correctAnswers != 1)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionType),
+                        nameof(model.QuestionOptions),
                         "True/False questions must have exactly one correct answer.");
 
-                    await LoadQuestionOptions(model);
                     await LoadQuestionData(model);
-
                     return View(model);
                 }
             }
-            if (model.QuestionType == QuestionType.MultipleChoice)
-            {
-                if (options.Count < 2)
-                {
-                    ModelState.AddModelError(
-                        nameof(model.QuestionType),
-                        "Multiple choice questions must have at least two options.");
 
-                    await LoadQuestionOptions(model);
-                    await LoadQuestionData(model);
-
-                    return View(model);
-                }
-                if (correctAnswers != 1)
-                {
-                    ModelState.AddModelError(
-                        nameof(model.QuestionType),
-                        "Multiple choice questions must have exactly one correct answer.");
-
-                    await LoadQuestionOptions(model);
-                    await LoadQuestionData(model);
-
-                    return View(model);
-                }
-            }
             question.QuestionText =
                 model.QuestionText.Trim();
 
@@ -557,24 +550,48 @@ namespace Training_Platform.Areas.Admin.Controllers
             question.QuizId =
                 model.QuizId;
 
-
             _questionRepository.Update(question);
 
-            int result =
-                await _questionRepository.CommitAsync();
+            var oldOptions =
+                question.QuestionOptions?.ToList()
+                ?? new List<QuestionOption>();
 
+            foreach (var oldOption in oldOptions)
+            {
+                _questionOptionRepository.Delete(oldOption);
+            }
+
+            foreach (var submittedOption in submittedOptions)
+            {
+                var newOption = new QuestionOption
+                {
+                    OptionText =
+                        submittedOption.OptionText.Trim(),
+
+                    IsCorrect =
+                        submittedOption.IsCorrect,
+
+                    QuestionId =
+                        question.Id
+                };
+
+                await _questionOptionRepository.AddAsync(newOption);
+            }
+
+            int result =
+                await _questionOptionRepository.CommitAsync();
 
             if (result > 0)
             {
-                TempData["Success"] =
-                    "Question updated successfully.";
+                TempData["success"] =
+                    "Question and options updated successfully.";
 
                 return RedirectToAction(nameof(Index));
             }
-            TempData["Error"] =
+
+            TempData["error"] =
                 "Something went wrong while updating the question.";
 
-            await LoadQuestionOptions(model);
             await LoadQuestionData(model);
 
             return View(model);

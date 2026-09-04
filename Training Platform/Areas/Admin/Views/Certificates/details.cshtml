@@ -1,90 +1,100 @@
-﻿@model Training_Platform.Models.Certificate
+@model Training_Platform.ViewModels.CertificateVM
 
 @{
     ViewData["Title"] = Localizer["CertificateDetails"];
 }
 
-<div class="card">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark">
+                    <i class="fas fa-certificate text-primary me-2"></i>@Localizer["CertificateDetails"]
+                </h5>
+                @if (!string.IsNullOrWhiteSpace(Model.CertificateUrl))
+                {
+                    <span class="badge bg-success-subtle text-success border border-success px-3 py-2">
+                        <i class="fas fa-check-circle me-1"></i> @Localizer["Active"]
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-3 py-2">
+                        <i class="fas fa-clock me-1"></i> @Localizer["PendingLink"]
+                    </span>
+                }
+            </div>
 
-    <div class="card-header">
-        <h5 class="mb-0">@Localizer["CertificateDetails"]</h5>
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["CertificateNumber"]</div>
+                    <div class="col-md-8 fw-bold text-primary">@Model.CertificateNumber</div>
+                </div>
+
+                <hr class="text-muted opacity-25" />
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["TraineeName"]</div>
+                    <div class="col-md-8">@Model.UserName</div>
+                </div>
+
+                <hr class="text-muted opacity-25" />
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["TraineeEmail"]</div>
+                    <div class="col-md-8">@Model.UserEmail</div>
+                </div>
+
+                <hr class="text-muted opacity-25" />
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["CourseTitle"]</div>
+                    <div class="col-md-8 fw-semibold">@Model.CourseTitle</div>
+                </div>
+
+                <hr class="text-muted opacity-25" />
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["IssueDate"]</div>
+                    <div class="col-md-8">@Model.IssueDate.ToString("dd MMMM yyyy")</div>
+                </div>
+
+                <hr class="text-muted opacity-25" />
+
+                <div class="row mb-4">
+                    <div class="col-md-4 text-muted fw-semibold">@Localizer["GoogleDriveLink"]</div>
+                    <div class="col-md-8">
+                        @if (!string.IsNullOrWhiteSpace(Model.CertificateUrl))
+                        {
+                            <a href="@Model.CertificateUrl"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-google-drive me-1"></i> @Localizer["ViewExternalCertificate"]
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted fst-italic">
+                                @Localizer["NoCertificateLinkAssigned"]
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> @Localizer["BackToList"]
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@Model.Id"
+                       class="btn @(string.IsNullOrWhiteSpace(Model.CertificateUrl) ? "btn-success" : "btn-warning")">
+                        <i class="fas fa-edit me-1"></i>
+                        @(string.IsNullOrWhiteSpace(Model.CertificateUrl) ? Localizer["AddCertificateLink"] : Localizer["EditCertificateLink"])
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="card-body">
-
-        <div class="row mb-3">
-            <div class="col-md-3 fw-bold">
-                @Localizer["CertificateNumber"]
-            </div>
-
-            <div class="col-md-9">
-                @Model.CertificateNumber
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row mb-3">
-            <div class="col-md-3 fw-bold">
-                @Localizer["User"]
-            </div>
-
-            <div class="col-md-9">
-                @Model.User.UserName
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row mb-3">
-            <div class="col-md-3 fw-bold">
-                @Localizer["Email"]
-            </div>
-
-            <div class="col-md-9">
-                @Model.User.Email
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row mb-3">
-            <div class="col-md-3 fw-bold">
-                @Localizer["Course"]
-            </div>
-
-            <div class="col-md-9">
-                @Model.Course.Title
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row mb-4">
-            <div class="col-md-3 fw-bold">
-                @Localizer["IssueDate"]
-            </div>
-
-            <div class="col-md-9">
-                @Model.IssueDate.ToString("dd MMM yyyy")
-            </div>
-        </div>
-
-        <div class="d-flex gap-2">
-
-            <a asp-action="Index"
-               class="btn btn-secondary">
-                @Localizer["Back"]
-            </a>
-
-            <a asp-action="Delete"
-               asp-route-id="@Model.Id"
-               class="btn btn-danger">
-                @Localizer["Delete"]
-            </a>
-
-        </div>
-
-    </div>
-
 </div>

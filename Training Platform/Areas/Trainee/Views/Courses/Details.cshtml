@@ -1,0 +1,307 @@
+﻿@model Training_Platform.ViewModels.Trainee.CourseDetailsVM
+
+@{
+    ViewData["Title"] = Model.Course.Title;
+}
+
+<div class="container-fluid py-3">
+
+    <div class="row g-4">
+
+        <!-- Course Information -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+
+                <!-- Thumbnail -->
+                @if (!string.IsNullOrWhiteSpace(Model.Course.Thumbnail))
+                {
+                    <img src="@Model.Course.Thumbnail"
+                         class="card-img-top"
+                         alt="@Model.Course.Title"
+                         style="max-height:350px; object-fit:cover;" />
+                }
+
+
+                <div class="card-body">
+
+
+                    <!-- Level + Category -->
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary me-1">
+                            @Model.Course.Level
+                        </span>
+
+                        @if (Model.Course.Category != null)
+                        {
+                            <span class="badge bg-secondary">
+
+                                <i class="fas fa-folder me-1"></i>
+
+                                @Model.Course.Category.Name
+
+                            </span>
+                        }
+
+                    </div>
+
+
+                    <!-- Title -->
+                    <h2 class="mb-3">
+                        @Model.Course.Title
+                    </h2>
+
+
+                    <!-- Description -->
+                    <p class="text-700">
+                        @Model.Course.Description
+                    </p>
+
+
+                    <hr />
+
+
+                    <!-- Course Stats -->
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+
+                            <small class="text-600 d-block">
+                                Category
+                            </small>
+
+                            <strong>
+
+                                @if (Model.Course.Category != null)
+                                {
+                                    @Model.Course.Category.Name
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+
+                            </strong>
+
+                        </div>
+                        <div class="col-md-4 mb-3">
+
+                            <small class="text-600 d-block">
+                                Duration
+                            </small>
+
+                            <strong>
+                                @Model.Course.DurationInHours Hours
+                            </strong>
+
+                        </div>
+                        <div class="col-md-4 mb-3">
+
+                            <small class="text-600 d-block">
+                                Lessons
+                            </small>
+
+                            <strong>
+                                @Model.TotalLessons
+                            </strong>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-600 d-block">Rating</small>
+                        <div class="d-flex align-items-center text-warning">
+                            <i class="fas fa-star me-1"></i>
+                            <strong class="text-dark me-1">@Model.AverageRating / 5.0</strong>
+                            <span class="text-600 fs--1">(@Model.TotalReviews reviews)</span>
+                        </div>
+                    </div>
+
+                    <!-- Enrolled -->
+                    @if (Model.IsEnrolled)
+                    {
+                        <div class="alert alert-success mt-3">
+
+                            <i class="fas fa-check-circle me-2"></i>
+
+                            You are enrolled in this course.
+
+                        </div>
+
+                        <!-- Progress -->
+                        @if (Model.TotalLessons > 0)
+                        {
+                            <div class="mb-4">
+
+                                @{
+                                    var progress =
+                                        Model.TotalLessons == 0
+                                            ? 0
+                                            : (Model.CompletedLessons * 100)
+                                              / Model.TotalLessons;
+                                }
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>
+                                        Course Progress
+                                    </span>
+
+                                    <strong>
+                                        @progress%
+                                    </strong>
+                                </div>
+
+                                <div class="progress"
+                                     style="height:10px;">
+
+                                    <div class="progress-bar"
+                                         role="progressbar"
+                                         style="width:@progress%"
+                                         aria-valuenow="@progress"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+
+                                <small class="text-600">
+                                    @Model.CompletedLessons
+                                    of
+                                    @Model.TotalLessons
+                                    lessons completed.
+                                </small>
+                            </div>
+                        }
+
+                        <!-- Learning Button -->
+                        @if (Model.IsCompleted)
+                        {
+                            <div class="alert alert-primary">
+
+                                <i class="fas fa-graduation-cap me-2"></i>
+
+                                You have completed this course.
+                            </div>
+                        }
+                        <a asp-area="Trainee"
+                           asp-controller="Lessons"
+                           asp-action="Index"
+                           asp-route-courseId="@Model.Course.Id"
+                           class="btn btn-primary">
+
+                            <i class="fas fa-play me-1"></i>
+                            Continue Learning
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Not Enrolled -->
+
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Enroll in this course to access its lessons.
+                        </div>
+
+                        <form asp-action="Enroll"
+                              method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden"
+                                   name="courseId"
+                                   value="@Model.Course.Id" />
+
+                            <button type="submit"
+                                    class="btn btn-success">
+                                <i class="fas fa-user-plus me-1"></i>
+                                Enroll Now
+                            </button>
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Summary -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        Course Information
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Trainer -->
+                    <div class="mb-3">
+                        <small class="text-600 d-block">
+                            Trainer
+                        </small>
+
+                        <strong>
+                            @if (Model.Course.Trainer != null)
+                            {
+                                @Model.Course.Trainer.UserName
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </strong>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <small class="text-600 d-block">
+                            Category
+                        </small>
+
+                        <strong>
+                            @if (Model.Course.Category != null)
+                            {
+                                @Model.Course.Category.Name
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </strong>
+                    </div>
+
+                    <!-- Level -->
+                    <div class="mb-3">
+                        <small class="text-600 d-block">
+                            Level
+                        </small>
+
+                        <strong>
+                            @Model.Course.Level
+                        </strong>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="mb-3">
+                        <small class="text-600 d-block">
+                            Duration
+                        </small>
+
+                        <strong>
+                            @Model.Course.DurationInHours Hours
+                        </strong>
+                    </div>
+
+                    <!-- Lessons -->
+                    <div>
+                        <small class="text-600 d-block">
+                            Lessons
+                        </small>
+
+                        <strong>
+                            @Model.TotalLessons
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,45 +1,61 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace Training_Platform.Areas.Admin.Controllers
+﻿namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        //private readonly RoleManager<IdentityRole<int>> _roleManager;
 
-        public UsersController(
-            UserManager<ApplicationUser> userManager)
-            //RoleManager<IdentityRole<int>> roleManager)
+        public UsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            //_roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index(
-    int page = 1,
-    string? query = null,
-    CancellationToken cancellationToken = default)
+            int page = 1,
+            string? query = null,
+            CancellationToken cancellationToken = default)
         {
+            const int pageSize = 6;
+
             var users = await _userManager.Users
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                query = query.Trim().ToLower();
+                query = query.Trim();
 
-                users = users.Where(u =>
-                    u.UserName!.ToLower().Contains(query) ||
-                    u.Email!.ToLower().Contains(query))
+                users = users
+                    .Where(u =>
+                        (!string.IsNullOrEmpty(u.UserName) &&
+                         u.UserName.Contains(
+                             query,
+                             StringComparison.OrdinalIgnoreCase))
+                        ||
+                        (!string.IsNullOrEmpty(u.Email) &&
+                         u.Email.Contains(
+                             query,
+                             StringComparison.OrdinalIgnoreCase)))
                     .ToList();
             }
-            var users1 = await _userManager.Users.ToListAsync();
+
+            if (page < 1)
+                page = 1;
+
+            int totalPages = (int)Math.Ceiling(
+                users.Count / (double)pageSize);
+
+            if (totalPages > 0 && page > totalPages)
+                page = totalPages;
+
+            var pagedUsers = users
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
             var userRoles = new List<UserWithRoleVM>();
 
-            foreach (var user in users)
+            foreach (var user in pagedUsers)
             {
                 var roles = await _userManager.GetRolesAsync(user);
 
@@ -49,13 +65,6 @@ namespace Training_Platform.Areas.Admin.Controllers
                     Role = roles.FirstOrDefault() ?? "No Role"
                 });
             }
-
-            int totalPages = (int)Math.Ceiling(users.Count / 6.0);
-
-            users = users
-                .Skip((page - 1) * 6)
-                .Take(6)
-                .ToList();
 
             var vm = new UserWithRelatedVM
             {
@@ -81,8 +90,8 @@ namespace Training_Platform.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(
-        int id,
-        CancellationToken cancellationToken = default)
+            int id,
+            CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
 
@@ -93,30 +102,21 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (!result.Succeeded)
             {
-                TempData["error_notification"] = "Failed to delete user.";
+                TempData["error_notification"] =
+                    "Failed to delete user.";
+
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData["success_notification"] = "User deleted successfully.";
+            TempData["success_notification"] =
+                "User deleted successfully.";
 
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            //var vm = new CreateUserVM
-            //{
-            //    //Roles = await _roleManager.
-            //        .Select(r => new SelectListItem
-            //        {
-            //            Value = r.Name!,
-            //            Text = r.Name
-            //        })
-            //        .ToListAsync()
-            //};
-
-            //return View(vm);
             return View();
         }
 
@@ -124,14 +124,6 @@ namespace Training_Platform.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateUserVM vm)
         {
-            //vm.Roles = await _roleManager.Roles
-            //    .Select(r => new SelectListItem
-            //    {
-            //        Value = r.Name!,
-            //        Text = r.Name
-            //    })
-            //    .ToListAsync();
-
             if (!ModelState.IsValid)
                 return View(vm);
 
@@ -145,19 +137,24 @@ namespace Training_Platform.Areas.Admin.Controllers
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(user, vm.Password);
+            var result = await _userManager.CreateAsync(
+                user,
+                vm.Password);
 
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                    ModelState.AddModelError("", error.Description);
+                {
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
+                }
 
                 return View(vm);
             }
 
-            //await _userManager.AddToRoleAsync(user, vm.SelectedRole);
-
-            TempData["success_notification"] = "User created successfully.";
+            TempData["success_notification"] =
+                "User created successfully.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -190,7 +187,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            var user = await _userManager.FindByIdAsync(vm.Id.ToString());
+            var user = await _userManager.FindByIdAsync(
+                vm.Id.ToString());
 
             if (user is null)
                 return NotFound();
@@ -206,32 +204,41 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                    ModelState.AddModelError("", error.Description);
+                {
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
+                }
 
                 return View(vm);
             }
-
             if (!string.IsNullOrWhiteSpace(vm.Password))
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var token =
+                    await _userManager.GeneratePasswordResetTokenAsync(
+                        user);
 
-                var passwordResult = await _userManager.ResetPasswordAsync(
-                    user,
-                    token,
-                    vm.Password);
+                var passwordResult =
+                    await _userManager.ResetPasswordAsync(
+                        user,
+                        token,
+                        vm.Password);
 
                 if (!passwordResult.Succeeded)
                 {
                     foreach (var error in passwordResult.Errors)
                     {
-                        ModelState.AddModelError("", error.Description);
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
                     }
 
                     return View(vm);
                 }
             }
 
-            TempData["success_notification"] = "User updated successfully.";
+            TempData["success_notification"] =
+                "User updated successfully.";
 
             return RedirectToAction(nameof(Index));
         }

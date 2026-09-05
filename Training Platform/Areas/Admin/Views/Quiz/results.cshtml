@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<QuizResultViewModel>
 
 @{
-    ViewData["Title"] = "My Quiz Results";
+    ViewData["Title"] = Localizer["MyQuizResults"];
 }
 
 <div class="container mt-4">
 
     <h2 class="mb-4">
-        My Quiz Results
+        @Localizer["MyQuizResults"]
     </h2>
 
     @if (!Model.Any())
     {
         <div class="alert alert-info">
-            You haven't completed any quizzes yet.
+            @Localizer["NoQuizzesYet"]
         </div>
     }
     else
@@ -24,10 +24,10 @@
 
                 <thead>
                     <tr>
-                        <th>Quiz</th>
-                        <th>Score</th>
-                        <th>Status</th>
-                        <th>Submitted At</th>
+                        <th>@Localizer["Quiz"]</th>
+                        <th>@Localizer["Score"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["SubmittedAt"]</th>
                     </tr>
                 </thead>
 
@@ -48,13 +48,13 @@
                                 @if (result.IsPassed)
                                 {
                                     <span class="badge bg-success">
-                                        Passed
+                                        @Localizer["Passed"]
                                     </span>
                                 }
                                 else
                                 {
                                     <span class="badge bg-danger">
-                                        Failed
+                                        @Localizer["Failed"]
                                     </span>
                                 }
                             </td>

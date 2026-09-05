@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1988/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="metadata"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" /></xsd:sequence><xsd:attribute name="name" use="required" type="xsd:string" /><xsd:attribute name="type" type="xsd:string" /><xsd:attribute name="mimetype" type="xsd:string" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="assembly"><xsd:complexType><xsd:attribute name="alias" type="xsd:string" /><xsd:attribute name="name" type="xsd:string" /></xsd:complexType></xsd:element>
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /><xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" /><xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CourseDetails" xml:space="preserve"><value>تفاصيل الكورس</value></data>
+  <data name="Published" xml:space="preserve"><value>منشور</value></data>
+  <data name="Draft" xml:space="preserve"><value>مسودة</value></data>
+  <data name="Category" xml:space="preserve"><value>التصنيف</value></data>
+  <data name="Trainer" xml:space="preserve"><value>المدرب</value></data>
+  <data name="Level" xml:space="preserve"><value>المستوى</value></data>
+  <data name="Beginner" xml:space="preserve"><value>مبتدئ</value></data>
+  <data name="Intermediate" xml:space="preserve"><value>متوسط</value></data>
+  <data name="Advanced" xml:space="preserve"><value>متقدم</value></data>
+  <data name="Duration" xml:space="preserve"><value>المدة</value></data>
+  <data name="Hours" xml:space="preserve"><value>ساعات</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="CourseId" xml:space="preserve"><value>رقم الكورس</value></data>
+  <data name="Lessons" xml:space="preserve"><value>الدروس</value></data>
+  <data name="Quizzes" xml:space="preserve"><value>الاختبارات</value></data>
+  <data name="Enrollments" xml:space="preserve"><value>التسجيلات</value></data>
+  <data name="Reviews" xml:space="preserve"><value>التقييمات</value></data>
+  <data name="Back" xml:space="preserve"><value>رجوع</value></data>
+  <data name="EditCourse" xml:space="preserve"><value>تعديل الكورس</value></data>
+</root>

@@ -1,7 +1,7 @@
-﻿@model Training_Platform.ViewModels.UserWithRelatedVM
+@model Training_Platform.ViewModels.UserWithRelatedVM
 
 @{
-    ViewData["Title"] = "Users Management";
+    ViewData["Title"] = Localizer["UsersManagement"];
 }
 
 <!-- Alert Notifications -->
@@ -26,9 +26,9 @@
 
     <!-- Card Header -->
     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Users Management</h5>
+        <h5 class="mb-0">@Localizer["UsersManagement"]</h5>
         <a asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add User
+            <i class="fas fa-plus me-1"></i> @Localizer["AddUser"]
         </a>
     </div>
 
@@ -41,12 +41,12 @@
                        name="query"
                        value="@Model.Query"
                        class="form-control"
-                       placeholder="Search by Username or Email..." />
+                       placeholder="@Localizer["SearchByUsernameOrEmail"]" />
             </div>
 
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search me-1"></i> Search
+                    <i class="fas fa-search me-1"></i> @Localizer["Search"]
                 </button>
             </div>
 
@@ -65,12 +65,12 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th class="text-center" style="width: 180px;">Actions</th>
+                        <th>@Localizer["UserName"]</th>
+                        <th>@Localizer["Email"]</th>
+                        <th>@Localizer["Role"]</th>
+                        <th>@Localizer["Approved"]</th>
+                        <th>@Localizer["Created"]</th>
+                        <th class="text-center" style="width: 180px;">@Localizer["Actions"]</th>
                     </tr>
                 </thead>
 
@@ -121,13 +121,13 @@
                                     @if (item.User.IsApproved)
                                     {
                                         <span class="badge bg-success">
-                                            <i class="fas fa-check me-1"></i> Approved
+                                            <i class="fas fa-check me-1"></i> @Localizer["Approved"]
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="badge bg-warning text-dark">
-                                            <i class="fas fa-clock me-1"></i> Pending
+                                            <i class="fas fa-clock me-1"></i> @Localizer["Pending"]
                                         </span>
                                     }
                                 </td>
@@ -143,14 +143,14 @@
                                         <a asp-action="Details"
                                            asp-route-id="@item.User.Id"
                                            class="btn btn-info btn-sm text-white"
-                                           title="Details">
+                                           title="@Localizer["Details"]">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
                                         <a asp-action="Edit"
                                            asp-route-id="@item.User.Id"
                                            class="btn btn-warning btn-sm"
-                                           title="Edit">
+                                           title="@Localizer["Edit"]">
                                             <i class="fas fa-edit"></i>
                                         </a>
 
@@ -163,7 +163,7 @@
                                             {
                                                 <button type="submit"
                                                         class="btn btn-danger btn-sm"
-                                                        title="Deactivate"
+                                                        title="@Localizer["MakeDeactivate"]"
                                                         onclick="return confirm('Are you sure you want to deactivate this user?');">
                                                     <i class="fas fa-user-slash"></i>
                                                 </button>
@@ -172,7 +172,7 @@
                                             {
                                                 <button type="submit"
                                                         class="btn btn-success btn-sm"
-                                                        title="Activate"
+                                                        title="@Localizer["MakeActivate"]"
                                                         onclick="return confirm('Are you sure you want to activate this user?');">
                                                     <i class="fas fa-user-check"></i>
                                                 </button>
@@ -189,7 +189,7 @@
                             <td colspan="6" class="text-center py-4">
                                 <div class="text-muted">
                                     <i class="fas fa-users fa-2x mb-2 d-block"></i>
-                                    <div>No Users Found.</div>
+                                    <div>@Localizer["NoUsersFound"]</div>
                                 </div>
                             </td>
                         </tr>

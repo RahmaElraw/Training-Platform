@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = Localizer["AccessDenied"];
+    Layout = "_AuthLayout";
+}
+
+<div class="text-center">
+    <div class="access-denied-icon mx-auto mb-3">
+        <i class="bi bi-shield-lock"></i>
+    </div>
+
+    <h2 class="fw-bold mb-2">@Localizer["AccessDenied"]</h2>
+    <p class="text-muted mb-4">@Localizer["NoPermissionToViewPage"]</p>
+
+    <a href="/Admin/Users/Index" class="btn btn-primary btn-lg d-inline-flex align-items-center gap-2 px-4">
+        <i class="bi bi-box-arrow-in-left"></i> @Localizer["Back"]
+    </a>
+</div>
+
+<style>
+    .access-denied-icon {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: #fdeeee;
+        color: #d84b4b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+    }
+</style>

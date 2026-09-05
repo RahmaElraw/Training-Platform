@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class LessonsController : Controller
     {
         private readonly IRepository<Lesson> _lessonRepository;

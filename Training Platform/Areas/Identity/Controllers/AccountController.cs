@@ -29,20 +29,33 @@ namespace Training_Platform.Areas.Identity.Controllers
 
 
 
-   
+
 
         [HttpGet]
         public IActionResult Login()
         {
             if (_accountService.IsLogined(User))
             {
-                return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Admin_Area });
+                if (User.IsInRole(RoleNames.SUPER_ADMIN))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Admin_Area });
+                }
+
+                if (User.IsInRole(RoleNames.TRAINER))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainer_Area });
+                }
+
+                if (User.IsInRole(RoleNames.TRAINEE))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainee_Area });
+                }
+
+                return RedirectToAction(nameof(Profile));
             }
-
-            return View();
+                return View();
+            
         }
-
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
@@ -70,8 +83,15 @@ namespace Training_Platform.Areas.Identity.Controllers
             }
 
 
+            if (!user.IsApproved)
+            {
+                TempData["error"] = "Your account is still pending approval from the administration.";
+                return RedirectToAction(nameof(Login));
+            }
 
-           var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe,true);
+
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe,true);
 
             if (result.IsNotAllowed)
             {
@@ -88,6 +108,21 @@ namespace Training_Platform.Areas.Identity.Controllers
            
 
             TempData["success"] = $"Login successful. Welcome";
+
+            if (User.IsInRole(RoleNames.SUPER_ADMIN))
+            {
+                return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Admin_Area });
+            }
+
+            if (User.IsInRole(RoleNames.TRAINER))
+            {
+                return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainer_Area });
+            }
+
+            if (User.IsInRole(RoleNames.TRAINEE))
+            {
+                return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainee_Area });
+            }
 
             return RedirectToAction(nameof(Profile));
         }
@@ -224,11 +259,25 @@ namespace Training_Platform.Areas.Identity.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser is null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.Users
+            .Include(u => u.Enrollments)
+            .Include(u => u.Certificates)
+            .Include(u => u.Reviews)
+            .Include(u => u.CoursesCreated)
+            .FirstOrDefaultAsync(u => u.Id == currentUser.Id);
+
             if (user is null)
             {
                 return NotFound();
             }
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             var profileVM = new ProfileVM
             {
@@ -238,7 +287,13 @@ namespace Training_Platform.Areas.Identity.Controllers
                 LastName = user.LastName!,
                 Address = user.Address!,
                 PhoneNumber = user.PhoneNumber!,
-                ProfileImage = user.ProfileImage
+                ProfileImage = user.ProfileImage,
+                CreatedAt = user.CreatedAt,
+                Roles = roles,
+                EnrollmentsCount = user.Enrollments.Count,
+                CertificatesCount = user.Certificates.Count,
+                ReviewsCount = user.Reviews.Count,
+                CoursesCreatedCount = user.CoursesCreated.Count
             };
 
             return View(profileVM);
@@ -493,8 +548,13 @@ namespace Training_Platform.Areas.Identity.Controllers
         {
             await _signInManager.SignOutAsync();
             TempData["success"] = "You have been logged out successfully.";
-            return RedirectToAction("Login");
+            return RedirectToAction(nameof(Login));
         }
        
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }

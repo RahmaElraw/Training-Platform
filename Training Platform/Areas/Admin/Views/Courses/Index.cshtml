@@ -5,14 +5,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            All Courses
+            @Localizer["AllCourses"]
         </h5>
 
         <a asp-action="Create" class="btn btn-primary">
 
             <i class="fas fa-plus me-1"></i>
 
-            Add Course
+            @Localizer["AddCourse"]
 
         </a>
 
@@ -30,7 +30,7 @@
                 <input asp-for="Query"
                        name="query"
                        class="form-control"
-                       placeholder="Search course..." />
+                       placeholder="@Localizer["SearchCoursePlaceholder"]" />
 
                 <button type="submit"
                         class="btn btn-primary">
@@ -54,7 +54,7 @@
 {
     <div class="alert alert-warning">
 
-        No Courses Found.
+        @Localizer["NoCoursesFound"]
 
     </div>
 }
@@ -111,7 +111,7 @@
                             <p class="text-muted mb-2">
 
                                 @(string.IsNullOrWhiteSpace(item.Description)
-                                    ? "No Description"
+                                    ? Localizer["NoDescription"]
                                     : item.Description)
 
                             </p>
@@ -127,41 +127,41 @@
 
                         <span>
 
-                            <strong>Category:</strong>
+                            <strong>@Localizer["Category"]</strong>
 
-                            @(item.Category?.Name ?? "No Category")
-
-                        </span>
-
-
-                        <span>
-
-                            <strong>Trainer:</strong>
-
-                            @(item.Trainer?.UserName ?? "No Trainer")
+                            @(item.Category?.Name ?? Localizer["NoCategory"].Value)
 
                         </span>
 
 
                         <span>
 
-                            <strong>Duration:</strong>
+                            <strong>@Localizer["Trainer"]</strong>
 
-                            @item.DurationInHours hours
+                            @(item.Trainer?.UserName ?? Localizer["NoTrainer"].Value)
 
                         </span>
 
 
                         <span>
 
-                            <strong>Level:</strong>
+                            <strong>@Localizer["Duration"]</strong>
+
+                            @item.DurationInHours @Localizer["Hours"]
+
+                        </span>
+
+
+                        <span>
+
+                            <strong>@Localizer["Level"]</strong>
 
                             @switch (item.Level)
                             {
                                 case Training_Platform.Models.CourseLevel.Beginner:
 
                                     <span class="badge bg-success">
-                                        Beginner
+                                        @Localizer["Beginner"]
                                     </span>
 
                                     break;
@@ -169,7 +169,7 @@
                                 case Training_Platform.Models.CourseLevel.Intermediate:
 
                                     <span class="badge bg-warning text-dark">
-                                        Intermediate
+                                        @Localizer["Intermediate"]
                                     </span>
 
                                     break;
@@ -177,7 +177,7 @@
                                 case Training_Platform.Models.CourseLevel.Advanced:
 
                                     <span class="badge bg-danger">
-                                        Advanced
+                                        @Localizer["Advanced"]
                                     </span>
 
                                     break;
@@ -188,18 +188,18 @@
 
                         <span>
 
-                            <strong>Status:</strong>
+                            <strong>@Localizer["Status"]</strong>
 
                             @if (item.IsPublished)
                             {
                                 <span class="badge bg-success">
-                                    Published
+                                    @Localizer["Published"]
                                 </span>
                             }
                             else
                             {
                                 <span class="badge bg-secondary">
-                                    Draft
+                                    @Localizer["Draft"]
                                 </span>
                             }
 
@@ -214,7 +214,7 @@
 
                         <span>
 
-                            <strong>Lessons:</strong>
+                            <strong>@Localizer["Lessons"]</strong>
 
                             @item.Lessons.Count
 
@@ -223,7 +223,7 @@
 
                         <span>
 
-                            <strong>Quizzes:</strong>
+                            <strong>@Localizer["Quizzes"]</strong>
 
                             @item.Quizzes.Count
 
@@ -232,7 +232,7 @@
 
                         <span>
 
-                            <strong>Enrollments:</strong>
+                            <strong>@Localizer["Enrollments"]</strong>
 
                             @item.Enrollments.Count
 
@@ -241,7 +241,7 @@
 
                         <span>
 
-                            <strong>Reviews:</strong>
+                            <strong>@Localizer["Reviews"]</strong>
 
                             @item.Reviews.Count
 
@@ -258,7 +258,7 @@
 
                             <i class="fas fa-calendar me-1"></i>
 
-                            Created:
+                            @Localizer["Created"]
 
                             @item.CreatedAt.ToString("dd/MM/yyyy")
 
@@ -283,7 +283,7 @@
 
                             <i class="fas fa-eye me-1"></i>
 
-                            Details
+                            @Localizer["Details"]
 
                         </a>
                         <!-- Related Courses -->
@@ -294,7 +294,7 @@
 
                             <i class="fas fa-layer-group me-1"></i>
 
-                            Related Courses
+                            @Localizer["RelatedCourses"]
 
                         </a>
 
@@ -306,7 +306,7 @@
 
                             <i class="fas fa-edit me-1"></i>
 
-                            Edit
+                            @Localizer["Edit"]
 
                         </a>
 
@@ -322,7 +322,7 @@
 
                             <i class="fas fa-trash-alt me-1"></i>
 
-                            Delete
+                            @Localizer["Delete"]
 
                         </button>
 
@@ -352,7 +352,7 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    Delete Course
+                    @Localizer["DeleteCourse"]
                 </h5>
 
                 <button type="button"
@@ -365,7 +365,7 @@
 
             <div class="modal-body">
 
-                Are you sure you want to delete
+                @Localizer["AreYouSureYouWantToDelete"]
 
                 <strong id="courseName"></strong> ?
 
@@ -378,7 +378,7 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal">
 
-                    Cancel
+                    @Localizer["Cancel"]
 
                 </button>
 
@@ -396,7 +396,7 @@
                     <button type="submit"
                             class="btn btn-danger">
 
-                        Delete
+                        @Localizer["Delete"]
 
                     </button>
 

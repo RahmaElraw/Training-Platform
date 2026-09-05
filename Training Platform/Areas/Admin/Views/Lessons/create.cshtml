@@ -1,165 +1,89 @@
-﻿@model Training_Platform.ViewModels.LessonVM
+@model Training_Platform.ViewModels.LessonVM
 
 <div class="card shadow-sm">
-
     <div class="card-header">
         <h5 class="mb-0">
             <i class="fas fa-plus-circle me-1"></i>
-            Create Lesson
+            @Localizer["CreateLesson"]
         </h5>
     </div>
 
     <div class="card-body">
-
         <form asp-action="Create" method="post">
-
             @Html.AntiForgeryToken()
 
-            <div asp-validation-summary="ModelOnly"
-                 class="alert alert-danger"
-                 role="alert">
-            </div>
-
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
             <!-- Title -->
-
             <div class="mb-3">
-
                 <label asp-for="Title" class="form-label">
-                    Title
+                    @Localizer["Title"]
                     <span class="text-danger">*</span>
                 </label>
-
-                <input asp-for="Title"
-                       class="form-control"
-                       placeholder="Enter lesson title" />
-
-                <span asp-validation-for="Title"
-                      class="text-danger">
-                </span>
-
+                <input asp-for="Title" class="form-control" placeholder="@Localizer["EnterLessonTitle"]" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-
 
             <!-- Description -->
-
             <div class="mb-3">
-
                 <label asp-for="Description" class="form-label">
-                    Description
+                    @Localizer["Description"]
                 </label>
-
-                <textarea asp-for="Description"
-                          class="form-control"
-                          rows="4"
-                          placeholder="Enter lesson description"></textarea>
-
-                <span asp-validation-for="Description"
-                      class="text-danger">
-                </span>
-
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="@Localizer["EnterLessonDescription"]"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
 
             <!-- Video -->
-
             <div class="mb-3">
-
                 <label asp-for="VideoUrl" class="form-label">
-                    Video URL
+                    @Localizer["VideoUrl"]
                     <span class="text-danger">*</span>
                 </label>
-
-                <input asp-for="VideoUrl"
-                       type="url"
-                       class="form-control"
-                       placeholder="https://..." />
-
-                <span asp-validation-for="VideoUrl"
-                      class="text-danger">
-                </span>
-
+                <input asp-for="VideoUrl" type="url" class="form-control" placeholder="https://..." />
+                <span asp-validation-for="VideoUrl" class="text-danger"></span>
             </div>
-
 
             <div class="row">
-
                 <!-- Course -->
-
                 <div class="col-md-6 mb-3">
-
                     <label asp-for="CourseId" class="form-label">
-                        Course
+                        @Localizer["Course"]
                         <span class="text-danger">*</span>
                     </label>
-
-                    <select asp-for="CourseId"
-                            asp-items="ViewBag.Courses"
-                            class="form-select">
-
+                    <select asp-for="CourseId" asp-items="ViewBag.Courses" class="form-select">
                         <option value="">
-                            -- Select Course --
+                            @Localizer["SelectCourse"]
                         </option>
-
                     </select>
-
-                    <span asp-validation-for="CourseId"
-                          class="text-danger">
-                    </span>
-
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
                 </div>
-
 
                 <!-- Order -->
-
                 <div class="col-md-6 mb-3">
-
                     <label asp-for="OrderNumber" class="form-label">
-                        Order Number
+                        @Localizer["OrderNumber"]
                         <span class="text-danger">*</span>
                     </label>
-
-                    <input asp-for="OrderNumber"
-                           type="number"
-                           min="1"
-                           class="form-control" />
-
-                    <span asp-validation-for="OrderNumber"
-                          class="text-danger">
-                    </span>
-
+                    <input asp-for="OrderNumber" type="number" min="1" class="form-control" />
+                    <span asp-validation-for="OrderNumber" class="text-danger"></span>
                 </div>
-
             </div>
-
 
             <!-- Buttons -->
-
             <div class="d-flex gap-2 mt-3">
-
-                <button type="submit"
-                        class="btn btn-primary">
-
+                <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i>
-                    Create Lesson
-
+                    @Localizer["CreateLesson"]
                 </button>
 
-                <a asp-action="Index"
-                   class="btn btn-secondary">
-
+                <a asp-action="Index" class="btn btn-secondary">
                     <i class="fas fa-arrow-left me-1"></i>
-                    Cancel
-
+                    @Localizer["Cancel"]
                 </a>
-
             </div>
-
         </form>
-
     </div>
 </div>
-
 
 @section Scripts
 {

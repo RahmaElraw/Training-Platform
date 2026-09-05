@@ -7,7 +7,7 @@
 
         <h5 class="mb-0">
             <i class="fas fa-plus-circle me-1"></i>
-            Create Question
+            @Localizer["CreateQuestion"]
         </h5>
 
     </div>
@@ -37,7 +37,7 @@
                     <label asp-for="QuestionText"
                            class="form-label">
 
-                        Question
+                        @Localizer["Question"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -45,7 +45,7 @@
                     <textarea asp-for="QuestionText"
                               class="form-control"
                               rows="4"
-                              placeholder="Enter question..."></textarea>
+                              placeholder="@Localizer["EnterQuestionPlaceholder"]"></textarea>
 
                     <span asp-validation-for="QuestionText"
                           class="text-danger">
@@ -61,7 +61,7 @@
                     <label asp-for="QuizId"
                            class="form-label">
 
-                        Quiz
+                        @Localizer["Quiz"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -71,7 +71,7 @@
                             class="form-select">
 
                         <option value="">
-                            -- Select Quiz --
+                            @Localizer["SelectQuiz"]
                         </option>
 
                     </select>
@@ -90,7 +90,7 @@
                     <label asp-for="Mark"
                            class="form-label">
 
-                        Mark
+                        @Localizer["Mark"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -114,7 +114,7 @@
                     <label asp-for="QuestionType"
                            class="form-label">
 
-                        Question Type
+                        @Localizer["QuestionType"]
                         <span class="text-danger">*</span>
 
                     </label>
@@ -125,7 +125,7 @@
                             id="questionType">
 
                         <option value="">
-                            -- Select Type --
+                            @Localizer["SelectType"]
                         </option>
 
                     </select>
@@ -147,7 +147,7 @@
             <h5 class="mb-3">
 
                 <i class="fas fa-list me-1"></i>
-                Question Options
+                @Localizer["QuestionOptions"]
 
             </h5>
 
@@ -181,7 +181,7 @@
                                     <label asp-for="QuestionOptions[i].OptionText"
                                            class="form-label">
 
-                                        Option @(i + 1)
+                                        @Localizer["Option"] @(i + 1)
 
                                         <span class="text-danger">*</span>
 
@@ -189,7 +189,7 @@
 
                                     <input asp-for="QuestionOptions[i].OptionText"
                                            class="form-control option-text"
-                                           placeholder="Enter option..." />
+                                           placeholder="@Localizer["EnterOptionPlaceholder"]" />
 
                                     <span asp-validation-for="QuestionOptions[i].OptionText"
                                           class="text-danger">
@@ -212,7 +212,7 @@
                                                class="form-check-label"
                                                for="correct_@i">
 
-                                            Correct Answer
+                                            @Localizer["CorrectAnswer"]
 
                                         </label>
 
@@ -244,10 +244,9 @@
 
                 <i class="fas fa-info-circle me-1"></i>
 
-                <strong>Multiple Choice:</strong>
+                <strong>@Localizer["MultipleChoice"]:</strong>
 
-                Enter at least two options and select exactly one
-                correct answer.
+                @Localizer["MultipleChoiceHelpText"]
 
             </div>
 
@@ -260,15 +259,15 @@
 
                 <i class="fas fa-info-circle me-1"></i>
 
-                <strong>True / False:</strong>
+                <strong>@Localizer["TrueFalse"]:</strong>
 
-                The first option will be
-                <strong>True</strong>
+                @Localizer["TrueFalseHelpFirstPart"]
+                <strong>@Localizer["True"]</strong>
 
-                and the second option will be
-                <strong>False</strong>.
+                @Localizer["TrueFalseHelpSecondPart"]
+                <strong>@Localizer["False"]</strong>.
 
-                Select exactly one correct answer.
+                @Localizer["TrueFalseHelpSelectExactlyOne"]
 
             </div>
 
@@ -281,7 +280,7 @@
                         class="btn btn-primary">
 
                     <i class="fas fa-save me-1"></i>
-                    Create Question
+                    @Localizer["CreateQuestion"]
 
                 </button>
 
@@ -290,7 +289,7 @@
                    class="btn btn-secondary">
 
                     <i class="fas fa-arrow-left me-1"></i>
-                    Cancel
+                    @Localizer["Cancel"]
 
                 </a>
 

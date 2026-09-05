@@ -4,10 +4,17 @@
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UsersController(UserManager<ApplicationUser> userManager)
+        public UsersController(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole<int>> roleManager,
+            IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index(
@@ -16,49 +23,29 @@
             CancellationToken cancellationToken = default)
         {
             const int pageSize = 6;
-
-            var users = await _userManager.Users
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+            var usersQuery = _userManager.Users.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                query = query.Trim();
-
-                users = users
-                    .Where(u =>
-                        (!string.IsNullOrEmpty(u.UserName) &&
-                         u.UserName.Contains(
-                             query,
-                             StringComparison.OrdinalIgnoreCase))
-                        ||
-                        (!string.IsNullOrEmpty(u.Email) &&
-                         u.Email.Contains(
-                             query,
-                             StringComparison.OrdinalIgnoreCase)))
-                    .ToList();
+                query = query.Trim().ToLower();
+                usersQuery = usersQuery.Where(u =>
+                    u.UserName!.ToLower().Contains(query) ||
+                    u.Email!.ToLower().Contains(query));
             }
 
-            if (page < 1)
-                page = 1;
+            int totalCount = await usersQuery.CountAsync(cancellationToken);
+            int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-            int totalPages = (int)Math.Ceiling(
-                users.Count / (double)pageSize);
-
-            if (totalPages > 0 && page > totalPages)
-                page = totalPages;
-
-            var pagedUsers = users
+            var pagedUsers = await usersQuery
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToList();
+                .ToListAsync(cancellationToken);
 
             var userRoles = new List<UserWithRoleVM>();
 
             foreach (var user in pagedUsers)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-
                 userRoles.Add(new UserWithRoleVM
                 {
                     User = user,
@@ -89,27 +76,28 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(
+        public async Task<IActionResult> ToggleStatus(
             int id,
             CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
 
-            if (user is null)
+            if (user == null)
                 return NotFound();
 
-            var result = await _userManager.DeleteAsync(user);
+            user.IsApproved = !user.IsApproved;
+            var result = await _userManager.UpdateAsync(user);
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                TempData["error_notification"] =
-                    "Failed to delete user.";
-
-                return RedirectToAction(nameof(Index));
+                TempData["Success"] = user.IsApproved
+                    ? "User activated successfully."
+                    : "User deactivated successfully.";
             }
-
-            TempData["success_notification"] =
-                "User deleted successfully.";
+            else
+            {
+                TempData["Error"] = "Something went wrong.";
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -117,44 +105,75 @@
         [HttpGet]
         public IActionResult Create()
         {
+            var vm = new CreateUserVM
+            {
+                Roles = await GetRoleSelectListAsync()
+            };
+
+            return View(vm);
+            //            Text = r.Name
+            //        })
+            //        .ToListAsync()
+            //};
+
+            //return View(vm);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateUserVM vm)
+        public async Task<IActionResult> Create(CreateUserVM vm, IFormFile? ProfileImageFile)
         {
             if (!ModelState.IsValid)
+            {
+                vm.Roles = await GetRoleSelectListAsync();
                 return View(vm);
+            }
+
+            string? fileName = null;
+            if (ProfileImageFile != null && ProfileImageFile.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "profiles");
+                Directory.CreateDirectory(uploadsFolder);
+
+                fileName = $"{Guid.NewGuid()}_{Path.GetFileName(ProfileImageFile.FileName)}";
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ProfileImageFile.CopyToAsync(fileStream);
+                }
+            }
 
             var user = new ApplicationUser
             {
                 UserName = vm.UserName,
                 Email = vm.Email,
                 PhoneNumber = vm.PhoneNumber,
+                ProfileImage = fileName,
                 IsApproved = vm.IsApproved,
                 CreatedAt = DateTime.UtcNow,
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(
+                    ModelState.AddModelError(string.Empty, error.Description);
                 user,
                 vm.Password);
 
             if (!result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(
-                        string.Empty,
-                        error.Description);
-                }
+            if (!string.IsNullOrWhiteSpace(vm.SelectedRole))
+            {
+                await _userManager.AddToRoleAsync(user, vm.SelectedRole);
+            }
 
+            TempData["success_notification"] = "User created successfully.";
                 return View(vm);
             }
 
-            TempData["success_notification"] =
-                "User created successfully.";
+            //await _userManager.AddToRoleAsync(user, vm.SelectedRole);
+
+            TempData["success_notification"] = "User created successfully.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -197,50 +216,46 @@
             user.Email = vm.Email;
             user.PhoneNumber = vm.PhoneNumber;
             user.ProfileImage = vm.ProfileImage;
-            user.IsApproved = vm.IsApproved;
+                    ModelState.AddModelError(string.Empty, error.Description);
 
             var result = await _userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(
-                        string.Empty,
-                        error.Description);
-                }
-
-                return View(vm);
-            }
-            if (!string.IsNullOrWhiteSpace(vm.Password))
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var passwordResult = await _userManager.ResetPasswordAsync(user, token, vm.Password);
             {
-                var token =
-                    await _userManager.GeneratePasswordResetTokenAsync(
-                        user);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                var passwordResult =
-                    await _userManager.ResetPasswordAsync(
-                        user,
-                        token,
-                        vm.Password);
+                var passwordResult = await _userManager.ResetPasswordAsync(
+                    user,
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    vm.Password);
 
                 if (!passwordResult.Succeeded)
                 {
                     foreach (var error in passwordResult.Errors)
                     {
-                        ModelState.AddModelError(
-                            string.Empty,
-                            error.Description);
+            TempData["success_notification"] = "User updated successfully.";
+            return RedirectToAction(nameof(Index));
+        }
                     }
 
                     return View(vm);
                 }
             }
 
-            TempData["success_notification"] =
-                "User updated successfully.";
+            TempData["success_notification"] = "User updated successfully.";
 
-            return RedirectToAction(nameof(Index));
+        private async Task<List<SelectListItem>> GetRoleSelectListAsync()
+        {
+            return await _roleManager.Roles
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Name!,
+                    Text = r.Name
+                })
+                .ToListAsync();
         }
     }
 }

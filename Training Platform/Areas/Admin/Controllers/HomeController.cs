@@ -1,13 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Course> _courseRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public HomeController(
+            IRepository<Category> categoryRepository,
+            IRepository<Course> courseRepository,
+            UserManager<ApplicationUser> userManager)
         {
-            return View();
+            _categoryRepository = categoryRepository;
+            _courseRepository = courseRepository;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var trainees = await _userManager.GetUsersInRoleAsync("Trainee");
+            var trainers = await _userManager.GetUsersInRoleAsync("Trainer");
+
+            var categories = await _categoryRepository.GetAsync(
+                tracked: false);
+
+            var courses = await _courseRepository.GetAsync(
+                tracked: false);
+
+            var model = new AdminDashboardVM
+            {
+                TraineesCount = trainees.Count,
+                TrainersCount = trainers.Count,
+                CategoriesCount = categories.Count(),
+                CoursesCount = courses.Count()
+            };
+
+            return View(model);
         }
     }
 }

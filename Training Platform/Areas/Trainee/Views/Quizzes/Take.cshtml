@@ -1,0 +1,86 @@
+﻿@model Training_Platform.ViewModels.Trainee.QuizTakeVM
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white shadow-sm rounded">
+        <div>
+            <h3 class="mb-0">@Model.Title</h3>
+            <small class="text-muted">Total Questions: @Model.Questions.Count</small>
+        </div>
+        <div class="badge bg-warning text-dark fs-6 px-3 py-2" id="timerBadge">
+            <i class="fas fa-clock me-1"></i>
+            <span id="timeRemaining">--:--</span>
+        </div>
+    </div>
+
+    <form id="quizForm" asp-action="Submit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="QuizId" value="@Model.QuizId" />
+
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            var question = Model.Questions[i];
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Question @(i + 1)</h5>
+                    <span class="badge bg-secondary">@question.Mark Mark(s)</span>
+                </div>
+                <div class="card-body">
+                    <p class="fw-bold fs-5 mb-3">@question.QuestionText</p>
+
+                    <input type="hidden" name="Answers[@i].QuestionId" value="@question.QuestionId" />
+
+                    <div class="d-flex flex-column gap-2">
+                        @foreach (var option in question.Options)
+                        {
+                            <label class="list-group-item list-group-item-action rounded border p-3 d-flex align-items-center cursor-pointer">
+                                <input class="form-check-input me-3 mt-0"
+                                       type="radio"
+                                       name="Answers[@i].SelectedOptionId"
+                                       value="@option.OptionId"
+                                       required />
+                                <span>@option.OptionText</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="d-flex justify-content-end mb-5">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-paper-plane me-2"></i>Submit Answers
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let timeLimitMinutes = @Model.TimeLimitMinutes;
+            let durationSeconds = timeLimitMinutes * 60;
+            const timerDisplay = document.getElementById("timeRemaining");
+            const form = document.getElementById("quizForm");
+
+            const timer = setInterval(function() {
+                let minutes = Math.floor(durationSeconds / 60);
+                let seconds = durationSeconds % 60;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timerDisplay.textContent = minutes + ":" + seconds;
+
+                if (--durationSeconds < 0) {
+                    clearInterval(timer);
+                    alert("Time is up! Your quiz will be submitted automatically.");
+                    form.submit();
+                }
+            }, 1000);
+        });
+    </script>
+}

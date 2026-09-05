@@ -272,49 +272,26 @@ namespace Training_Platform.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var quiz =
-                await _quizRepository.GetOneAsync(
-                    q => q.Id == id,
-                    includes:
-                    [
-                        q => q.Questions,
-                        q => q.QuizResults
-                    ]);
+            var quiz = await _quizRepository.GetOneAsync(
+                q => q.Id == id);
 
             if (quiz == null)
                 return NotFound();
 
-            if (quiz.Questions.Count > 0)
-            {
-                TempData["Error"] =
-                    "Cannot delete quiz because it has questions.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            if (quiz.QuizResults.Count > 0)
-            {
-                TempData["Error"] =
-                    "Cannot delete quiz because it has quiz results.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
             _quizRepository.Delete(quiz);
 
+            int result = await _quizRepository.CommitAsync();
 
-            if (await _quizRepository.CommitAsync() > 0)
+            if (result > 0)
             {
                 TempData["Success"] =
-                    "Quiz deleted successfully.";
+                    "Quiz and all related questions, options, and results deleted successfully.";
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong.";
+                    "Something went wrong while deleting the quiz.";
             }
-
 
             return RedirectToAction(nameof(Index));
         }

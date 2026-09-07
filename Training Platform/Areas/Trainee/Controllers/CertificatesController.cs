@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 
 [Area(SD.Trainee_Area)]
+[Authorize(Roles = RoleNames.TRAINEE)]
+
 public class CertificatesController : Controller
 {
     private readonly IRepository<Certificate> _certificateRepository;

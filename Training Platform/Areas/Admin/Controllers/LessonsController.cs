@@ -301,52 +301,25 @@ namespace Training_Platform.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var lesson = await _lessonRepository.GetOneAsync(
-                l => l.Id == id,
-                includes:
-                [
-                    l => l.CourseMaterials,
-                    l => l.UserProgresses
-                ]);
-
+                l => l.Id == id);
 
             if (lesson == null)
                 return NotFound();
 
-
-            if (lesson.CourseMaterials.Any())
-            {
-                TempData[ErrorMessage] =
-                    "Cannot delete lesson because it has course materials.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            if (lesson.UserProgresses.Any())
-            {
-                TempData[ErrorMessage] =
-                    "Cannot delete lesson because it has user progress records.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
             _lessonRepository.Delete(lesson);
-
 
             var result = await _lessonRepository.CommitAsync();
 
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Lesson deleted successfully.";
+                    "Lesson deleted successfully, including all related materials and progress records.";
             }
             else
             {
                 TempData[ErrorMessage] =
                     "Something went wrong while deleting the lesson.";
             }
-
 
             return RedirectToAction(nameof(Index));
         }

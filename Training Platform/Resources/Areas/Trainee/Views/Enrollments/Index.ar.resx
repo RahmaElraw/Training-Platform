@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="metadata"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" /></xsd:sequence><xsd:attribute name="name" use="required" type="xsd:string" /><xsd:attribute name="type" type="xsd:string" /><xsd:attribute name="mimetype" type="xsd:string" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="assembly"><xsd:complexType><xsd:attribute name="alias" type="xsd:string" /><xsd:attribute name="name" type="xsd:string" /></xsd:complexType></xsd:element>
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /><xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" /><xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="MyEnrolledCourses" xml:space="preserve"><value>دوراتي المسجلة</value></data>
+  <data name="TrackOngoingCourses" xml:space="preserve"><value>تتبع دوراتك الجارية، والوصول إلى الدروس، وإدارة تقييمات الدورة.</value></data>
+  <data name="BrowseMoreCourses" xml:space="preserve"><value>تصفح المزيد من الدورات</value></data>
+  <data name="Completed" xml:space="preserve"><value>مكتمل</value></data>
+  <data name="InProgress" xml:space="preserve"><value>قيد التنفيذ</value></data>
+  <data name="Lessons" xml:space="preserve"><value>الدروس</value></data>
+  <data name="Enrolled" xml:space="preserve"><value>تم التسجيل:</value></data>
+  <data name="ContinueLearning" xml:space="preserve"><value>متابعة التعلم</value></data>
+  <data name="EditReview" xml:space="preserve"><value>تعديل المراجعة</value></data>
+  <data name="RateCourse" xml:space="preserve"><value>تقييم الدورة</value></data>
+  <data name="Unenroll" xml:space="preserve"><value>إلغاء التسجيل</value></data>
+  <data name="ConfirmUnenroll" xml:space="preserve"><value>هل أنت متأكد من إلغاء التسجيل من هذه الدورة؟ سيُفقد تقدمك.</value></data>
+  <data name="NoEnrolledCourses" xml:space="preserve"><value>لا توجد دورات مسجلة</value></data>
+  <data name="NoEnrollmentsMessage" xml:space="preserve"><value>لم تسجل في أي دورات بعد. ابدأ التعلم اليوم!</value></data>
+  <data name="ExploreAvailableCourses" xml:space="preserve"><value>استكشف الدورات المتاحة</value></data>
+</root>

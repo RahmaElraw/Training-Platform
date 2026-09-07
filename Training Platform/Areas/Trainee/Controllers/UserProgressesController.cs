@@ -4,7 +4,7 @@ using System.Security.Claims;
 namespace Training_Platform.Areas.Trainee.Controllers
 {
     [Area(SD.Trainee_Area)]
-    [Authorize]
+    [Authorize(Roles = RoleNames.TRAINEE)]
     public class UserProgressesController : Controller
     {
         private readonly IRepository<UserProgress> _progressRepository;

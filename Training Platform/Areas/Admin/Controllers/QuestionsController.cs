@@ -600,42 +600,26 @@ namespace Training_Platform.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var question =
-                await _questionRepository.GetOneAsync(
-                    q => q.Id == id,
-                    includes:
-                    [
-                        q => q.QuestionOptions
-                    ]);
-
+            var question = await _questionRepository.GetOneAsync(
+                q => q.Id == id);
 
             if (question == null)
                 return NotFound();
 
-
-            if (question.QuestionOptions.Any())
-            {
-                TempData["Error"] =
-                    "Cannot delete question because it has question options.";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
             _questionRepository.Delete(question);
 
+            int result = await _questionRepository.CommitAsync();
 
-            if (await _questionRepository.CommitAsync() > 0)
+            if (result > 0)
             {
-                TempData["Success"] =
-                    "Question deleted successfully.";
+                TempData["success"] =
+                    "Question and its options deleted successfully.";
             }
             else
             {
-                TempData["Error"] =
-                    "Something went wrong.";
+                TempData["error"] =
+                    "Something went wrong while deleting the question.";
             }
-
 
             return RedirectToAction(nameof(Index));
         }
@@ -986,33 +970,48 @@ namespace Training_Platform.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteOption(int id)
         {
-            var option =
-                await _questionOptionRepository.GetOneAsync(
-                    o => o.Id == id);
-
+            var option = await _questionOptionRepository.GetOneAsync(
+                o => o.Id == id);
 
             if (option == null)
                 return NotFound();
 
+            int questionId = option.QuestionId;
 
-            int questionId =
-                option.QuestionId;
+            var question = await _questionRepository.GetOneAsync(
+                q => q.Id == questionId,
+                includes:
+                [
+                    q => q.QuestionOptions
+                ]);
 
+            if (question == null)
+                return NotFound();
+
+            if (question.QuestionOptions.Count <= 1)
+            {
+                TempData["error"] =
+                    "A question must have at least one option.";
+
+                return RedirectToAction(
+                    nameof(Edit),
+                    new { id = questionId });
+            }
 
             _questionOptionRepository.Delete(option);
 
+            int result = await _questionOptionRepository.CommitAsync();
 
-            if (await _questionOptionRepository.CommitAsync() > 0)
+            if (result > 0)
             {
-                TempData["Success"] =
+                TempData["success"] =
                     "Question option deleted successfully.";
             }
             else
             {
-                TempData["Error"] =
-                    "Something went wrong.";
+                TempData["error"] =
+                    "Something went wrong while deleting the option.";
             }
-
 
             return RedirectToAction(
                 nameof(Edit),

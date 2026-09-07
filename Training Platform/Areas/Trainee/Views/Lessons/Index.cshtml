@@ -1,7 +1,7 @@
 ﻿@model Training_Platform.ViewModels.Trainee.LessonListVM
 
 @{
-    ViewData["Title"] = "Lessons & Quizzes";
+    ViewData["Title"] = Localizer["LessonsAndQuizzes"];
 }
 
 <div class="container-fluid py-3">
@@ -13,7 +13,7 @@
                 @Model.Course.Title
             </h3>
             <p class="text-600 mb-0">
-                Course Lessons & Quizzes
+                @Localizer["CourseLessonsAndQuizzes"]
             </p>
         </div>
 
@@ -22,7 +22,7 @@
            asp-route-id="@Model.Course.Id"
            class="btn btn-secondary">
             <i class="fas fa-arrow-left me-1"></i>
-            Course Details
+            @Localizer["CourseDetails"]
         </a>
     </div>
 
@@ -30,10 +30,10 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">
-                <i class="fas fa-book-open me-2 text-primary"></i>Lessons
+                <i class="fas fa-book-open me-2 text-primary"></i>@Localizer["Lessons"]
             </h5>
             <span class="text-600">
-                @Model.Lessons.Count Lessons
+                @Model.Lessons.Count @Localizer["Lessons"]
             </span>
         </div>
 
@@ -78,11 +78,11 @@
                                 <div>
                                     @if (lesson.IsCompleted)
                                     {
-                                        <span class="badge bg-success">Completed</span>
+                                        <span class="badge bg-success">@Localizer["Completed"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-primary">Start</span>
+                                        <span class="badge bg-primary">@Localizer["Start"]</span>
                                     }
                                     <i class="fas fa-chevron-right ms-2"></i>
                                 </div>
@@ -95,7 +95,7 @@
             {
                 <div class="text-center py-4">
                     <i class="fas fa-book-open fa-2x text-500 mb-2"></i>
-                    <h6 class="mb-0">No lessons available for this course.</h6>
+                    <h6 class="mb-0">@Localizer["NoLessonsAvailable"]</h6>
                 </div>
             }
         </div>
@@ -105,10 +105,10 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">
-                <i class="fas fa-file-alt me-2 text-warning"></i>Quizzes (Required &ge; 70% to Pass)
+                <i class="fas fa-file-alt me-2 text-warning"></i>@Localizer["QuizzesRequired"]
             </h5>
             <span class="text-600">
-                @Model.Quizzes.Count Quizzes
+                @Model.Quizzes.Count @Localizer["Quizzes"]
             </span>
         </div>
 
@@ -146,13 +146,13 @@
                                                 @quiz.Title
                                             </h6>
                                             <small class="fw-bold @(quiz.IsPassed ? "text-success" : "text-danger")">
-                                                Score: @quiz.BestScorePercentage%
+                                                @Localizer["Score"] @quiz.BestScorePercentage%
                                             </small>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <span class="badge bg-info text-white">View Result</span>
+                                        <span class="badge bg-info text-white">@Localizer["ViewResult"]</span>
                                         <i class="fas fa-chevron-right ms-2"></i>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                                     </div>
 
                                     <div>
-                                        <span class="badge bg-warning text-dark">Take Quiz</span>
+                                        <span class="badge bg-warning text-dark">@Localizer["TakeQuiz"]</span>
                                         <i class="fas fa-chevron-right ms-2"></i>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
             {
                 <div class="text-center py-4">
                     <i class="fas fa-file-alt fa-2x text-500 mb-2"></i>
-                    <h6 class="mb-0">No quizzes available for this course.</h6>
+                    <h6 class="mb-0">@Localizer["NoQuizzesAvailable"]</h6>
                 </div>
             }
         </div>

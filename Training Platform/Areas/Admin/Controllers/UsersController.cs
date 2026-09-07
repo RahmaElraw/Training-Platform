@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -28,20 +28,35 @@ namespace Training_Platform.Areas.Admin.Controllers
             CancellationToken cancellationToken = default)
         {
             const int pageSize = 6;
-            var usersQuery = _userManager.Users.AsNoTracking();
+
+            if (page < 1)
+                page = 1;
+
+            var usersQuery = _userManager.Users
+                .AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                query = query.Trim().ToLower();
+                query = query.Trim();
+
                 usersQuery = usersQuery.Where(u =>
-                    u.UserName!.ToLower().Contains(query) ||
-                    u.Email!.ToLower().Contains(query));
+                    (u.UserName != null &&
+                     u.UserName.Contains(query)) ||
+                    (u.Email != null &&
+                     u.Email.Contains(query)));
             }
 
-            int totalCount = await usersQuery.CountAsync(cancellationToken);
-            int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            int totalCount =
+                await usersQuery.CountAsync(cancellationToken);
+
+            int totalPages =
+                (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            if (totalPages > 0 && page > totalPages)
+                page = totalPages;
 
             var pagedUsers = await usersQuery
+                .OrderBy(u => u.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
@@ -51,6 +66,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             foreach (var user in pagedUsers)
             {
                 var roles = await _userManager.GetRolesAsync(user);
+
                 userRoles.Add(new UserWithRoleVM
                 {
                     User = user,
@@ -69,11 +85,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             return View(vm);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            var user =
+                await _userManager.FindByIdAsync(id.ToString());
 
-            if (user is null)
+            if (user == null)
                 return NotFound();
 
             return View(user);
@@ -81,27 +99,30 @@ namespace Training_Platform.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ToggleStatus(
-            int id,
-            CancellationToken cancellationToken = default)
+        public async Task<IActionResult> ToggleStatus(int id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            var user =
+                await _userManager.FindByIdAsync(id.ToString());
 
             if (user == null)
                 return NotFound();
 
             user.IsApproved = !user.IsApproved;
-            var result = await _userManager.UpdateAsync(user);
+
+            var result =
+                await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
-                TempData["Success"] = user.IsApproved
-                    ? "User activated successfully."
-                    : "User deactivated successfully.";
+                TempData["success_notification"] =
+                    user.IsApproved
+                        ? "User activated successfully."
+                        : "User deactivated successfully.";
             }
             else
             {
-                TempData["Error"] = "Something went wrong.";
+                TempData["error_notification"] =
+                    "Something went wrong.";
             }
 
             return RedirectToAction(nameof(Index));
@@ -117,30 +138,45 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             return View(vm);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateUserVM vm, IFormFile? ProfileImageFile)
+        public async Task<IActionResult> Create(
+            CreateUserVM vm,
+            IFormFile? ProfileImageFile)
         {
             if (!ModelState.IsValid)
             {
-                vm.Roles = await GetRoleSelectListAsync();
+                vm.Roles =
+                    await GetRoleSelectListAsync();
+
                 return View(vm);
             }
 
             string? fileName = null;
-            if (ProfileImageFile != null && ProfileImageFile.Length > 0)
+
+            if (ProfileImageFile != null &&
+                ProfileImageFile.Length > 0)
             {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "profiles");
+                string uploadsFolder = Path.Combine(
+                    _webHostEnvironment.WebRootPath,
+                    "images",
+                    "profiles");
+
                 Directory.CreateDirectory(uploadsFolder);
 
-                fileName = $"{Guid.NewGuid()}_{Path.GetFileName(ProfileImageFile.FileName)}";
-                string filePath = Path.Combine(uploadsFolder, fileName);
+                fileName =
+                    $"{Guid.NewGuid()}_{Path.GetFileName(ProfileImageFile.FileName)}";
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ProfileImageFile.CopyToAsync(fileStream);
-                }
+                string filePath =
+                    Path.Combine(uploadsFolder, fileName);
+
+                using var fileStream =
+                    new FileStream(
+                        filePath,
+                        FileMode.Create);
+
+                await ProfileImageFile.CopyToAsync(
+                    fileStream);
             }
 
             var user = new ApplicationUser
@@ -154,39 +190,71 @@ namespace Training_Platform.Areas.Admin.Controllers
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(user, vm.Password);
+            var result =
+                await _userManager.CreateAsync(
+                    user,
+                    vm.Password);
 
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
+                {
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
+                }
 
-                vm.Roles = await GetRoleSelectListAsync();
+                vm.Roles =
+                    await GetRoleSelectListAsync();
+
                 return View(vm);
             }
 
-            if (!string.IsNullOrWhiteSpace(vm.SelectedRole))
+            if (!string.IsNullOrWhiteSpace(
+                    vm.SelectedRole))
             {
-                await _userManager.AddToRoleAsync(user, vm.SelectedRole);
+                var roleResult =
+                    await _userManager.AddToRoleAsync(
+                        user,
+                        vm.SelectedRole);
+
+                if (!roleResult.Succeeded)
+                {
+                    foreach (var error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
+                    }
+
+                    vm.Roles =
+                        await GetRoleSelectListAsync();
+
+                    return View(vm);
+                }
             }
 
-            TempData["success_notification"] = "User created successfully.";
+            TempData["success_notification"] =
+                "User created successfully.";
+
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            var user =
+                await _userManager.FindByIdAsync(
+                    id.ToString());
 
-            if (user is null)
+            if (user == null)
                 return NotFound();
 
             var vm = new EditUserVM
             {
                 Id = user.Id,
-                UserName = user.UserName!,
-                Email = user.Email!,
+                UserName = user.UserName ?? string.Empty,
+                Email = user.Email ?? string.Empty,
                 PhoneNumber = user.PhoneNumber,
                 ProfileImage = user.ProfileImage,
                 IsApproved = user.IsApproved
@@ -197,14 +265,17 @@ namespace Training_Platform.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditUserVM vm)
+        public async Task<IActionResult> Edit(
+            EditUserVM vm)
         {
             if (!ModelState.IsValid)
                 return View(vm);
 
-            var user = await _userManager.FindByIdAsync(vm.Id.ToString());
+            var user =
+                await _userManager.FindByIdAsync(
+                    vm.Id.ToString());
 
-            if (user is null)
+            if (user == null)
                 return NotFound();
 
             user.UserName = vm.UserName;
@@ -213,43 +284,97 @@ namespace Training_Platform.Areas.Admin.Controllers
             user.ProfileImage = vm.ProfileImage;
             user.IsApproved = vm.IsApproved;
 
-            var result = await _userManager.UpdateAsync(user);
+            var result =
+                await _userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
+                {
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
+                }
 
                 return View(vm);
             }
-
             if (!string.IsNullOrWhiteSpace(vm.Password))
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var passwordResult = await _userManager.ResetPasswordAsync(user, token, vm.Password);
+                if (vm.Password != vm.ConfirmPassword)
+                {
+                    ModelState.AddModelError(
+                        nameof(vm.ConfirmPassword),
+                        "Passwords do not match.");
+
+                    return View(vm);
+                }
+
+                var token =
+                    await _userManager
+                        .GeneratePasswordResetTokenAsync(user);
+
+                var passwordResult =
+                    await _userManager.ResetPasswordAsync(
+                        user,
+                        token,
+                        vm.Password);
 
                 if (!passwordResult.Succeeded)
                 {
-                    foreach (var error in passwordResult.Errors)
+                    foreach (var error
+                             in passwordResult.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
                     }
 
                     return View(vm);
                 }
             }
 
-            TempData["success_notification"] = "User updated successfully.";
+            TempData["success_notification"] =
+                "User updated successfully.";
+
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<List<SelectListItem>> GetRoleSelectListAsync()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user =
+                await _userManager.FindByIdAsync(
+                    id.ToString());
+
+            if (user == null)
+                return NotFound();
+
+            var result =
+                await _userManager.DeleteAsync(user);
+
+            if (!result.Succeeded)
+            {
+                TempData["error_notification"] =
+                    "Failed to delete user.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            TempData["success_notification"] =
+                "User deleted successfully.";
+
+            return RedirectToAction(nameof(Index));
+        }
+        private async Task<List<SelectListItem>>
+            GetRoleSelectListAsync()
         {
             return await _roleManager.Roles
+                .OrderBy(r => r.Name)
                 .Select(r => new SelectListItem
                 {
                     Value = r.Name!,
-                    Text = r.Name
+                    Text = r.Name!
                 })
                 .ToListAsync();
         }

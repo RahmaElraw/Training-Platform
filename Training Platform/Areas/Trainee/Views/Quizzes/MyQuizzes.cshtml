@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Training_Platform.ViewModels.Trainee.TraineeQuizItemVM>
 
 @{
-    ViewData["Title"] = "My Quizzes";
+    ViewData["Title"] = @Localizer["MyQuizzes"];
 }
 
 <div class="container-fluid py-3">
@@ -9,13 +9,13 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <h4 class="mb-1 text-dark fw-bold">My Quizzes</h4>
+            <h4 class="mb-1 text-dark fw-bold">@Localizer["MyQuizzes"]</h4>
             <p class="text-secondary small mb-0">
-                View and take quizzes for your enrolled courses to evaluate your progress.
+                @Localizer["MyQuizzesDescription"]
             </p>
         </div>
         <a asp-controller="Enrollments" asp-action="Index" class="btn btn-outline-primary btn-sm">
-            <i class="fas fa-book me-1"></i> My Enrolled Courses
+            <i class="fas fa-book me-1"></i> @Localizer["MyEnrolledCourses"]
         </a>
     </div>
 
@@ -40,19 +40,19 @@
                                     if (quiz.IsPassed)
                                     {
                                         <span class="badge bg-success flex-shrink-0">
-                                            <i class="fas fa-check-circle me-1"></i> Passed
+                                            <i class="fas fa-check-circle me-1"></i> @Localizer["Passed"]
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="badge bg-danger flex-shrink-0">
-                                            <i class="fas fa-times-circle me-1"></i> Failed
+                                            <i class="fas fa-times-circle me-1"></i> @Localizer["Failed"]
                                         </span>
                                     }
                                 }
                                 else
                                 {
-                                    <span class="badge bg-secondary flex-shrink-0">Not Attempted</span>
+                                    <span class="badge bg-secondary flex-shrink-0">@Localizer["NotAttempted"]</span>
                                 }
                             </div>
 
@@ -65,15 +65,15 @@
                             <div class="text-secondary small mb-3">
                                 <div class="mb-1 text-truncate">
                                     <i class="fas fa-question-circle me-1 text-primary"></i>
-                                    @quiz.QuestionCount Questions (@quiz.TotalPossibleScore Marks)
+                                    @quiz.QuestionCount @Localizer["Questions"] (@quiz.TotalPossibleScore @Localizer["Marks"])
                                 </div>
                                 <div class="mb-1 text-truncate">
                                     <i class="fas fa-clock me-1 text-primary"></i>
-                                    Time: @quiz.TimeLimitMinutes Mins
+                                    @Localizer["Time"] @quiz.TimeLimitMinutes @Localizer["Mins"]
                                 </div>
                                 <div class="text-truncate">
                                     <i class="fas fa-bullseye me-1 text-primary"></i>
-                                    Passing Score: @quiz.PassingScore
+                                    @Localizer["PassingScore"] @quiz.PassingScore
                                 </div>
                             </div>
 
@@ -81,7 +81,7 @@
                             @if (quiz.HasAttempted)
                             {
                                 <div class="py-1 px-2 bg-light rounded mb-3 text-center small">
-                                    <span class="text-muted me-1">Best Score:</span>
+                                    <span class="text-muted me-1">@Localizer["BestScore"]</span>
                                     <span class="fw-bold @(quiz.IsPassed ? "text-success" : "text-danger")">
                                         @quiz.BestScore / @quiz.TotalPossibleScore
                                     </span>
@@ -94,7 +94,7 @@
                                    asp-route-id="@quiz.QuizId"
                                    class="btn btn-sm @(quiz.HasAttempted ? "btn-info text-white" : "btn-primary") w-100">
                                     <i class="fas @(quiz.HasAttempted ? "fa-eye" : "fa-play") me-1"></i>
-                                    @(quiz.HasAttempted ? "View Result" : "Start Quiz")
+                                    @(quiz.HasAttempted ? @Localizer["ViewResult"].ToString() : @Localizer["StartQuiz"].ToString())
                                 </a>
                             </div>
 
@@ -110,12 +110,12 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-4">
                 <i class="fas fa-file-alt fa-2x text-secondary mb-2"></i>
-                <h6 class="text-dark fw-bold">No Quizzes Available</h6>
+                <h6 class="text-dark fw-bold">@Localizer["NoQuizzesAvailable"]</h6>
                 <p class="text-secondary small mb-3">
-                    Enroll in courses to unlock quizzes and test your knowledge.
+                    @Localizer["NoQuizzesMessage"]
                 </p>
                 <a asp-controller="Courses" asp-action="Index" class="btn btn-primary btn-sm">
-                    Browse Available Courses
+                    @Localizer["BrowseAvailableCourses"]
                 </a>
             </div>
         </div>

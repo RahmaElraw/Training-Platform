@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

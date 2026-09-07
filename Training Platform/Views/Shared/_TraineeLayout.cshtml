@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "ar" : "en")" dir="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "rtl" : "ltr")">
 
 <head>
     <meta charset="utf-8">
@@ -9,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Training</title>
+    <title>@Localizer["Training"]</title>
 
     <!-- ===============================================-->
     <!--    Favicons-->
@@ -68,7 +69,8 @@
     </style>
 
     <script>
-            var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+            var isRTL = @(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "true" : "false");
+            localStorage.setItem('isRTL', isRTL);
             if (isRTL) {
                 var linkDefault = document.getElementById('style-default');
                 var userLinkDefault = document.getElementById('user-style-default');
@@ -109,13 +111,13 @@
                 <div class="d-flex align-items-center">
                     <div class="toggle-icon-wrapper">
 
-                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["ToggleNavigation"]"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 
                     </div>
                     <a class="navbar-brand" href="/Trainee/Home/Index">
                         <div class="d-flex align-items-center py-3">
                             <div class="avatar avatar-xl"><img class="rounded-circle" src="~/images/logo.png" alt="" /></div>
-                            <span class="font-sans-serif">Trainee</span>
+                            <span class="font-sans-serif">@Localizer["Trainee"]</span>
                         </div>
                     </a>
                 </div>
@@ -125,14 +127,14 @@
                             <li class="nav-item">
                                 <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">Dashboard</span>
+                                    <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">@Localizer["Dashboard"]</span>
                                 </div>
                             </a>
                             <ul class="nav collapse show flex-column gap-2" id="dashboard">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="/Trainee/Home/Index">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">Default</span>
+                                            <span class="nav-link-text ps-1">@Localizer["Default"]</span>
                                         </div>
                                     </a>
                                     <!-- more inner pages-->
@@ -141,7 +143,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Trainee/Courses/Index">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">Courses</span>
+                                            <span class="nav-link-text ps-1">@Localizer["Courses"]</span>
                                         </div>
                                     </a>
                                 </li>
@@ -149,7 +151,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Trainee/Enrollments/Index">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">My Enrollments</span>
+                                            <span class="nav-link-text ps-1">@Localizer["MyEnrollments"]</span>
                                         </div>
                                     </a>
                                 </li>
@@ -157,7 +159,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Trainee/Quizzes/MyQuizzes">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">My Quizzes</span>
+                                            <span class="nav-link-text ps-1">@Localizer["MyQuizzes"]</span>
                                         </div>
                                     </a>
                                 </li>
@@ -165,7 +167,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Trainee/Certificates/Index">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">My Certificates</span>
+                                            <span class="nav-link-text ps-1">@Localizer["MyCertificates"]</span>
                                         </div>
                                     </a>
                                 </li>
@@ -173,7 +175,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Trainee/Reviews/Index">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">My Reviews</span>
+                                            <span class="nav-link-text ps-1">@Localizer["MyReviews"]</span>
                                         </div>
                                     </a>
                                 </li>
@@ -193,17 +195,31 @@
                 <a class="navbar-brand me-1 me-sm-3" href="/Trainee/Home/Index">
                     <div class="d-flex align-items-center">
                         <div class="avatar avatar-xl"><img class="rounded-circle" src="~/images/logo.png" alt="" /></div>
-                        <span class="font-sans-serif">Trainee</span>
+                        <span class="font-sans-serif">@Localizer["Trainee"]</span>
                     </div>
                 </a>
 
                 <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+                    <!-- Language Switcher -->
+                    <li class="nav-item dropdown px-1">
+                        <a class="nav-link fa-icon-wait px-1" id="navbarDropdownLanguage" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-globe fs-0"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-2" aria-labelledby="navbarDropdownLanguage">
+                            <form asp-area="" asp-controller="Culture" asp-action="SetCulture" method="post">
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                <button type="submit" name="culture" value="en" class="dropdown-item">English</button>
+                                <button type="submit" name="culture" value="ar" class="dropdown-item">العربية</button>
+                            </form>
+                        </div>
+                    </li>
+
                     <!-- Theme Toggle -->
                     <li class="nav-item">
                         <div class="theme-control-toggle fa-icon-wait px-2">
                             <input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark" />
-                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch to light theme"><span class="fas fa-sun fs-0"></span></label>
-                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch to dark theme"><span class="fas fa-moon fs-0"></span></label>
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["SwitchToLightTheme"]"><span class="fas fa-sun fs-0"></span></label>
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["SwitchToDarkTheme"]"><span class="fas fa-moon fs-0"></span></label>
                         </div>
                     </li>
 
@@ -217,10 +233,10 @@
                                 <div class="card-header">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
-                                            <h6 class="card-header-title mb-0">Notifications</h6>
+                                            <h6 class="card-header-title mb-0">@Localizer["Notifications"]</h6>
                                         </div>
                                         <div class="col-auto ps-0 ps-sm-3">
-                                            <a class="card-link fw-normal" href="#">Mark all as read</a>
+                                            <a class="card-link fw-normal" href="#">@Localizer["MarkAllAsRead"]</a>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +247,7 @@
                                         <div class="list-group-item">
                                             <a class="notification notification-flush notification-unread" href="#!">
                                                 <div class="notification-body">
-                                                    <p class="mb-1"><strong>No notifications.</strong></p>
+                                                    <p class="mb-1"><strong>@Localizer["NoNotifications"]</strong></p>
                                                     <span class="notification-time"></span>
                                                 </div>
                                             </a>
@@ -298,7 +314,7 @@
                             <div class="bg-white dark__bg-1000 rounded-2 py-2">
 
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/Trainee/Profile/index">Profile &amp; account</a>
+                                <a class="dropdown-item" href="/Identity/Account/Profile">@Localizer["ProfileAndAccount"]</a>
                             </div>
                         </div>
                     </li>

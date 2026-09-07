@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "ar" : "en")" dir="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "rtl" : "ltr")">
 
 <head>
     <meta charset="utf-8">
@@ -68,7 +68,8 @@
     </style>
 
     <script>
-            var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+            var isRTL = @(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "true" : "false");
+            localStorage.setItem('isRTL', isRTL);
             if (isRTL) {
                 var linkDefault = document.getElementById('style-default');
                 var userLinkDefault = document.getElementById('user-style-default');

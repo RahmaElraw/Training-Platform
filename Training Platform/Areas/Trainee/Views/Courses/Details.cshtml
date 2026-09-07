@@ -69,7 +69,7 @@
                         <div class="col-md-4 mb-3">
 
                             <small class="text-600 d-block">
-                                Category
+                                @Localizer["Category"]
                             </small>
 
                             <strong>
@@ -80,7 +80,7 @@
                                 }
                                 else
                                 {
-                                    <span>N/A</span>
+                                    <span>@Localizer["NA"]</span>
                                 }
 
                             </strong>
@@ -89,18 +89,18 @@
                         <div class="col-md-4 mb-3">
 
                             <small class="text-600 d-block">
-                                Duration
+                                @Localizer["Duration"]
                             </small>
 
                             <strong>
-                                @Model.Course.DurationInHours Hours
+                                @Model.Course.DurationInHours @Localizer["Hours"]
                             </strong>
 
                         </div>
                         <div class="col-md-4 mb-3">
 
                             <small class="text-600 d-block">
-                                Lessons
+                                @Localizer["Lessons"]
                             </small>
 
                             <strong>
@@ -110,11 +110,11 @@
 
                     </div>
                     <div class="mb-3">
-                        <small class="text-600 d-block">Rating</small>
+                        <small class="text-600 d-block">@Localizer["Rating"]</small>
                         <div class="d-flex align-items-center text-warning">
                             <i class="fas fa-star me-1"></i>
                             <strong class="text-dark me-1">@Model.AverageRating / 5.0</strong>
-                            <span class="text-600 fs--1">(@Model.TotalReviews reviews)</span>
+                            <span class="text-600 fs--1">(@Model.TotalReviews @Localizer["reviews"])</span>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
 
                             <i class="fas fa-check-circle me-2"></i>
 
-                            You are enrolled in this course.
+                            @Localizer["YouAreEnrolled"]
 
                         </div>
 
@@ -143,7 +143,7 @@
                                 }
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>
-                                        Course Progress
+                                        @Localizer["CourseProgress"]
                                     </span>
 
                                     <strong>
@@ -163,12 +163,7 @@
                                     </div>
                                 </div>
 
-                                <small class="text-600">
-                                    @Model.CompletedLessons
-                                    of
-                                    @Model.TotalLessons
-                                    lessons completed.
-                                </small>
+                                <small class="text-600">@Model.CompletedLessons @Localizer["of"] @Model.TotalLessons @Localizer["lessonsCompleted"]</small>
                             </div>
                         }
 
@@ -179,7 +174,7 @@
 
                                 <i class="fas fa-graduation-cap me-2"></i>
 
-                                You have completed this course.
+                                @Localizer["CourseCompleted"]
                             </div>
                         }
                         <a asp-area="Trainee"
@@ -189,7 +184,7 @@
                            class="btn btn-primary">
 
                             <i class="fas fa-play me-1"></i>
-                            Continue Learning
+                            @Localizer["ContinueLearning"]
                         </a>
                     }
                     else
@@ -198,7 +193,7 @@
 
                         <div class="alert alert-info mt-3">
                             <i class="fas fa-info-circle me-2"></i>
-                            Enroll in this course to access its lessons.
+                            @Localizer["EnrollToAccess"]
                         </div>
 
                         <form asp-action="Enroll"
@@ -211,7 +206,7 @@
                             <button type="submit"
                                     class="btn btn-success">
                                 <i class="fas fa-user-plus me-1"></i>
-                                Enroll Now
+                                @Localizer["EnrollNow"]
                             </button>
 
                         </form>
@@ -226,7 +221,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        Course Information
+                        @Localizer["CourseInformation"]
                     </h5>
                 </div>
 
@@ -235,7 +230,7 @@
                     <!-- Trainer -->
                     <div class="mb-3">
                         <small class="text-600 d-block">
-                            Trainer
+                            @Localizer["Trainer"]
                         </small>
 
                         <strong>
@@ -245,7 +240,7 @@
                             }
                             else
                             {
-                                <span>N/A</span>
+                                <span>@Localizer["NA"]</span>
                             }
                         </strong>
                     </div>
@@ -253,7 +248,7 @@
                     <!-- Category -->
                     <div class="mb-3">
                         <small class="text-600 d-block">
-                            Category
+                            @Localizer["Category"]
                         </small>
 
                         <strong>
@@ -263,7 +258,7 @@
                             }
                             else
                             {
-                                <span>N/A</span>
+                                <span>@Localizer["NA"]</span>
                             }
                         </strong>
                     </div>
@@ -271,7 +266,7 @@
                     <!-- Level -->
                     <div class="mb-3">
                         <small class="text-600 d-block">
-                            Level
+                            @Localizer["Level"]
                         </small>
 
                         <strong>
@@ -282,18 +277,18 @@
                     <!-- Duration -->
                     <div class="mb-3">
                         <small class="text-600 d-block">
-                            Duration
+                            @Localizer["Duration"]
                         </small>
 
                         <strong>
-                            @Model.Course.DurationInHours Hours
+                            @Model.Course.DurationInHours @Localizer["Hours"]
                         </strong>
                     </div>
 
                     <!-- Lessons -->
                     <div>
                         <small class="text-600 d-block">
-                            Lessons
+                            @Localizer["Lessons"]
                         </small>
 
                         <strong>

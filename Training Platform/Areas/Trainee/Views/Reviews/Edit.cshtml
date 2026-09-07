@@ -1,0 +1,63 @@
+﻿@model Training_Platform.ViewModels.Trainee.ReviewEditVM
+
+@{
+    ViewData["Title"] = "Edit Review";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 text-dark">
+
+                    <div class="text-center mb-4">
+                        <i class="fas fa-edit fa-3x text-primary mb-3"></i>
+                        <h4>Edit Your Review</h4>
+                        <p class="text-secondary">@Model.CourseTitle</p>
+                    </div>
+
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CourseTitle" />
+
+                        <div class="mb-4">
+                            <label asp-for="Rating" class="form-label fw-bold">Your Rating</label>
+                            <select asp-for="Rating" class="form-select border-primary cursor-pointer">
+                                <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ - Very Good</option>
+                                <option value="3">⭐⭐⭐ - Good</option>
+                                <option value="2">⭐⭐ - Fair</option>
+                                <option value="1">⭐ - Poor</option>
+                            </select>
+                            <span asp-validation-for="Rating" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Comment" class="form-label fw-bold">Your Feedback (Optional)</label>
+                            <textarea asp-for="Comment"
+                                      class="form-control"
+                                      rows="4"></textarea>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <a asp-action="Index" class="btn btn-outline-dark">
+                                <i class="fas fa-arrow-left me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                Save Changes <i class="fas fa-save ms-1"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

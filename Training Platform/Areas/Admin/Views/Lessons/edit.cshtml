@@ -1,342 +1,187 @@
-﻿@model Training_Platform.ViewModels.LessonVM
+@model Training_Platform.ViewModels.LessonVM
 
-<div class="card">
+@{
+    ViewData["Title"] = Localizer["EditLesson"];
+}
 
-    <div class="card-header">
-        <h5 class="mb-0">@Localizer["EditLesson"]</h5>
+<div class="card shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0">
+            <i class="fas fa-edit me-1"></i>
+            @Localizer["EditLesson"]
+        </h5>
     </div>
 
     <div class="card-body">
-
         <form asp-action="Edit" method="post">
-
             @Html.AntiForgeryToken()
-
             <input type="hidden" asp-for="Id" />
 
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-            <div asp-validation-summary="ModelOnly"
-                 class="text-danger mb-3">
-            </div>
-
-
+            <!-- Title -->
             <div class="mb-3">
-
-                <label asp-for="Title"
-                       class="form-label">
+                <label asp-for="Title" class="form-label">
                     @Localizer["Title"]
                     <span class="text-danger">*</span>
                 </label>
-
-                <input asp-for="Title"
-                       class="form-control" />
-
-                <span asp-validation-for="Title"
-                      class="text-danger">
-                </span>
-
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
-
+            <!-- Description -->
             <div class="mb-3">
-
-                <label asp-for="Description"
-                       class="form-label">
+                <label asp-for="Description" class="form-label">
                     @Localizer["Description"]
                 </label>
-
-                <textarea asp-for="Description"
-                          class="form-control"
-                          rows="4">
-                </textarea>
-
-                <span asp-validation-for="Description"
-                      class="text-danger">
-                </span>
-
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
-
+            <!-- Video -->
             <div class="mb-3">
-
-                <label asp-for="VideoUrl"
-                       class="form-label">
+                <label asp-for="VideoUrl" class="form-label">
                     @Localizer["VideoUrl"]
                     <span class="text-danger">*</span>
                 </label>
-
-                <input asp-for="VideoUrl"
-                       class="form-control" />
-
-                <span asp-validation-for="VideoUrl"
-                      class="text-danger">
-                </span>
-
+                <input asp-for="VideoUrl" type="url" class="form-control" />
+                <span asp-validation-for="VideoUrl" class="text-danger"></span>
             </div>
 
-
             <div class="row">
-
+                <!-- Course -->
                 <div class="col-md-6 mb-3">
-
-                    <label asp-for="CourseId"
-                           class="form-label">
-
+                    <label asp-for="CourseId" class="form-label">
                         @Localizer["Course"]
                         <span class="text-danger">*</span>
-
                     </label>
-
-                    <select asp-for="CourseId"
-                            asp-items="ViewBag.Courses"
-                            class="form-select">
-
-                        <option value="">
-                            @Localizer["SelectCourse"]
-                        </option>
-
+                    <select asp-for="CourseId" asp-items="ViewBag.Courses" class="form-select">
+                        <option value="">@Localizer["SelectCourse"]</option>
                     </select>
-
-                    <span asp-validation-for="CourseId"
-                          class="text-danger">
-                    </span>
-
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
                 </div>
 
-
+                <!-- Order -->
                 <div class="col-md-6 mb-3">
-
-                    <label asp-for="OrderNumber"
-                           class="form-label">
-
+                    <label asp-for="OrderNumber" class="form-label">
                         @Localizer["OrderNumber"]
                         <span class="text-danger">*</span>
-
                     </label>
-
-                    <input asp-for="OrderNumber"
-                           type="number"
-                           min="1"
-                           class="form-control" />
-
-                    <span asp-validation-for="OrderNumber"
-                          class="text-danger">
-                    </span>
-
+                    <input asp-for="OrderNumber" type="number" min="1" class="form-control" />
+                    <span asp-validation-for="OrderNumber" class="text-danger"></span>
                 </div>
-
             </div>
 
             <hr class="my-4" />
 
+            <!-- Course Materials Section -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-
-                <h5 class="mb-0">
-                    @Localizer["CourseMaterials"]
-                </h5>
-
-                <button type="button"
-                        class="btn btn-success btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addMaterialModal">
-
+                <h5 class="mb-0">@Localizer["CourseMaterials"]</h5>
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addMaterialModal">
                     <i class="fas fa-plus me-1"></i>
                     @Localizer["AddMaterial"]
-
                 </button>
-
             </div>
 
-
-            @if (Model.CourseMaterials != null &&
-                 Model.CourseMaterials.Any())
+            @if (Model.CourseMaterials != null && Model.CourseMaterials.Any())
             {
                 <div class="list-group mb-4">
-
                     @foreach (var material in Model.CourseMaterials)
                     {
                         <div class="list-group-item">
-
                             <div class="d-flex justify-content-between align-items-center">
-
                                 <div>
-
-                                    <h6 class="mb-1">
-                                        @material.Title
-                                    </h6>
-
-                                    <a href="@material.Url"
-                                       target="_blank"
-                                       class="text-primary">
-
+                                    <h6 class="mb-1">@material.Title</h6>
+                                    <a href="@material.Url" target="_blank" class="text-primary">
                                         <i class="fas fa-external-link-alt me-1"></i>
                                         @Localizer["OpenMaterial"]
-
                                     </a>
-
                                 </div>
-
 
                                 <div class="d-flex gap-2">
-
-                                    <a asp-action="EditMaterial"
-                                       asp-route-id="@material.Id"
-                                       class="btn btn-sm btn-primary">
-
+                                    <a asp-action="EditMaterial" asp-route-id="@material.Id" class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i>
                                         @Localizer["Edit"]
-
                                     </a>
 
-
-                                    <form asp-action="DeleteMaterial"
-                                          asp-route-id="@material.Id"
-                                          method="post">
-
+                                    <form asp-action="DeleteMaterial" asp-route-id="@material.Id" method="post">
                                         @Html.AntiForgeryToken()
-
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this material?');">
-
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this material?');">
                                             <i class="fas fa-trash"></i>
                                             @Localizer["Delete"]
-
                                         </button>
-
                                     </form>
-
                                 </div>
-
                             </div>
-
                         </div>
                     }
-
                 </div>
             }
             else
             {
-                <div class="alert alert-info">
+                <div class="alert alert-info mb-4">
                     @Localizer["NoCourseMaterialsYet"]
                 </div>
             }
-            <div class="modal fade"
-                 id="addMaterialModal"
-                 tabindex="-1"
-                 aria-hidden="true">
 
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-
-                            <h5 class="modal-title">
-                                @Localizer["AddCourseMaterial"]
-                            </h5>
-
-                            <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal">
-                            </button>
-
-                        </div>
-
-                        <form asp-action="AddMaterial"
-                              method="post">
-
-                            @Html.AntiForgeryToken()
-
-                            <div class="modal-body">
-
-                                <input type="hidden"
-                                       name="LessonId"
-                                       value="@Model.Id" />
-
-                                <div class="mb-3">
-
-                                    <label class="form-label">
-                                        @Localizer["Title"]
-                                    </label>
-
-                                    <input type="text"
-                                           name="Title"
-                                           class="form-control"
-                                           maxlength="100"
-                                           required />
-
-                                </div>
-
-                                <div class="mb-3">
-
-                                    <label class="form-label">
-                                        @Localizer["Url"]
-                                    </label>
-
-                                    <input type="url"
-                                           name="Url"
-                                           class="form-control"
-                                           placeholder="https://example.com"
-                                           required />
-
-                                </div>
-
-                            </div>
-
-                            <div class="modal-footer">
-
-                                <button type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal">
-
-                                    @Localizer["Cancel"]
-
-                                </button>
-
-                                <button type="submit"
-                                        class="btn btn-success">
-
-                                    <i class="fas fa-plus me-1"></i>
-                                    @Localizer["AddMaterial"]
-
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="d-flex gap-2">
-
-                <button type="submit"
-                        class="btn btn-primary">
-
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i>
                     @Localizer["SaveChanges"]
-
                 </button>
 
-                <a asp-action="Index"
-                   class="btn btn-secondary">
-
-                    @Localizer["Cancel"]
-
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info text-white">
+                    <i class="fas fa-eye me-1"></i>
+                    @Localizer["Details"]
                 </a>
 
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    @Localizer["Back"]
+                </a>
             </div>
 
         </form>
-
     </div>
-
 </div>
 
+<!-- Add Course Material Modal -->
+<div class="modal fade" id="addMaterialModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Localizer["AddCourseMaterial"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form asp-action="AddMaterial" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" name="LessonId" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["Title"]</label>
+                        <input type="text" name="Title" class="form-control" maxlength="100" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["Url"]</label>
+                        <input type="url" name="Url" class="form-control" placeholder="https://example.com" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        @Localizer["Cancel"]
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus me-1"></i>
+                        @Localizer["AddMaterial"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Training_Platform.Models.Certificate>
+
+@{
+    ViewData["Title"] = "My Certificates";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+        <div class="col">
+            <h3 class="mb-1">My Certificates</h3>
+            <p class="text-muted mb-0">
+                View and access your course certificates.
+            </p>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+
+            @foreach (var certificate in Model)
+            {
+                <div class="col-md-6 col-xl-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex align-items-center mb-3">
+
+                                <div class="avatar avatar-2xl me-3">
+                                    <div class="avatar-name rounded-circle bg-primary">
+                                        <span>
+                                            <i class="fas fa-certificate text-white"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5 class="mb-1">
+                                        @certificate.Course.Title
+                                    </h5>
+
+                                    <small class="text-muted">
+                                        Certificate
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <hr />
+
+                            <div class="mb-2">
+                                <strong>Certificate Number:</strong>
+                                <span class="text-muted">
+                                    @certificate.CertificateNumber
+                                </span>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>Issue Date:</strong>
+                                <span class="text-muted">
+                                    @certificate.IssueDate.ToString("dd MMM yyyy")
+                                </span>
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(certificate.CertificateUrl))
+                            {
+                                <a href="@certificate.CertificateUrl"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="btn btn-primary w-100">
+
+                                    <i class="fas fa-certificate me-2"></i>
+                                    View Certificate
+
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="button"
+                                        class="btn btn-secondary w-100"
+                                        disabled>
+
+                                    <i class="fas fa-clock me-2"></i>
+                                    Certificate Not Available Yet
+
+                                </button>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body text-center py-5">
+
+                <div class="mb-3">
+                    <i class="fas fa-certificate fa-3x text-muted"></i>
+                </div>
+
+                <h5>No Certificates Yet</h5>
+
+                <p class="text-muted mb-0">
+                    You don't have any certificates yet.
+                    Complete a course to earn your certificate.
+                </p>
+
+            </div>
+        </div>
+    }
+
+</div>

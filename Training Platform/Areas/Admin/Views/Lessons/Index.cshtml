@@ -1,144 +1,204 @@
-﻿@model Training_Platform.ViewModels.LessonWithRelatedVM
+@model Training_Platform.ViewModels.LessonWithRelatedVM
 
-<div class="card mb-4">
+<div class="card mb-4 shadow-sm">
 
     <div class="card-header d-flex justify-content-between align-items-center">
-
         <h5 class="mb-0">
+            <i class="fas fa-book-open me-1"></i>
             @Localizer["AllLessons"]
         </h5>
 
-        <a asp-action="Create"
-           class="btn btn-primary">
-
+        <a asp-action="Create" class="btn btn-primary">
             <i class="fas fa-plus me-1"></i>
             @Localizer["AddLesson"]
-
         </a>
-
     </div>
-
 
     <div class="card-body">
 
-        <form method="get">
+        <!-- Search -->
+        <form asp-action="Index" method="get">
 
             <div class="input-group">
 
-                <input asp-for="Query"
+                <input type="text"
                        name="query"
+                       value="@Model.Query"
                        class="form-control"
                        placeholder="@Localizer["SearchLessonPlaceholder"]" />
 
-                <button type="submit"
-                        class="btn btn-primary">
-
-                    <i class="fas fa-search"></i>
-
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search me-1"></i>
+                    @Localizer["Search"]
                 </button>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Query))
+                {
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        <i class="fas fa-times me-1"></i>
+                        @Localizer["Clear"]
+
+                    </a>
+                }
 
             </div>
 
         </form>
 
     </div>
-
 </div>
 
 
-@if (!Model.Lessons.Any())
+<!-- Toast Messages -->
+@if (TempData["Success"] != null)
 {
-    <div class="alert alert-warning">
-        @Localizer["NoLessonsFound"]
-    </div>
+    <script>
+        toastr.success('@Html.Raw(TempData["Success"])');
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script>
+        toastr.error('@Html.Raw(TempData["Error"])');
+    </script>
 }
 
 
-@foreach (var item in Model.Lessons)
+<!-- Empty Result -->
+@if (!Model.Lessons.Any())
 {
-    <article class="card mb-3 shadow-sm">
+    <div class="alert alert-warning">
+        <i class="fas fa-info-circle me-1"></i>
+        @if (!string.IsNullOrWhiteSpace(Model.Query))
+        {
+            <span>
+                @Localizer["NoLessonsFoundMatching"] "<strong>@Model.Query</strong>".
+            </span>
+        }
+        else
+        {
+            <span>
+                @Localizer["NoLessonsFound"]
+            </span>
+        }
+    </div>
+}
+else
+{
+    <!-- Lessons -->
+    @foreach (var item in Model.Lessons)
+    {
+        <article class="card mb-3 shadow-sm">
 
-        <div class="card-body">
+            <div class="card-body">
 
-            <div class="row">
+                <div class="row align-items-center">
 
-                <div class="col-md-9">
+                    <!-- Lesson Information -->
 
-                    <h4 class="mb-2">
-                        @item.OrderNumber. @item.Title
-                    </h4>
+                    <div class="col-md-9">
 
-                    <p class="text-muted">
-                        @(string.IsNullOrWhiteSpace(item.Description)
-                            ? Localizer["NoDescription"].Value
-                            : item.Description)
-                    </p>
+                        <div class="d-flex align-items-center gap-2 mb-2">
 
-                    <div class="d-flex flex-wrap gap-4">
+                            <span class="badge bg-primary">
+                                @Localizer["Lesson"] @item.OrderNumber
+                            </span>
 
-                        <span>
-                            <strong>@Localizer["Course"]</strong>
-                            @(item.Course?.Title ?? Localizer["NoCourse"].Value)
-                        </span>
+                            <h5 class="mb-0">
+                                @item.Title
+                            </h5>
 
-                        <span>
-                            <strong>@Localizer["Order"]</strong>
-                            @item.OrderNumber
-                        </span>
+                        </div>
 
-                        <span>
-                            <strong>@Localizer["Materials"]</strong>
-                            @item.CourseMaterials.Count
-                        </span>
+                        <p class="text-muted mb-3">
+                            @(string.IsNullOrWhiteSpace(item.Description)
+                                ? Localizer["NoDescription"].Value
+                                : item.Description)
+                        </p>
 
-                        <span>
-                            <strong>@Localizer["ProgressRecords"]</strong>
-                            @item.UserProgresses.Count
-                        </span>
+
+                        <div class="d-flex flex-wrap gap-4">
+
+                            <span>
+                                <strong>
+                                    <i class="fas fa-book me-1"></i>
+                                    @Localizer["Course"]:
+                                </strong>
+                                @(item.Course?.Title ?? Localizer["NoCourse"].Value)
+                            </span>
+
+                            <span>
+                                <strong>
+                                    <i class="fas fa-sort-numeric-up me-1"></i>
+                                    @Localizer["Order"]:
+                                </strong>
+                                @item.OrderNumber
+                            </span>
+
+                            <span>
+                                <strong>
+                                    <i class="fas fa-file-alt me-1"></i>
+                                    @Localizer["Materials"]:
+                                </strong>
+                                <span class="badge bg-secondary">
+                                    @item.CourseMaterials.Count
+                                </span>
+                            </span>
+
+                            <span>
+                                <strong>
+                                    <i class="fas fa-users me-1"></i>
+                                    @Localizer["Progress"]:
+                                </strong>
+                                <span class="badge bg-secondary">
+                                    @item.UserProgresses.Count
+                                </span>
+                            </span>
+
+                        </div>
 
                     </div>
 
-                </div>
 
+                    <!-- Actions -->
 
-                <div class="col-md-3">
+                    <div class="col-md-3 mt-3 mt-md-0">
 
-                    <div class="d-grid gap-2">
+                        <div class="d-grid gap-2">
 
-                        <a asp-action="Details"
-                           asp-route-id="@item.Id"
-                           class="btn btn-info text-white">
+                            <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="btn btn-info text-white">
+                                <i class="fas fa-eye me-1"></i>
+                                @Localizer["Details"]
+                            </a>
 
-                            <i class="fas fa-eye me-1"></i>
-                            @Localizer["Details"]
+                            <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-primary">
+                                <i class="fas fa-edit me-1"></i>
+                                @Localizer["Edit"]
+                            </a>
 
-                        </a>
+                            <form asp-action="Delete"
+                                  asp-route-id="@item.Id"
+                                  method="post">
 
-                        <a asp-action="Edit"
-                           asp-route-id="@item.Id"
-                           class="btn btn-primary">
+                                @Html.AntiForgeryToken()
 
-                            <i class="fas fa-edit me-1"></i>
-                            @Localizer["Edit"]
+                                <button type="submit"
+                                        class="btn btn-danger w-100"
+                                        onclick="return confirm('@Localizer["ConfirmDeleteLesson"]');">
+                                    <i class="fas fa-trash-alt me-1"></i>
+                                    @Localizer["Delete"]
+                                </button>
 
-                        </a>
+                            </form>
 
-                        <form asp-action="Delete"
-                              asp-route-id="@item.Id"
-                              method="post">
-
-                            @Html.AntiForgeryToken()
-
-                            <button type="submit"
-                                    class="btn btn-danger w-100"
-                                    onclick="return confirm('Are you sure you want to delete this lesson?');">
-
-                                <i class="fas fa-trash-alt me-1"></i>
-                                @Localizer["Delete"]
-
-                            </button>
-
-                        </form>
+                        </div>
 
                     </div>
 
@@ -146,22 +206,49 @@
 
             </div>
 
-        </div>
-
-    </article>
+        </article>
+    }
 }
 
 
+<!-- Pagination -->
 @if (Model.TotalPages > 1)
 {
-    <nav>
+    <nav aria-label="Lessons pagination">
 
         <ul class="pagination justify-content-center">
 
+            <!-- Previous -->
+
+            <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+
+                @if (Model.CurrentPage > 1)
+                {
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@(Model.CurrentPage - 1)"
+                       asp-route-query="@Model.Query">
+
+                        <i class="fas fa-chevron-left me-1"></i>
+                        @Localizer["Previous"]
+
+                    </a>
+                }
+                else
+                {
+                    <span class="page-link">
+                        <i class="fas fa-chevron-left me-1"></i>
+                        @Localizer["Previous"]
+                    </span>
+                }
+
+            </li>
+
+
+            <!-- Page Numbers -->
             @for (int i = 1; i <= Model.TotalPages; i++)
             {
-                <li class="page-item
-                    @(i == Model.CurrentPage ? "active" : "")">
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
 
                     <a class="page-link"
                        asp-action="Index"
@@ -174,6 +261,33 @@
 
                 </li>
             }
+
+
+            <!-- Next -->
+
+            <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@(Model.CurrentPage + 1)"
+                       asp-route-query="@Model.Query">
+
+                        @Localizer["Next"]
+                        <i class="fas fa-chevron-right ms-1"></i>
+
+                    </a>
+                }
+                else
+                {
+                    <span class="page-link">
+                        @Localizer["Next"]
+                        <i class="fas fa-chevron-right ms-1"></i>
+                    </span>
+                }
+
+            </li>
 
         </ul>
 

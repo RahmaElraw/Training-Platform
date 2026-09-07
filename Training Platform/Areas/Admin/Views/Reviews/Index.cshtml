@@ -1,122 +1,68 @@
-﻿@model Training_Platform.ViewModels.ReviewWithRelatedVM
+@model Training_Platform.ViewModels.ReviewWithRelatedVM
 
-<div class="card mb-3">
-    @if (Model.TotalPages > 1)
-    {
-        <nav>
+@{
+    ViewData["Title"] = Localizer["ManageReviews"];
+}
 
-            <ul class="pagination justify-content-center">
+<div class="card shadow-sm mb-3">
 
-                @for (int i = 1; i <= Model.TotalPages; i++)
-                {
-                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-
-                        <a class="page-link"
-                           asp-action="Index"
-                           asp-route-page="@i"
-                           asp-route-query="@Model.Query">
-
-                            @i
-
-                        </a>
-
-                    </li>
-                }
-
-            </ul>
-
-        </nav>
-    }
-
-    <div class="card-header">
+    <!-- Header: Search & Title -->
+    <div class="card-header bg-white py-3">
         <div class="row align-items-center">
-
             <div class="col">
                 <h5 class="mb-0">@Localizer["AllReviews"]</h5>
             </div>
 
             <div class="col-auto">
-
                 <form asp-action="Index" method="get">
-
                     <div class="input-group">
-
                         <input name="query"
                                value="@Model.Query"
                                class="form-control form-control-sm"
                                placeholder="@Localizer["SearchPlaceholder"]" />
 
-                        <button class="btn btn-primary btn-sm">
-
+                        <button class="btn btn-primary btn-sm" type="submit">
                             <i class="fas fa-search"></i>
-
                         </button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
     </div>
 
-    <div class="card-body">
-
+    <!-- Body: Reviews Table -->
+    <div class="card-body p-0">
         @if (!Model.Reviews.Any())
         {
-            <div class="alert alert-warning text-center mb-0">
-
+            <div class="alert alert-warning text-center m-3">
                 @Localizer["NoReviewsFound"]
-
             </div>
         }
         else
         {
             <div class="table-responsive">
-
-                <table class="table table-hover align-middle">
-
-                    <thead class="bg-200">
-
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                         <tr>
-
                             <th>@Localizer["Course"]</th>
-
                             <th>@Localizer["User"]</th>
-
                             <th>@Localizer["Rating"]</th>
-
                             <th>@Localizer["Comment"]</th>
-
                             <th>@Localizer["Date"]</th>
-
                             <th class="text-center">@Localizer["Actions"]</th>
-
                         </tr>
-
                     </thead>
-
                     <tbody>
-
                         @foreach (var item in Model.Reviews)
                         {
                             <tr>
-
                                 <td>
-
-                                    <strong>@item.Course.Title</strong>
-
+                                    <strong>@(item.Course?.Title ?? "N/A")</strong>
                                 </td>
-
                                 <td>
-
-                                    @item.User.UserName
-
+                                    @(item.User?.UserName ?? "N/A")
                                 </td>
-
                                 <td>
-
                                     @for (int i = 1; i <= 5; i++)
                                     {
                                         if (i <= item.Rating)
@@ -128,104 +74,101 @@
                                             <i class="far fa-star text-secondary"></i>
                                         }
                                     }
-
-                                    <span class="ms-1">
-
-                                        (@item.Rating)
-
-                                    </span>
-
+                                    <span class="ms-1 fw-bold">(@item.Rating)</span>
                                 </td>
-
                                 <td>
-
                                     @(string.IsNullOrWhiteSpace(item.Comment)
                                         ? "-"
                                         : item.Comment.Length > 60
                                             ? item.Comment[..60] + "..."
                                             : item.Comment)
-
                                 </td>
-
                                 <td>
-
                                     @item.CreatedAt.ToString("dd MMM yyyy")
-
                                 </td>
-
                                 <td class="text-center">
-
                                     <a asp-action="Details"
                                        asp-route-id="@item.Id"
-                                       class="btn btn-info btn-sm text-white">
-
+                                       class="btn btn-info btn-sm text-white me-1"
+                                       title="@Localizer["Details"]">
                                         <i class="fas fa-eye"></i>
-
                                     </a>
-
                                     <button class="btn btn-danger btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#deleteReviewModal"
-                                            data-id="@item.Id">
-
+                                            data-id="@item.Id"
+                                            title="@Localizer["Delete"]">
                                         <i class="fas fa-trash"></i>
-
                                     </button>
-
-                                    <form asp-action="Delete" method="post">
-
-                                        @Html.AntiForgeryToken()
-
-                                        <input type="hidden"
-                                               id="deleteReviewId"
-                                               name="id" />
-
-                                        <button type="button"
-                                                class="btn btn-secondary"
-                                                data-bs-dismiss="modal">
-
-                                            @Localizer["Cancel"]
-
-                                        </button>
-
-                                        <button type="submit"
-                                                class="btn btn-danger">
-
-                                            @Localizer["Delete"]
-
-                                        </button>
-
-                                    </form>
-
                                 </td>
-
                             </tr>
                         }
-
                     </tbody>
-
                 </table>
-
             </div>
         }
-
     </div>
 
+    <!-- Footer: Pagination -->
+    @if (Model.TotalPages > 1)
+    {
+        <div class="card-footer bg-white py-3">
+            <nav>
+                <ul class="pagination justify-content-center mb-0">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-page="@i"
+                               asp-route-query="@Model.Query">
+                                @i
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    }
+</div>
 
+<!-- Single Delete Modal Wrapper -->
+<div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteReviewModalLabel">@Localizer["ConfirmDelete"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Localizer["DeleteReviewConfirmation"]
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="deleteReviewId" name="id" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        @Localizer["Cancel"]
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        @Localizer["Delete"]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts
 {
     <script>
-
         const reviewModal = document.getElementById('deleteReviewModal');
-
-        reviewModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget;
-
-            document.getElementById('deleteReviewId').value =
-                button.getAttribute('data-id');
-        });
-
+        if (reviewModal) {
+            reviewModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const reviewId = button.getAttribute('data-id');
+                document.getElementById('deleteReviewId').value = reviewId;
+            });
+        }
     </script>
 }

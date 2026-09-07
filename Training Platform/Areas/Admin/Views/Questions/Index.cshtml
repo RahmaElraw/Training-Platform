@@ -19,7 +19,6 @@
 
     </div>
 
-
     <div class="card-body">
 
         <!-- Search -->
@@ -60,43 +59,6 @@
     </div>
 
 </div>
-
-
-<!-- TempData Messages -->
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert">
-
-        <i class="fas fa-check-circle me-1"></i>
-
-        @TempData["Success"]
-
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-        </button>
-
-    </div>
-}
-
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show"
-         role="alert">
-
-        <i class="fas fa-exclamation-circle me-1"></i>
-
-        @TempData["Error"]
-
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-        </button>
-
-    </div>
-}
 
 
 <!-- Questions -->
@@ -140,7 +102,6 @@ else
                             @item.QuestionText
                         </h5>
 
-
                         <!-- Quiz -->
 
                         <p class="text-muted mb-3">
@@ -154,7 +115,6 @@ else
 
                         </p>
 
-
                         <!-- Question Data -->
 
                         <div class="d-flex flex-wrap gap-4">
@@ -162,15 +122,12 @@ else
                             <!-- Mark -->
 
                             <span>
-
                                 <strong>
                                     @Localizer["Mark"]:
                                 </strong>
 
                                 @item.Mark
-
                             </span>
-
 
                             <!-- Question Type -->
 
@@ -203,14 +160,11 @@ else
                                 else
                                 {
                                     <span class="badge bg-secondary">
-
                                         @item.QuestionType
-
                                     </span>
                                 }
 
                             </span>
-
 
                             <!-- Options -->
 
@@ -372,7 +326,6 @@ else
 
                         @Localizer["Next"]
                         <i class="fas fa-chevron-right"></i>
-
                     </span>
                 }
 
@@ -381,4 +334,34 @@ else
         </ul>
 
     </nav>
+}
+
+
+<!-- Toastr Messages -->
+@if (TempData["success"] != null)
+{
+    <script>
+        toastr.success('@TempData["success"]');
+    </script>
+}
+
+@if (TempData["error"] != null)
+{
+    <script>
+        toastr.error('@TempData["error"]');
+    </script>
+}
+
+@if (TempData["warning"] != null)
+{
+    <script>
+        toastr.warning('@TempData["warning"]');
+    </script>
+}
+
+@if (TempData["info"] != null)
+{
+    <script>
+        toastr.info('@TempData["info"]');
+    </script>
 }

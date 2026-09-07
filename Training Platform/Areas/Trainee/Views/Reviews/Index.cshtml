@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Training_Platform.Models.Review>
+
+@{
+    ViewData["Title"] = "My Reviews";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1 text-dark">My Reviews</h3>
+            <p class="text-secondary mb-0">Manage your course feedback and ratings.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="py-3 px-4">Course</th>
+                                <th class="py-3">Rating</th>
+                                <th class="py-3">Comment</th>
+                                <th class="py-3">Date</th>
+                                <th class="py-3 text-end px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="px-4 fw-bold text-dark">@item.Course.Title</td>
+                                    <td>
+                                        <div class="text-primary">
+                                            @for (int i = 0; i < item.Rating; i++)
+                                            {
+                                                <i class="fas fa-star"></i>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var comment = string.IsNullOrWhiteSpace(item.Comment) ? "<em class='text-muted'>No comment</em>" : item.Comment;
+                                            if (comment.Length > 50 && !comment.Contains("<em"))
+                                            {
+                                                comment = comment.Substring(0, 50) + "...";
+                                            }
+                                        }
+                                        @Html.Raw(comment)
+                                    </td>
+                                    <td class="text-secondary">@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                    <td class="text-end px-4">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+
+                                        <!-- Direct Inline Delete Form -->
+                                        <form asp-action="Delete"
+                                              asp-route-id="@item.Id"
+                                              method="post"
+                                              class="d-inline"
+                                              onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-dark">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-star fa-3x text-secondary mb-3"></i>
+                    <h5 class="text-dark">No reviews yet</h5>
+                    <p class="text-secondary">You haven't submitted any course reviews.</p>
+                    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary mt-2">Browse Courses</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

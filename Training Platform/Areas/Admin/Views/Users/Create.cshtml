@@ -1,68 +1,65 @@
-﻿@model Training_Platform.ViewModels.CreateUserVM
+@model Training_Platform.ViewModels.CreateUserVM
 
-<div class="card">
+@{
+    ViewData["Title"] = Localizer["CreateUser"];
+}
 
-    <div class="card-header">
+<div class="card shadow-sm">
+    <div class="card-header bg-white py-3">
         <h5 class="mb-0">@Localizer["CreateUser"]</h5>
     </div>
 
     <div class="card-body">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
 
-        <form asp-action="Create" method="post">
-
-            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
             <div class="mb-3">
                 <label asp-for="UserName" class="form-label"></label>
                 <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="PhoneNumber" class="form-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    @Localizer["ProfileImage"]
-                </label>
-
+                <label class="form-label">@Localizer["ProfileImage"]</label>
                 <input type="file"
                        name="ProfileImageFile"
                        class="form-control"
                        accept="image/*" />
-
             </div>
 
             <div class="mb-3">
                 <label asp-for="Password" class="form-label"></label>
                 <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="ConfirmPassword" class="form-label"></label>
                 <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="SelectedRole"></label>
-
+            <div class="mb-3">
+                <label asp-for="SelectedRole" class="form-label"></label>
                 <select asp-for="SelectedRole"
                         asp-items="Model.Roles"
-                        class="form-control">
-
+                        class="form-select">
                     <option value="">@Localizer["SelectRole"]</option>
-
                 </select>
-
-                <span asp-validation-for="SelectedRole"
-                      class="text-danger"></span>
+                <span asp-validation-for="SelectedRole" class="text-danger"></span>
             </div>
 
             <div class="form-check mb-4">
@@ -72,16 +69,17 @@
                 </label>
             </div>
 
-            <button class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                 @Localizer["Create"]
             </button>
-
-            <a asp-action="Index" class="btn btn-secondary">
+            <a asp-action="Index" class="btn btn-secondary ms-1">
                 @Localizer["Cancel"]
             </a>
 
         </form>
-
     </div>
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

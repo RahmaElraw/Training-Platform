@@ -151,13 +151,14 @@
 
                             <button type="submit"
                                     class="btn btn-danger w-100"
-                                    onclick="return confirm('Are you sure you want to delete this quiz?');">
+                                    onclick="return confirm(
+                                'Warning: Deleting this quiz will also delete all questions, options, and quiz results. Are you sure you want to continue?'
+                                );">
 
                                 <i class="fas fa-trash-alt me-1"></i>
                                 @Localizer["Delete"]
 
                             </button>
-
                         </form>
 
                     </div>

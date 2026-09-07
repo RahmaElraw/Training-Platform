@@ -13,5 +13,7 @@
         public string UserEmail { get; set; } = string.Empty;
 
         public string CourseTitle { get; set; } = string.Empty;
+
+        public string? CertificateUrl { get; set; }
     }
 }

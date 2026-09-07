@@ -1,0 +1,52 @@
+﻿@model Training_Platform.ViewModels.Trainee.QuizResultVM
+
+@{
+    ViewData["Title"] = "Quiz Result";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow text-center border-0">
+                <div class="card-header p-4 @(Model.IsPassed ? "bg-success" : "bg-danger") text-white">
+                    <i class="fas @(Model.IsPassed ? "fa-check-circle" : "fa-times-circle") fa-4x mb-2"></i>
+                    <h2 class="mb-0 text-white">@(Model.IsPassed ? "Congratulations!" : "Quiz Completed")</h2>
+                    <p class="mb-0 fs-5">@(Model.IsPassed ? "You passed the quiz." : "You did not meet the passing score.")</p>
+                </div>
+                <div class="card-body p-4">
+                    <h4 class="text-muted mb-4">@Model.QuizTitle</h4>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded">
+                                <small class="text-muted d-block">Your Score</small>
+                                <span class="fs-3 fw-bold @(Model.IsPassed ? "text-success" : "text-danger")">
+                                    @Model.Score / @Model.TotalPossibleScore
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded">
+                                <small class="text-muted d-block">Passing Score Required</small>
+                                <span class="fs-3 fw-bold text-dark">@Model.PassingScore</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-muted fs--1">
+                        Submitted on @Model.SubmittedAt.ToLocalTime().ToString("f")
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <a asp-controller="Lessons"
+                           asp-action="Index"
+                           asp-route-courseId="@Model.CourseId"
+                           class="btn btn-primary px-4">
+                            <i class="fas fa-arrow-left me-1"></i> Back to Course
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

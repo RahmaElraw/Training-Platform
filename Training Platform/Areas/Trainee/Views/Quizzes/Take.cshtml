@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white shadow-sm rounded">
         <div>
             <h3 class="mb-0">@Model.Title</h3>
-            <small class="text-muted">Total Questions: @Model.Questions.Count</small>
+            <small class="text-muted">@Localizer["TotalQuestions"] @Model.Questions.Count</small>
         </div>
         <div class="badge bg-warning text-dark fs-6 px-3 py-2" id="timerBadge">
             <i class="fas fa-clock me-1"></i>
@@ -25,8 +25,8 @@
             var question = Model.Questions[i];
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Question @(i + 1)</h5>
-                    <span class="badge bg-secondary">@question.Mark Mark(s)</span>
+                    <h5 class="card-title mb-0">@Localizer["Question"] @(i + 1)</h5>
+                    <span class="badge bg-secondary">@question.Mark @Localizer["Marks"]</span>
                 </div>
                 <div class="card-body">
                     <p class="fw-bold fs-5 mb-3">@question.QuestionText</p>
@@ -52,7 +52,7 @@
 
         <div class="d-flex justify-content-end mb-5">
             <button type="submit" class="btn btn-primary btn-lg px-5">
-                <i class="fas fa-paper-plane me-2"></i>Submit Answers
+                <i class="fas fa-paper-plane me-2"></i>@Localizer["SubmitAnswers"]
             </button>
         </div>
     </form>
@@ -77,7 +77,7 @@
 
                 if (--durationSeconds < 0) {
                     clearInterval(timer);
-                    alert("Time is up! Your quiz will be submitted automatically.");
+                    alert("@Localizer["TimeIsUp"]");
                     form.submit();
                 }
             }, 1000);

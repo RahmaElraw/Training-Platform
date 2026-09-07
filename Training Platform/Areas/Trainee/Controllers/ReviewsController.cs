@@ -5,7 +5,7 @@ using Training_Platform.ViewModels.Trainee;
 namespace Training_Platform.Areas.Trainee.Controllers
 {
     [Area(SD.Trainee_Area)]
-    [Authorize] 
+    [Authorize(Roles = RoleNames.TRAINEE)]
     public class ReviewsController : Controller
     {
         private readonly IRepository<Review> _reviewRepository;

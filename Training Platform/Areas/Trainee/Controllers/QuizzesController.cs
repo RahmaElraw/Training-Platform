@@ -6,7 +6,7 @@ using QuestionVM = Training_Platform.ViewModels.Trainee.QuestionVM;
 namespace Training_Platform.Areas.Trainee.Controllers
 {
     [Area(SD.Trainee_Area)]
-    [Authorize]
+    [Authorize(Roles = RoleNames.TRAINEE)]
     public class QuizzesController : Controller
     {
         private readonly IRepository<Quiz> _quizRepository;

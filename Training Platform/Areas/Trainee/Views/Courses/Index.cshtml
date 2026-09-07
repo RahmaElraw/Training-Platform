@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Training_Platform.Models.Course>
 
 @{
-    ViewData["Title"] = "Courses";
+    ViewData["Title"] = @Localizer["Courses"];
     var categories = ViewBag.Categories as IEnumerable<Training_Platform.Models.Category> ?? [];
     int? selectedCategory = ViewBag.CategoryId as int?;
     string? selectedLevel = ViewBag.Level as string;
@@ -13,9 +13,9 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <h4 class="mb-1 text-dark fw-bold">Courses</h4>
+            <h4 class="mb-1 text-dark fw-bold">@Localizer["Courses"]</h4>
             <p class="text-secondary small mb-0">
-                Explore our available training courses.
+                @Localizer["ExploreCourses"]
             </p>
         </div>
     </div>
@@ -29,13 +29,13 @@
                    name="query"
                    value="@ViewBag.Query"
                    class="form-control form-control-sm"
-                   placeholder="Search by title or description..." />
+                   placeholder="@Localizer["SearchPlaceholder"]" />
         </div>
 
         <!-- Category Dropdown -->
         <div class="col-md-3">
             <select name="categoryId" class="form-select form-select-sm">
-                <option value="">All Categories</option>
+                <option value="">@Localizer["AllCategories"]</option>
                 @foreach (var cat in categories)
                 {
                     <option value="@cat.Id" selected="@(selectedCategory == cat.Id ? "selected" : null)">
@@ -48,17 +48,17 @@
         <!-- Level Dropdown -->
         <div class="col-md-3">
             <select name="level" class="form-select form-select-sm">
-                <option value="">All Levels</option>
-                <option value="Beginner" selected="@(selectedLevel == "Beginner" ? "selected" : null)">Beginner</option>
-                <option value="Intermediate" selected="@(selectedLevel == "Intermediate" ? "selected" : null)">Intermediate</option>
-                <option value="Advanced" selected="@(selectedLevel == "Advanced" ? "selected" : null)">Advanced</option>
+                <option value="">@Localizer["AllLevels"]</option>
+                <option value="Beginner" selected="@(selectedLevel == "Beginner" ? "selected" : null)">@Localizer["Beginner"]</option>
+                <option value="Intermediate" selected="@(selectedLevel == "Intermediate" ? "selected" : null)">@Localizer["Intermediate"]</option>
+                <option value="Advanced" selected="@(selectedLevel == "Advanced" ? "selected" : null)">@Localizer["Advanced"]</option>
             </select>
         </div>
 
         <!-- Submit & Clear Buttons -->
         <div class="col-md-2 d-flex gap-1">
             <button type="submit" class="btn btn-sm btn-primary w-100">
-                <i class="fas fa-filter me-1"></i> Filter
+                <i class="fas fa-filter me-1"></i> @Localizer["Filter"]
             </button>
 
             @if (hasFilters)
@@ -120,11 +120,11 @@
                                 <div class="d-flex justify-content-between text-secondary small mb-2">
                                     <span>
                                         <i class="fas fa-clock me-1 text-primary"></i>
-                                        @course.DurationInHours Hrs
+                                        @course.DurationInHours @Localizer["Hrs"]
                                     </span>
                                     <span>
                                         <i class="fas fa-layer-group me-1 text-primary"></i>
-                                        @course.Lessons.Count Lessons
+                                        @course.Lessons.Count @Localizer["Lessons"]
                                     </span>
                                 </div>
 
@@ -155,7 +155,7 @@
                                 <a asp-action="Details"
                                    asp-route-id="@course.Id"
                                    class="btn btn-sm btn-primary w-100">
-                                    <i class="fas fa-eye me-1"></i> View Course
+                                    <i class="fas fa-eye me-1"></i> @Localizer["ViewCourse"]
                                 </a>
                             </div>
                         </div>
@@ -222,16 +222,16 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-4">
                 <i class="fas fa-book-open fa-2x text-secondary mb-2"></i>
-                <h6 class="text-dark fw-bold">No courses found</h6>
+                <h6 class="text-dark fw-bold">@Localizer["NoCoursesFound"]</h6>
 
                 @if (hasFilters)
                 {
-                    <p class="text-secondary small mb-3">No courses match your active filter criteria.</p>
-                    <a asp-action="Index" class="btn btn-sm btn-secondary">Clear Filters</a>
+                    <p class="text-secondary small mb-3">@Localizer["NoCoursesFilterMessage"]</p>
+                    <a asp-action="Index" class="btn btn-sm btn-secondary">@Localizer["ClearFilters"]</a>
                 }
                 else
                 {
-                    <p class="text-secondary small mb-0">There are no published courses available.</p>
+                    <p class="text-secondary small mb-0">@Localizer["NoPublishedCourses"]</p>
                 }
             </div>
         </div>

@@ -1,16 +1,16 @@
 ﻿@model Training_Platform.ViewModels.Trainee.TraineeDashboardVM
 
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = @Localizer["Dashboard"];
 }
 
 <div class="container-fluid py-3">
 
     <!-- Page Header -->
     <div class="mb-4">
-        <h3 class="mb-1">Welcome back!</h3>
+        <h3 class="mb-1">@Localizer["WelcomeBack"]</h3>
         <p class="text-600 mb-0">
-            Here's an overview of your learning progress.
+                            @Localizer["LearningProgressOverview"]
         </p>
     </div>
 
@@ -27,7 +27,7 @@
 
                         <div>
                             <h6 class="text-600 mb-2">
-                                My Enrollments
+                                @Localizer["MyEnrollments"]
                             </h6>
 
                             <h3 class="mb-0">
@@ -55,7 +55,7 @@
 
                         <div>
                             <h6 class="text-600 mb-2">
-                                Completed Courses
+                                @Localizer["CompletedCourses"]
                             </h6>
 
                             <h3 class="mb-0">
@@ -83,7 +83,7 @@
 
                         <div>
                             <h6 class="text-600 mb-2">
-                                In Progress
+                                @Localizer["InProgress"]
                             </h6>
 
                             <h3 class="mb-0">
@@ -111,7 +111,7 @@
 
                         <div>
                             <h6 class="text-600 mb-2">
-                                Certificates
+                                @Localizer["Certificates"]
                             </h6>
 
                             <h3 class="mb-0">
@@ -131,16 +131,16 @@
         <!-- Course Progress Section -->
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-transparent border-0 py-3">
-                <h5 class="mb-0">Course Progress</h5>
+                <h5 class="mb-0">@Localizer["CourseProgress"]</h5>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th scope="col" class="ps-4">Course</th>
-                                <th scope="col">Completed Lessons</th>
-                                <th scope="col" class="pe-4" style="min-width: 280px;">Progress</th>
+                                <th scope="col" class="ps-4">@Localizer["Course"]</th>
+                                <th scope="col">@Localizer["CompletedLessons"]</th>
+                                <th scope="col" class="pe-4" style="min-width: 280px;">@Localizer["Progress"]</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,7 +178,7 @@
                             {
                                 <tr>
                                     <td colspan="3" class="text-center py-4 text-muted">
-                                        No course progress records found.
+                                        @Localizer["NoProgressRecords"]
                                     </td>
                                 </tr>
                             }

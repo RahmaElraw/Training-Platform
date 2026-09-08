@@ -4,7 +4,7 @@
 
     <div class="card-header">
         <h5 class="mb-0">
-            Create New Category
+            @Localizer["CreateNewCategory"]
         </h5>
     </div>
 
@@ -17,13 +17,13 @@
             <div class="col-12 mb-3">
 
                 <label asp-for="Name" class="form-label">
-                    Category Name
+                    @Localizer["CategoryName"]
                     <span class="text-danger">*</span>
                 </label>
 
                 <input asp-for="Name"
                        class="form-control"
-                       placeholder="Enter category name" />
+                       placeholder="@Localizer["EnterCategoryName"]" />
 
                 <span asp-validation-for="Name" class="text-danger"></span>
 
@@ -32,13 +32,13 @@
             <div class="col-12 mb-3">
 
                 <label asp-for="Description" class="form-label">
-                    Description
+                    @Localizer["Description"]
                 </label>
 
                 <textarea asp-for="Description"
                           rows="5"
                           class="form-control"
-                          placeholder="Enter category description"></textarea>
+                          placeholder="@Localizer["EnterCategoryDescription"]"></textarea>
 
                 <span asp-validation-for="Description" class="text-danger"></span>
 
@@ -51,7 +51,7 @@
 
                     <i class="fas fa-arrow-left me-1"></i>
 
-                    Back
+                    @Localizer["Back"]
 
                 </a>
 
@@ -60,7 +60,7 @@
 
                     <i class="fas fa-save me-1"></i>
 
-                    Create Category
+                    @Localizer["CreateCategory"]
 
                 </button>
 

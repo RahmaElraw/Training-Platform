@@ -4,6 +4,8 @@
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles = $"{RoleNames.SUPER_ADMIN}")]
+
     public class HomeController : Controller
     {
         private readonly IRepository<Category> _categoryRepository;

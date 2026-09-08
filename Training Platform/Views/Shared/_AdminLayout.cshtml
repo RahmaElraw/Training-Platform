@@ -9,14 +9,14 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Dashboard </title>
+    <title>@Localizer["Dashboard"] </title>
 
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
 
     <meta name="theme-color" content="#ffffff">
-    
+
     <script src="~/js/admin/config.js"></script>
     <script src="~/js/admin/simplebar.min.js"></script>
 
@@ -36,8 +36,8 @@
     <!--    Custom Style For Navigation -->
     <!-- ===============================================-->
     <style>
-          
 
+          
             #navbarVerticalNav .nav-link {
                 border-radius: 8px !important;
                 margin: 4px 10px !important;
@@ -65,8 +65,6 @@
                         color: #ffffff !important;
                     }
 
-            
-        
     </style>
 
     <script>
@@ -111,166 +109,195 @@
                 <div class="d-flex align-items-center">
                     <div class="toggle-icon-wrapper">
 
-                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+                        <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["ToggleNavigation"]"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 
                     </div>
                     <a class="navbar-brand" href="/Admin/Home/Index">
                         <div class="d-flex align-items-center py-3">
                             <div class="avatar avatar-xl"><img class="rounded-circle" src="~/images/logo.png" alt="" /></div>
-                            <span class="font-sans-serif">Admin</span>
+                            <span class="font-sans-serif">@Localizer["Training"]</span>
                         </div>
                     </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-                <div class="navbar-vertical-content scrollbar">
-                    <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
-                        <li class="nav-item">
-                            <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
-                            <div class="d-flex align-items-center">
-                                <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">Dashboard</span>
-                            </div>
-                        </a>
-                        <ul class="nav collapse show flex-column gap-2" id="dashboard">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="/Admin/Home/Index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Default</span>
-                                    </div>
-                                </a>
-                                <!-- more inner pages-->
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Admin/Categories/index">
-                        <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Categories</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/Admin/Courses/index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Courses</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/Admin/Lessons/index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Lessons</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/Admin/Enrollments/index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Enrollments</span>
-                                    </div>
-                                </a>
-                            </li>
-                    <li class="nav-item"><a class="nav-link" href="/Admin/Quizzes/index">
-                <div class="d-flex align-items-center">
-                    <span class="nav-link-text ps-1">Quizzes</span>
                 </div>
-               </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/Admin/Questions/index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Questions</span>
-                        </div>
-                      </a>
-                    </li>
-                    
+                <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+                    <div class="navbar-vertical-content scrollbar">
+                        <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                             <li class="nav-item">
-                                <a class="nav-link" href="/Admin/Reviews/index">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Courses Review</span>
-                        </div>
-                      </a>
-                    </li>
-                    
-                                
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Admin/Users/index">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-text ps-1">Users Management</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    
-                                    <li class="nav-item">
-                                <a class="nav-link" href="/Admin/UserProgresses/index">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-text ps-1">Users Progress</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Admin/Certificates/index">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-text ps-1">Users Certificates</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="content">
-                <!-- Top Navbar -->
-                <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
-                    <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation">
-                        <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
-                    </button>
-            <a class="navbar-brand me-1 me-sm-3" href="/Admin/Home/Index">
-                <div class="d-flex align-items-center">
-                    <div class="avatar avatar-xl"><img class="rounded-circle" src="~/images/logo.png" alt="" /></div>
-                        <span class="font-sans-serif">Admin</span>
-                </div>
-            </a>
-
-                    <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
-                        <!-- Theme Toggle -->
-                        <li class="nav-item">
-                            <div class="theme-control-toggle fa-icon-wait px-2">
-                                <input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark" />
-                                <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch to light theme"><span class="fas fa-sun fs-0"></span></label>
-                                <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch to dark theme"><span class="fas fa-moon fs-0"></span></label>
-                            </div>
-                        </li>
-
-                        <!-- Notifications -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link notification-indicator notification-indicator-primary px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
-                                <span class="fas fa-bell" data-fa-transform="shrink-6" style="font-size: 33px;"></span>
+                                <!-- parent pages--><a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span class="nav-link-text ps-1">@Localizer["Dashboard"]</span>
+                                </div>
                             </a>
-                            <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end dropdown-menu-card dropdown-menu-notification dropdown-caret-bg" aria-labelledby="navbarDropdownNotification">
-                                <div class="card card-notification shadow-none">
-                                    <div class="card-header">
-                                        <div class="row justify-content-between align-items-center">
-                                            <div class="col-auto">
-                                                <h6 class="card-header-title mb-0">Notifications</h6>
-                                            </div>
-                                            <div class="col-auto ps-0 ps-sm-3">
-                                                <a class="card-link fw-normal" href="#">Mark all as read</a>
-                                            </div>
+                            <ul class="nav collapse show flex-column gap-2" id="dashboard">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/Admin/Home/Index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Default"]</span>
                                         </div>
-                                    </div>
-                                    <div class="scrollbar-overlay" style="max-height:19rem">
-                                        <div class="list-group list-group-flush fw-normal fs--1">
-                                            <div class="list-group-title border-bottom">NEW</div>
-                                            <!-- Notification Items -->
-                                        <div class="list-group-item">
-                                            <a class="notification notification-flush notification-unread" href="#!">
-                                                <div class="notification-body">
-                                                    <p class="mb-1"><strong>No notifications.</strong></p>
-                                                    <span class="notification-time"></span>
-                                                </div>
-                                            </a>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Categories/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Categories"]</span>
                                         </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Courses/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Courses"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Lessons/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Lessons"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Enrollments/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Enrollments"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Quizzes/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Quizzes"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Questions/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["Questions"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Reviews/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["CoursesReview"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                    
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Users/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["UsersManagement"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/UserProgresses/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["UsersProgress"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Certificates/index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">@Localizer["UsersCertificates"]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
+                <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="@Localizer["ToggleNavigation"]">
+                    <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
+                </button>
+                <a class="navbar-brand me-1 me-sm-3" href="/Admin/Home/Index">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-xl"><img class="rounded-circle" src="~/images/logo.png" alt="" /></div>
+                        <span class="font-sans-serif">@Localizer["Training"]</span>
+                    </div>
+                </a>
+
+                <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+
+                    <!-- Language Switcher -->
+                    <li class="nav-item dropdown px-1">
+                        <a class="nav-link fa-icon-wait px-1" id="navbarDropdownLanguage" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-globe fs-0"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-2" aria-labelledby="navbarDropdownLanguage">
+                            <form asp-area="" asp-controller="Culture" asp-action="SetCulture" method="post">
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                <button type="submit" name="culture" value="en" class="dropdown-item">English</button>
+                                <button type="submit" name="culture" value="ar" class="dropdown-item">العربية</button>
+                            </form>
+                        </div>
+                    </li>
+
+                    <!-- Theme Toggle -->
+                    <li class="nav-item">
+                        <div class="theme-control-toggle fa-icon-wait px-2">
+                            <input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark" />
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["SwitchToLightTheme"]"><span class="fas fa-sun fs-0"></span></label>
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@Localizer["SwitchToDarkTheme"]"><span class="fas fa-moon fs-0"></span></label>
+                        </div>
+                    </li>
+
+                    <!-- Notifications -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link notification-indicator notification-indicator-primary px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
+                            <span class="fas fa-bell" data-fa-transform="shrink-6" style="font-size: 33px;"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end dropdown-menu-card dropdown-menu-notification dropdown-caret-bg" aria-labelledby="navbarDropdownNotification">
+                            <div class="card card-notification shadow-none">
+                                <div class="card-header">
+                                    <div class="row justify-content-between align-items-center">
+                                        <div class="col-auto">
+                                            <h6 class="card-header-title mb-0">@Localizer["Notifications"]</h6>
+                                        </div>
+                                        <div class="col-auto ps-0 ps-sm-3">
+                                            <a class="card-link fw-normal" href="#">@Localizer["MarkAllAsRead"]</a>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="scrollbar-overlay" style="max-height:19rem">
+                                    <div class="list-group list-group-flush fw-normal fs--1">
+                                        <div class="list-group-title border-bottom">NEW</div>
+                                        <!-- Notification Items -->
+                                        <div class="list-group-item">
+                                            <a class="notification notification-flush notification-unread" href="#!">
+                                                <div class="notification-avatar">
+                                                    <div class="avatar avatar-2xl me-3">
+                                                        <img class="rounded-circle" src="" alt="" />
+                                                    </div>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <p class="mb-1"><strong>Emma Watson</strong> replied to your comment : "Hello world 😍"</p>
+                                                    <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">💬</span>Just now</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center border-top">
+                                    <a class="card-link d-block" href="app/social/notifications.html">@Localizer["ViewAll"]</a>
+                                </div>
                             </div>
-                        </li>
+                        </div>
+                    </li>
 
                         <!-- User Menu / 9 Dots -->
                         <li class="nav-item dropdown px-1">
@@ -321,61 +348,61 @@
                                 <div class="avatar avatar-xl">
                                     <img class="rounded-circle" src="~/images/nav_icons/ProfileImg.jpg" alt="" />
 
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
-                                <div class="bg-white dark__bg-1000 rounded-2 py-2">
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
+                            <div class="bg-white dark__bg-1000 rounded-2 py-2">
 
-                                    <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/Identity/Account/Profile">Profile &amp; account</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Identity/Account/Profile">@Localizer["ProfileAndAccount"]</a>
 
                                    
-                                </div>
                             </div>
-                        </li>
+                        </div>
+                    </li>
 
-                    </ul>
-                </nav>
+                </ul>
+            </nav>
 
-                <!-- Render Body -->
-                @RenderBody()
+            <!-- Render Body -->
+            @RenderBody()
 
-            </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <!-- ===============================================-->
-    <!--    JavaScripts-->
-    <!-- ===============================================-->
-    <script src="~/js/admin/popper.min.js"></script>
-    <script src="~/js/admin/bootstrap.min.js"></script>
-    <script src="~/js/admin/anchor.min.js"></script>
-    <script src="~/js/admin/is.min.js"></script>
-    <script src="~/js/admin/echarts.min.js"></script>
-    <script src="~/js/admin/all.min.js"></script>
-    <script src="~/js/admin/lodash.min.js"></script>
-    <script src="~/js/admin/list.min.js"></script>
-    <script src="~/js/admin/theme.js"></script>
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="~/js/admin/popper.min.js"></script>
+<script src="~/js/admin/bootstrap.min.js"></script>
+<script src="~/js/admin/anchor.min.js"></script>
+<script src="~/js/admin/is.min.js"></script>
+<script src="~/js/admin/echarts.min.js"></script>
+<script src="~/js/admin/all.min.js"></script>
+<script src="~/js/admin/lodash.min.js"></script>
+<script src="~/js/admin/list.min.js"></script>
+<script src="~/js/admin/theme.js"></script>
 
-    <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var currentUrl = window.location.href.split('?')[0].toLowerCase();
-                var navLinks = document.querySelectorAll('#navbarVerticalNav .nav-link');
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentUrl = window.location.href.split('?')[0].toLowerCase();
+            var navLinks = document.querySelectorAll('#navbarVerticalNav .nav-link');
 
-                navLinks.forEach(function(link) {
-                    link.classList.remove('active');
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
 
-                    if (link.href && link.href.split('?')[0].toLowerCase() === currentUrl) {
-                        link.classList.add('active');
-                        var parentCollapse = link.closest('.collapse');
-                        if (parentCollapse) {
-                            parentCollapse.classList.add('show');
-                        }
+                if (link.href && link.href.split('?')[0].toLowerCase() === currentUrl) {
+                    link.classList.add('active');
+                    var parentCollapse = link.closest('.collapse');
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
                     }
-                });
+                }
             });
-    </script>
+        });
+</script>
 
-    @RenderSection("Scripts", required: false)
+@RenderSection("Scripts", required: false)
 </body>
 </html>

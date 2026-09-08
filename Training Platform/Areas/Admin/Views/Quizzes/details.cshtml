@@ -5,14 +5,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            Quiz Details
+            @Localizer["QuizDetails"]
         </h5>
 
         <a asp-action="Index"
            class="btn btn-secondary btn-sm">
 
             <i class="fas fa-arrow-left me-1"></i>
-            Back
+            @Localizer["Back"]
 
         </a>
 
@@ -26,7 +26,7 @@
         </h3>
 
         <p class="text-muted">
-            @(Model.Course?.Title ?? "No Course")
+            @(Model.Course?.Title ?? Localizer["NoCourse"].Value)
         </p>
 
         <hr />
@@ -36,7 +36,7 @@
 
             <div class="col-md-4">
 
-                <strong>Passing Score</strong>
+                <strong>@Localizer["PassingScore"]</strong>
 
                 <p>
                     @Model.PassingScore%
@@ -47,10 +47,10 @@
 
             <div class="col-md-4">
 
-                <strong>Time Limit</strong>
+                <strong>@Localizer["TimeLimit"]</strong>
 
                 <p>
-                    @Model.TimeLimit minutes
+                    @Model.TimeLimit @Localizer["Minutes"]
                 </p>
 
             </div>
@@ -58,7 +58,7 @@
 
             <div class="col-md-4">
 
-                <strong>Questions</strong>
+                <strong>@Localizer["Questions"]</strong>
 
                 <p>
                     @Model.Questions.Count
@@ -71,7 +71,7 @@
 
         <div class="mt-3">
 
-            <strong>Quiz Results:</strong>
+            <strong>@Localizer["QuizResults"]:</strong>
 
             <span class="badge bg-info">
                 @Model.QuizResults.Count
@@ -87,7 +87,7 @@
                class="btn btn-warning">
 
                 <i class="fas fa-edit me-1"></i>
-                Edit
+                @Localizer["Edit"]
 
             </a>
 

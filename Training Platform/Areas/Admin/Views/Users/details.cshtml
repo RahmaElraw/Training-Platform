@@ -1,13 +1,13 @@
 ﻿@model Training_Platform.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "User Details";
+    ViewData["Title"] = Localizer["UserDetails"];
 }
 
 <div class="card">
 
     <div class="card-header">
-        <h5 class="mb-0">User Details</h5>
+        <h5 class="mb-0">@Localizer["UserDetails"]</h5>
     </div>
 
     <div class="card-body">
@@ -15,7 +15,7 @@
         <div class="row mb-3">
 
             <div class="col-md-3 fw-bold">
-                User Name
+                @Localizer["UserName"]
             </div>
 
             <div class="col-md-9">
@@ -29,7 +29,7 @@
         <div class="row mb-3">
 
             <div class="col-md-3 fw-bold">
-                Email
+                @Localizer["Email"]
             </div>
 
             <div class="col-md-9">
@@ -43,11 +43,11 @@
         <div class="row mb-3">
 
             <div class="col-md-3 fw-bold">
-                Phone Number
+                @Localizer["PhoneNumber"]
             </div>
 
             <div class="col-md-9">
-                @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not Provided" : Model.PhoneNumber)
+                @(string.IsNullOrEmpty(Model.PhoneNumber) ? Localizer["NotProvided"].Value : Model.PhoneNumber)
             </div>
 
         </div>
@@ -57,7 +57,7 @@
         <div class="row mb-3">
 
             <div class="col-md-3 fw-bold">
-                Status
+                @Localizer["Status"]
             </div>
 
             <div class="col-md-9">
@@ -65,13 +65,13 @@
                 @if (Model.IsApproved)
                 {
                     <span class="badge bg-success">
-                        Approved
+                        @Localizer["Approved"]
                     </span>
                 }
                 else
                 {
                     <span class="badge bg-danger">
-                        Pending
+                        @Localizer["Pending"]
                     </span>
                 }
 
@@ -84,7 +84,7 @@
         <div class="row mb-4">
 
             <div class="col-md-3 fw-bold">
-                Created At
+                @Localizer["CreatedAt"]
             </div>
 
             <div class="col-md-9">
@@ -99,7 +99,7 @@
                asp-route-id="@Model.Id"
                class="btn btn-warning">
 
-                Edit
+                @Localizer["Edit"]
 
             </a>
 
@@ -107,14 +107,14 @@
                asp-route-id="@Model.Id"
                class="btn btn-danger">
 
-                Delete
+                @Localizer["Delete"]
 
             </a>
 
             <a asp-action="Index"
                class="btn btn-secondary">
 
-                Back
+                @Localizer["Back"]
 
             </a>
 

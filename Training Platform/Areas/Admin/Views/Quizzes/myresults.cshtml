@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Training_Platform.ViewModels.QuizResultViewModel>
 
-<h2>My Quiz Results</h2>
+<h2>@Localizer["MyQuizResults"]</h2>
 
 @if (!Model.Any())
 {
-    <p>You don't have any quiz results yet.</p>
+    <p>@Localizer["NoQuizResultsYet"]</p>
 }
 else
 {
@@ -12,10 +12,10 @@ else
 
         <thead>
             <tr>
-                <th>Quiz</th>
-                <th>Score</th>
-                <th>Status</th>
-                <th>Submitted At</th>
+                <th>@Localizer["Quiz"]</th>
+                <th>@Localizer["Score"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["SubmittedAt"]</th>
             </tr>
         </thead>
 
@@ -33,7 +33,7 @@ else
                     </td>
 
                     <td>
-                        @(result.IsPassed ? "Passed" : "Failed")
+                        @(result.IsPassed ? Localizer["Passed"] : Localizer["Failed"])
                     </td>
 
                     <td>

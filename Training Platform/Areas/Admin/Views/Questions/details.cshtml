@@ -7,14 +7,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            Question Details
+            @Localizer["QuestionDetails"]
         </h5>
 
         <a asp-action="Index"
            class="btn btn-secondary btn-sm">
 
             <i class="fas fa-arrow-left me-1"></i>
-            Back
+            @Localizer["Back"]
 
         </a>
 
@@ -32,9 +32,9 @@
         <!-- Quiz -->
         <p class="text-muted">
 
-            <strong>Quiz:</strong>
+            <strong>@Localizer["Quiz"]:</strong>
 
-            @(Model.Quiz?.Title ?? "No Quiz")
+            @(Model.Quiz?.Title ?? Localizer["NoQuiz"].Value)
 
         </p>
 
@@ -49,7 +49,7 @@
             <div class="col-md-4">
 
                 <strong>
-                    Mark
+                    @Localizer["Mark"]
                 </strong>
 
                 <p class="mt-1">
@@ -63,7 +63,7 @@
             <div class="col-md-4">
 
                 <strong>
-                    Question Type
+                    @Localizer["QuestionType"]
                 </strong>
 
                 <p class="mt-1">
@@ -73,7 +73,7 @@
                         <span class="badge bg-primary">
 
                             <i class="fas fa-list me-1"></i>
-                            Multiple Choice
+                            @Localizer["MultipleChoice"]
 
                         </span>
                     }
@@ -82,7 +82,7 @@
                         <span class="badge bg-info">
 
                             <i class="fas fa-check-circle me-1"></i>
-                            True / False
+                            @Localizer["TrueFalse"]
 
                         </span>
                     }
@@ -102,7 +102,7 @@
             <div class="col-md-4">
 
                 <strong>
-                    Options
+                    @Localizer["Options"]
                 </strong>
 
                 <p class="mt-1">
@@ -119,7 +119,7 @@
 
         <!-- Question Options -->
         <h5 class="mb-3">
-            Question Options
+            @Localizer["QuestionOptions"]
         </h5>
 
 
@@ -149,7 +149,7 @@
                                 <span class="badge bg-success">
 
                                     <i class="fas fa-check me-1"></i>
-                                    Correct Answer
+                                    @Localizer["CorrectAnswer"]
 
                                 </span>
                             }
@@ -158,7 +158,7 @@
                                 <span class="badge bg-secondary">
 
                                     <i class="fas fa-times me-1"></i>
-                                    Incorrect
+                                    @Localizer["Incorrect"]
 
                                 </span>
                             }
@@ -176,7 +176,7 @@
 
                 <i class="fas fa-info-circle me-1"></i>
 
-                No options added yet.
+                @Localizer["NoOptionsAddedYet"]
 
             </div>
         }
@@ -190,7 +190,7 @@
                class="btn btn-warning">
 
                 <i class="fas fa-edit me-1"></i>
-                Edit
+                @Localizer["Edit"]
 
             </a>
 

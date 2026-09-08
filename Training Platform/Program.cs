@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using QuestPDF.Infrastructure;
+using Training_Platform.Utilities.DbInitailzers;
+using Training_Platform.Utilities.DbInitializers;
 
 namespace Training_Platform
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,24 @@ namespace Training_Platform
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            // 1. Localization Services
+            var supportedCultures = new[] { "en", "ar" };
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture("en")
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
 
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            builder.Services.AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(Training_Platform.SharedResource));
+                });
+
+            // 2. Database Context
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(
@@ -23,6 +42,7 @@ namespace Training_Platform
                 );
             });
 
+            // 3. Application Services & Repositories
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             builder.Services.AddScoped(
@@ -30,6 +50,7 @@ namespace Training_Platform
                 typeof(Repository<>)
             );
 
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IAccountService, AccountService>();
 
             builder.Services.AddScoped<
@@ -47,6 +68,10 @@ namespace Training_Platform
                 ApplicationUser,
                 IdentityRole<int>
             >(options =>
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+            // 4. ASP.NET Core Identity Configuration
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.User.RequireUniqueEmail = true;
@@ -56,9 +81,26 @@ namespace Training_Platform
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+            // 5. Authentication Cookie Settings
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // 6. Database Initialization and Seeding Execution
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                await dbInitializer.Initialize();
+            }
+
+            // 7. HTTP Pipeline Middleware
+            app.UseRequestLocalization(localizationOptions);
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -79,7 +121,7 @@ namespace Training_Platform
                 pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

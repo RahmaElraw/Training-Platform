@@ -1,28 +1,28 @@
 ﻿@model IEnumerable<Course>
 
 @{
-    ViewData["Title"] = "Related Courses";
+    ViewData["Title"] = Localizer["RelatedCourses"];
 }
 
 <div class="container-fluid">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="fw-bold mb-1">Related Courses</h2>
+            <h2 class="fw-bold mb-1">@Localizer["RelatedCourses"]</h2>
             <p class="text-muted mb-0">
-                Courses in the same category
+                @Localizer["CoursesInTheSameCategory"]
             </p>
         </div>
 
         <a asp-action="Index" class="btn btn-secondary">
-            Back to Courses
+            @Localizer["BackToCourses"]
         </a>
     </div>
 
     @if (!Model.Any())
     {
         <div class="alert alert-info">
-            No related courses found.
+            @Localizer["NoRelatedCoursesFound"]
         </div>
     }
     else
@@ -47,7 +47,7 @@
                             <div class="bg-light d-flex align-items-center justify-content-center"
                                  style="height: 200px;">
                                 <span class="text-muted">
-                                    No Image
+                                    @Localizer["NoImage"]
                                 </span>
                             </div>
                         }
@@ -69,13 +69,13 @@
                             <div class="mb-3">
 
                                 <small class="text-muted d-block">
-                                    Duration:
-                                    @course.DurationInHours hours
+                                    @Localizer["Duration"]
+                                    @course.DurationInHours @Localizer["Hours"]
                                 </small>
 
                                 <small class="text-muted d-block">
-                                    Trainer:
-                                    @(course.Trainer?.UserName ?? "N/A")
+                                    @Localizer["Trainer"]
+                                    @(course.Trainer?.UserName ?? Localizer["Na"].Value)
                                 </small>
 
                             </div>
@@ -83,7 +83,7 @@
                             <a asp-action="Details"
                                asp-route-id="@course.Id"
                                class="btn btn-outline-primary">
-                                View Details
+                                @Localizer["ViewDetails"]
                             </a>
 
                         </div>

@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<Training_Platform.ViewModels.UserProgressVM>
 
 @{
-    ViewData["Title"] = "Users Progress";
+    ViewData["Title"] = Localizer["UsersProgress"];
 }
 
 <div class="container mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2>Users Progress</h2>
+            <h2>@Localizer["UsersProgress"]</h2>
             <p class="text-muted">
-                Track users' progress across courses.
+                @Localizer["TrackUsersProgressAcrossCourses"]
             </p>
         </div>
     </div>
@@ -24,16 +24,16 @@
                    name="query"
                    value="@Context.Request.Query["query"]"
                    class="form-control"
-                   placeholder="Search by user or course..." />
+                   placeholder="@Localizer["SearchByUserOrCourse"]" />
 
             <button type="submit"
                     class="btn btn-primary">
-                Search
+                @Localizer["Search"]
             </button>
 
             <a asp-action="Index"
                class="btn btn-secondary">
-                Clear
+                @Localizer["Clear"]
             </a>
         </div>
 
@@ -43,7 +43,7 @@
     @if (!Model.Any())
     {
         <div class="alert alert-info">
-            No progress data found.
+            @Localizer["NoProgressDataFound"]
         </div>
     }
     else
@@ -58,10 +58,10 @@
 
                         <thead class="table-light">
                             <tr>
-                                <th>User</th>
-                                <th>Course</th>
-                                <th>Completed Lessons</th>
-                                <th>Progress</th>
+                                <th>@Localizer["User"]</th>
+                                <th>@Localizer["Course"]</th>
+                                <th>@Localizer["CompletedLessons"]</th>
+                                <th>@Localizer["Progress"]</th>
                             </tr>
                         </thead>
 

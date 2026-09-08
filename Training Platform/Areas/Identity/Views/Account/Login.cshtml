@@ -1,13 +1,13 @@
 ﻿@model Training_Platform.ViewModels.LoginVM
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = Localizer["Login"];
     Layout = "_AuthLayout";
 }
 
 <div class="text-center mb-4">
-    <h2 class="fw-bold">Login</h2>
-    <p class="text-muted mb-0">Welcome back to Training Platform</p>
+    <h2 class="fw-bold">@Localizer["Login"]</h2>
+    <p class="text-muted mb-0">@Localizer["WelcomeBack"]</p>
 </div>
 
 <form asp-action="Login" method="post">
@@ -15,19 +15,19 @@
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
     <div class="mb-3">
-        <label asp-for="EmailOrUserName" class="form-label"></label>
+        <label asp-for="EmailOrUserName" class="form-label">@Localizer["EmailOrFullName"]</label>
         <div class="input-icon">
             <i class="bi bi-person"></i>
-            <input asp-for="EmailOrUserName" class="form-control" placeholder="Email or Full Name" />
+            <input asp-for="EmailOrUserName" class="form-control" placeholder="@Localizer["EmailOrFullName"]" />
         </div>
         <span asp-validation-for="EmailOrUserName" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
+        <label asp-for="Password" class="form-label">@Localizer["Password"]</label>
         <div class="input-icon">
             <i class="bi bi-lock"></i>
-            <input asp-for="Password" class="form-control" type="password" placeholder="••••••••" />
+            <input asp-for="Password" class="form-control" type="password" placeholder="@Localizer["Password"]" />
         </div>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
@@ -35,13 +35,13 @@
      <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
-            <label class="form-check-label" asp-for="RememberMe"></label>
+            <label class="form-check-label" asp-for="RememberMe">@Localizer["RememberMe"]</label>
         </div>
         @* <a asp-action="ForgetPassword" class="text-primary text-decoration-none" style="font-size: 0.85rem;">Forgot password?</a> *@
     </div> 
 
     <div class="d-grid">
-        <input type="submit" value="Login" class="btn btn-primary btn-lg" />
+        <input type="submit" value="@Localizer["Login"]" class="btn btn-primary btn-lg" />
     </div>
 
 </form>

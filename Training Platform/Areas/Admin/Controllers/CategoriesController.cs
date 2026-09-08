@@ -1,8 +1,10 @@
-﻿using Training_Platform.ViewModels;
+﻿using Microsoft.AspNetCore.Authorization;
+using Training_Platform.ViewModels;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
+    [Authorize(Roles =$"{RoleNames.SUPER_ADMIN}") ]
     public class CategoriesController : Controller
     {
         private readonly IRepository<Category> _categoryRepository;

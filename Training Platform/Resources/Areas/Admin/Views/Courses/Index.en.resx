@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1988/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="metadata"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" /></xsd:sequence><xsd:attribute name="name" use="required" type="xsd:string" /><xsd:attribute name="type" type="xsd:string" /><xsd:attribute name="mimetype" type="xsd:string" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="assembly"><xsd:complexType><xsd:attribute name="alias" type="xsd:string" /><xsd:attribute name="name" type="xsd:string" /></xsd:complexType></xsd:element>
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /><xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" /><xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AllCourses" xml:space="preserve"><value>All Courses</value></data>
+  <data name="AddCourse" xml:space="preserve"><value>Add Course</value></data>
+  <data name="SearchCoursePlaceholder" xml:space="preserve"><value>Search course...</value></data>
+  <data name="NoCoursesFound" xml:space="preserve"><value>No Courses Found.</value></data>
+  <data name="NoDescription" xml:space="preserve"><value>No Description</value></data>
+  <data name="Category" xml:space="preserve"><value>Category:</value></data>
+  <data name="NoCategory" xml:space="preserve"><value>No Category</value></data>
+  <data name="Trainer" xml:space="preserve"><value>Trainer:</value></data>
+  <data name="NoTrainer" xml:space="preserve"><value>No Trainer</value></data>
+  <data name="Duration" xml:space="preserve"><value>Duration:</value></data>
+  <data name="Hours" xml:space="preserve"><value>hours</value></data>
+  <data name="Level" xml:space="preserve"><value>Level:</value></data>
+  <data name="Beginner" xml:space="preserve"><value>Beginner</value></data>
+  <data name="Intermediate" xml:space="preserve"><value>Intermediate</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Advanced</value></data>
+  <data name="Status" xml:space="preserve"><value>Status:</value></data>
+  <data name="Published" xml:space="preserve"><value>Published</value></data>
+  <data name="Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Lessons" xml:space="preserve"><value>Lessons:</value></data>
+  <data name="Quizzes" xml:space="preserve"><value>Quizzes:</value></data>
+  <data name="Enrollments" xml:space="preserve"><value>Enrollments:</value></data>
+  <data name="Reviews" xml:space="preserve"><value>Reviews:</value></data>
+  <data name="Created" xml:space="preserve"><value>Created:</value></data>
+  <data name="Details" xml:space="preserve"><value>Details</value></data>
+  <data name="RelatedCourses" xml:space="preserve"><value>Related Courses</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="DeleteCourse" xml:space="preserve"><value>Delete Course</value></data>
+  <data name="AreYouSureYouWantToDelete" xml:space="preserve"><value>Are you sure you want to delete</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+</root>

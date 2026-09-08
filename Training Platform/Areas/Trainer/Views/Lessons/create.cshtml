@@ -1,0 +1,166 @@
+﻿@using Training_Platform.ViewModels.Trainer
+@model LessonVM
+
+@{
+    ViewData["Title"] = "Create Lesson";
+    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Create Lesson
+        </h2>
+
+        <p class="text-muted">
+            Add a new lesson to your course
+        </p>
+
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Lesson Information
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="CourseId" type="hidden" />
+
+
+                <!-- Validation -->
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <!-- Title -->
+                <div class="mb-3">
+
+                    <label asp-for="Title"
+                           class="form-label">
+                        Lesson Title
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter lesson title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="mb-3">
+
+                    <label asp-for="Description"
+                           class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter lesson description"></textarea>
+
+                    <span asp-validation-for="Description"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Video URL -->
+                <div class="mb-3">
+
+                    <label asp-for="VideoUrl"
+                           class="form-label">
+                        Video URL
+                    </label>
+
+                    <input asp-for="VideoUrl"
+                           class="form-control"
+                           placeholder="https://..." />
+
+                    <span asp-validation-for="VideoUrl"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Order -->
+                <div class="mb-4">
+
+                    <label asp-for="OrderNumber"
+                           class="form-label">
+                        Lesson Order
+                    </label>
+
+                    <input asp-for="OrderNumber"
+                           type="number"
+                           min="1"
+                           class="form-control"
+                           placeholder="1" />
+
+                    <span asp-validation-for="OrderNumber"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Determines the order in which lessons appear.
+                    </small>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-check-lg"></i>
+                        Create Lesson
+
+                    </button>
+
+                    <a asp-action="Index"
+                       asp-route-courseId="@Model.CourseId"
+                       class="btn btn-outline-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

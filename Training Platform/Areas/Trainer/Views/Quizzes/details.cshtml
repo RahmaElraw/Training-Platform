@@ -1,0 +1,382 @@
+﻿@using Training_Platform.Models
+@model Quiz
+
+@{
+    ViewData["Title"] = "Quiz Details";
+    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+                Quiz Details
+            </h2>
+
+            <p class="text-muted mb-0">
+                View quiz information and statistics
+            </p>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+
+                <i class="bi bi-pencil"></i>
+                Edit
+
+            </a>
+
+            <a asp-action="Index"
+               asp-route-courseId="@Model.CourseId"
+               class="btn btn-outline-secondary">
+
+                Back to Quizzes
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Quiz Information -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Quiz Information
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <!-- Title -->
+                <div class="col-md-6">
+
+                    <small class="text-muted">
+                        Quiz Title
+                    </small>
+
+                    <h4 class="fw-bold mt-1">
+                        @Model.Title
+                    </h4>
+
+                </div>
+
+
+                <!-- Course -->
+                <div class="col-md-6">
+
+                    <small class="text-muted">
+                        Course
+                    </small>
+
+                    <div class="fw-semibold mt-1">
+                        @(Model.Course?.Title ?? "N/A")
+                    </div>
+
+                </div>
+
+
+                <!-- Passing Score -->
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Passing Score
+                    </small>
+
+                    <div class="mt-2">
+
+                        <span class="badge bg-success fs-6">
+                            @Model.PassingScore%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Time Limit -->
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Time Limit
+                    </small>
+
+                    <div class="mt-2">
+
+                        <span class="badge bg-info text-dark fs-6">
+                            @Model.TimeLimit minutes
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Questions Count -->
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Questions
+                    </small>
+
+                    <div class="mt-2">
+
+                        <span class="badge bg-primary fs-6">
+                            @(Model.Questions?.Count ?? 0)
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Questions -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Questions
+                </h5>
+
+                <span class="badge bg-primary">
+                    @(Model.Questions?.Count ?? 0)
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (Model.Questions != null &&
+                 Model.Questions.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>Question</th>
+                                <th>Mark</th>
+                                <th>Type</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @{
+                                int counter = 1;
+                            }
+
+                            @foreach (var question in Model.Questions)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @counter
+                                    </td>
+
+                                    <td>
+
+                                        <div class="fw-semibold">
+                                            @question.QuestionText
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-secondary">
+                                            @question.Mark
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-light text-dark">
+                                            @question.QuestionType
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                counter++;
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+
+                    <i class="bi bi-question-circle fs-2 text-muted"></i>
+
+                    <p class="text-muted mt-2 mb-0">
+                        No questions have been added to this quiz yet.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- Quiz Results -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Quiz Results
+                </h5>
+
+                <span class="badge bg-secondary">
+                    @(Model.QuizResults?.Count ?? 0)
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (Model.QuizResults != null &&
+                 Model.QuizResults.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>User ID</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Submitted At</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @{
+                                int counter = 1;
+                            }
+
+                            @foreach (var result in Model.QuizResults
+                                .OrderByDescending(r => r.SubmittedAt))
+                            {
+                                <tr>
+
+                                    <td>
+                                        @counter
+                                    </td>
+
+                                    <td>
+                                        @result.UserId
+                                    </td>
+
+                                    <td>
+
+                                        <span class="fw-semibold">
+                                            @result.Score
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (result.IsPassed)
+                                        {
+                                            <span class="badge bg-success">
+                                                Passed
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                Failed
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        @result.SubmittedAt.ToString(
+                                            "dd MMM yyyy, hh:mm tt")
+
+                                    </td>
+
+                                </tr>
+
+                                counter++;
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+
+                    <i class="bi bi-bar-chart fs-2 text-muted"></i>
+
+                    <p class="text-muted mt-2 mb-0">
+                        No quiz results available yet.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

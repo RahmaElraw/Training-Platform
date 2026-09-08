@@ -1,0 +1,180 @@
+﻿@using Training_Platform.ViewModels
+@model QuizVM
+
+@{
+    ViewData["Title"] = "Edit Quiz";
+    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Edit Quiz
+        </h2>
+
+        <p class="text-muted">
+            Update quiz information
+        </p>
+
+    </div>
+
+
+    <!-- Form -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Quiz Information
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="Id"
+                       type="hidden" />
+
+                <input asp-for="CourseId"
+                       type="hidden" />
+
+
+                <!-- Validation -->
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <!-- Title -->
+                <div class="mb-3">
+
+                    <label asp-for="Title"
+                           class="form-label">
+
+                        Quiz Title
+
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter quiz title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Passing Score -->
+                <div class="mb-3">
+
+                    <label asp-for="PassingScore"
+                           class="form-label">
+
+                        Passing Score
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <input asp-for="PassingScore"
+                               type="number"
+                               min="0"
+                               max="100"
+                               class="form-control" />
+
+                        <span class="input-group-text">
+                            %
+                        </span>
+
+                    </div>
+
+                    <span asp-validation-for="PassingScore"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        The minimum percentage required to pass the quiz.
+                    </small>
+
+                </div>
+
+
+                <!-- Time Limit -->
+                <div class="mb-4">
+
+                    <label asp-for="TimeLimit"
+                           class="form-label">
+
+                        Time Limit
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <input asp-for="TimeLimit"
+                               type="number"
+                               min="1"
+                               max="300"
+                               class="form-control" />
+
+                        <span class="input-group-text">
+                            minutes
+                        </span>
+
+                    </div>
+
+                    <span asp-validation-for="TimeLimit"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Maximum allowed time for completing the quiz.
+                    </small>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-save"></i>
+                        Save Changes
+
+                    </button>
+
+                    <a asp-action="Index"
+                       asp-route-courseId="@Model.CourseId"
+                       class="btn btn-outline-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

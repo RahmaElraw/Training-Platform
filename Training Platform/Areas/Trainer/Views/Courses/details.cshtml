@@ -1,0 +1,318 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = "Course Details";
+    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+                @Model.Title
+            </h2>
+
+            <p class="text-muted mb-0">
+                Course Details
+            </p>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+
+                <i class="bi bi-pencil"></i>
+                Edit
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Course Information -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Course Information
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-3">
+                        @Model.Title
+                    </h4>
+
+
+                    <p class="text-muted mb-4">
+                        @Model.Description
+                    </p>
+
+
+                    <div class="row g-3">
+
+                        <!-- Category -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Category
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @(Model.Category?.Name ?? "N/A")
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Level -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Level
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @Model.Level
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Duration -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Duration
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @Model.DurationInHours hours
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Status
+                                </small>
+
+                                <div class="mt-1">
+
+                                    @if (Model.IsPublished)
+                                    {
+                                        <span class="badge bg-success">
+                                            Published
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Draft
+                                        </span>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Created At -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Created At
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @Model.CreatedAt.ToLocalTime()
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Lessons -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Lessons
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @(Model.Lessons?.Count ?? 0)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Quizzes -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Quizzes
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @(Model.Quizzes?.Count ?? 0)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Enrollments -->
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Trainees
+
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    @(Model.Enrollments?.Count ?? 0)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Management -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        Course Management
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <a asp-area="Trainer"
+                       asp-controller="Lessons"
+                       asp-action="Index"
+                       asp-route-courseId="@Model.Id"
+                       class="btn btn-outline-primary w-100 mb-3">
+
+                        <i class="bi bi-play-circle"></i>
+
+                        Manage Lessons
+
+                    </a>
+
+
+                    <a asp-area="Trainer"
+                       asp-controller="Quizzes"
+                       asp-action="Index"
+                       asp-route-courseId="@Model.Id"
+                       class="btn btn-outline-success w-100 mb-3">
+
+                        <i class="bi bi-question-circle"></i>
+
+                        Manage Quizzes
+
+                    </a>
+
+
+                    <a asp-area="Trainer"
+                       asp-controller="Progress"
+                       asp-action="Index"
+                       asp-route-courseId="@Model.Id"
+                       class="btn btn-outline-info w-100">
+
+                        <i class="bi bi-bar-chart"></i>
+
+                        View Trainee Progress
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,324 @@
+﻿@using Training_Platform.Models
+@model Training_Platform.ViewModels.QuestionVM
+
+@{
+    ViewData["Title"] = "Create Question";
+    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
+
+    var quiz = ViewBag.Quiz as Quiz;
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Create Question
+        </h2>
+
+        <p class="text-muted mb-0">
+            Add a new question to
+            <strong>@(quiz?.Title ?? "Quiz")</strong>
+        </p>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+            <h5 class="mb-0">
+                Question Information
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="QuizId" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <!-- Question Text -->
+                <div class="mb-3">
+
+                    <label asp-for="QuestionText"
+                           class="form-label fw-semibold">
+                        Question
+                    </label>
+
+                    <textarea asp-for="QuestionText"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter the question"></textarea>
+
+                    <span asp-validation-for="QuestionText"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Mark -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Mark"
+                               class="form-label fw-semibold">
+                            Mark
+                        </label>
+
+                        <input asp-for="Mark"
+                               type="number"
+                               min="1"
+                               max="100"
+                               class="form-control" />
+
+                        <span asp-validation-for="Mark"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Question Type -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="QuestionType"
+                               class="form-label fw-semibold">
+                            Question Type
+                        </label>
+
+                        <select asp-for="QuestionType"
+                                class="form-select">
+
+                            <option value="MultipleChoice">
+                                Multiple Choice
+                            </option>
+
+                            <option value="TrueFalse">
+                                True / False
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="QuestionType"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- Options -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <div>
+                        <h5 class="mb-1">
+                            Question Options
+                        </h5>
+
+                        <small class="text-muted">
+                            Add at least two options and select the correct answer.
+                        </small>
+                    </div>
+
+                    <button type="button"
+                            id="addOption"
+                            class="btn btn-outline-primary">
+                        <i class="bi bi-plus-lg"></i>
+                        Add Option
+                    </button>
+
+                </div>
+
+                <div id="optionsContainer">
+
+                    <div class="option-row border rounded p-3 mb-3">
+
+                        <div class="row align-items-center">
+
+                            <div class="col-md-9">
+
+                                <label class="form-label">
+                                    Option
+                                </label>
+
+                                <input name="QuestionOptions[0].OptionText"
+                                       class="form-control"
+                                       placeholder="Enter option" />
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="form-check mt-4">
+
+                                    <input name="QuestionOptions[0].IsCorrect"
+                                           type="checkbox"
+                                           value="true"
+                                           class="form-check-input" />
+
+                                    <input name="QuestionOptions[0].IsCorrect"
+                                           type="hidden"
+                                           value="false" />
+
+                                    <label class="form-check-label">
+                                        Correct Answer
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="option-row border rounded p-3 mb-3">
+
+                        <div class="row align-items-center">
+
+                            <div class="col-md-9">
+
+                                <label class="form-label">
+                                    Option
+                                </label>
+
+                                <input name="QuestionOptions[1].OptionText"
+                                       class="form-control"
+                                       placeholder="Enter option" />
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="form-check mt-4">
+
+                                    <input name="QuestionOptions[1].IsCorrect"
+                                           type="checkbox"
+                                           value="true"
+                                           class="form-check-input" />
+
+                                    <input name="QuestionOptions[1].IsCorrect"
+                                           type="hidden"
+                                           value="false" />
+
+                                    <label class="form-check-label">
+                                        Correct Answer
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="optionsValidation"
+                     class="text-danger mb-3">
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <a asp-action="Index"
+                       asp-route-quizId="@Model.QuizId"
+                       class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i>
+                        Create Question
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        let optionIndex = 2;
+
+        document.getElementById("addOption")
+            .addEventListener("click", function() {
+
+                const container =
+                    document.getElementById("optionsContainer");
+
+                const div =
+                    document.createElement("div");
+
+                div.className =
+                    "option-row border rounded p-3 mb-3";
+
+                div.innerHTML = `
+                            <div class="row align-items-center">
+
+                                <div class="col-md-9">
+
+                                    <label class="form-label">
+                                        Option
+                                    </label>
+
+                                    <input
+                                        name="QuestionOptions[${optionIndex}].OptionText"
+                                        class="form-control"
+                                        placeholder="Enter option" />
+
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <div class="form-check mt-4">
+
+                                        <input
+                                            name="QuestionOptions[${optionIndex}].IsCorrect"
+                                            type="checkbox"
+                                            value="true"
+                                            class="form-check-input" />
+
+                                        <input
+                                            name="QuestionOptions[${optionIndex}].IsCorrect"
+                                            type="hidden"
+                                            value="false" />
+
+                                        <label class="form-check-label">
+                                            Correct Answer
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+
+                container.appendChild(div);
+
+                optionIndex++;
+            });
+
+    </script>
+}

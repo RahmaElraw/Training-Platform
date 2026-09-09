@@ -7,7 +7,7 @@ namespace Training_Platform.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(500)]
         public string QuestionText { get; set; } = string.Empty;
 
         [Required]

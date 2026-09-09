@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using QuestPDF.Infrastructure;
 using Training_Platform.Utilities.DbInitailzers;
 using Training_Platform.Utilities.DbInitializers;
 
@@ -11,6 +12,11 @@ namespace Training_Platform
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // QuestPDF License
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
             // 1. Localization Services
             var supportedCultures = new[] { "en", "ar" };
             var localizationOptions = new RequestLocalizationOptions()
@@ -38,8 +44,30 @@ namespace Training_Platform
 
             // 3. Application Services & Repositories
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+            builder.Services.AddScoped(
+                typeof(IRepository<>),
+                typeof(Repository<>)
+            );
+
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IAccountService, AccountService>();
+
+            builder.Services.AddScoped<
+                IProgressRepository,
+                ProgressRepository
+            >();
+
+            // Certificate Service
+            builder.Services.AddScoped<
+                ICertificateService,
+                CertificateService
+            >();
+
+            builder.Services.AddIdentity<
+                ApplicationUser,
+                IdentityRole<int>
+            >(options =>
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
             // 4. ASP.NET Core Identity Configuration
@@ -80,12 +108,14 @@ namespace Training_Platform
             }
 
             app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}")

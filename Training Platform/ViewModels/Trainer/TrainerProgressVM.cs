@@ -21,9 +21,5 @@
         public double ProgressPercentage { get; set; }
 
         public bool IsCompleted { get; set; }
-
-        public bool HasCertificate { get; set; }
-
-        public int? CertificateId { get; set; }
     }
 }

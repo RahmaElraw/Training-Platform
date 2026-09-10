@@ -7,7 +7,7 @@ namespace Training_Platform.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(100)]
-        public string? Title { get; set; }
+        public string Title { get; set; }
         [Required]
         public string Url { get; set; }
 

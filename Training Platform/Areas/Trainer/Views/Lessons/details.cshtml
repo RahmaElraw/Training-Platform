@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Lesson Details";
-    Layout = "~/Areas/Trainer/Views/Shared/_TrainerLayout.cshtml";
 }
 
 <div class="container-fluid">
@@ -174,11 +173,36 @@
 
         <div class="card-header bg-white">
 
-            <h5 class="mb-0">
-                Course Materials
-            </h5>
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h5 class="mb-0">
+                        Course Materials
+                    </h5>
+
+                    <small class="text-muted">
+                        Learning materials for this lesson
+                    </small>
+
+                </div>
+
+
+                <a asp-area="Trainer"
+                   asp-controller="Materials"
+                   asp-action="Index"
+                   asp-route-lessonId="@Model.Id"
+                   class="btn btn-sm btn-primary">
+
+                    <i class="bi bi-folder2-open me-1"></i>
+                    Manage Materials
+
+                </a>
+
+            </div>
 
         </div>
+
 
         <div class="card-body">
 
@@ -206,7 +230,7 @@
                         <tbody>
 
                             @{
-                                int counter = 1;
+                                int materialCounter = 1;
                             }
 
                             @foreach (var material in Model.CourseMaterials)
@@ -214,13 +238,15 @@
                                 <tr>
 
                                     <td>
-                                        @counter
+                                        @materialCounter
                                     </td>
 
                                     <td>
+
                                         <strong>
                                             @material.Title
                                         </strong>
+
                                     </td>
 
                                     <td>
@@ -232,7 +258,7 @@
                                                rel="noopener noreferrer"
                                                class="btn btn-sm btn-outline-primary">
 
-                                                <i class="bi bi-box-arrow-up-right"></i>
+                                                <i class="bi bi-box-arrow-up-right me-1"></i>
                                                 Open
 
                                             </a>
@@ -248,7 +274,7 @@
 
                                 </tr>
 
-                                counter++;
+                                materialCounter++;
                             }
 
                         </tbody>
@@ -263,9 +289,20 @@
 
                     <i class="bi bi-file-earmark-x fs-2 text-muted"></i>
 
-                    <p class="text-muted mt-2 mb-0">
+                    <p class="text-muted mt-2 mb-3">
                         No course materials found.
                     </p>
+
+                    <a asp-area="Trainer"
+                       asp-controller="Materials"
+                       asp-action="Create"
+                       asp-route-lessonId="@Model.Id"
+                       class="btn btn-sm btn-primary">
+
+                        <i class="bi bi-plus-lg me-1"></i>
+                        Add First Material
+
+                    </a>
 
                 </div>
             }
@@ -314,7 +351,7 @@
                         <tbody>
 
                             @{
-                                int counter = 1;
+                                int progressCounter = 1;
                             }
 
                             @foreach (var progress in Model.UserProgresses)
@@ -322,7 +359,7 @@
                                 <tr>
 
                                     <td>
-                                        @counter
+                                        @progressCounter
                                     </td>
 
                                     <td>
@@ -334,13 +371,19 @@
                                         @if (progress.IsCompleted)
                                         {
                                             <span class="badge bg-success">
+
+                                                <i class="bi bi-check-circle me-1"></i>
                                                 Completed
+
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="badge bg-warning text-dark">
+
+                                                <i class="bi bi-clock me-1"></i>
                                                 In Progress
+
                                             </span>
                                         }
 
@@ -350,7 +393,8 @@
 
                                         @if (progress.CompletedAt.HasValue)
                                         {
-                                            @progress.CompletedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                            @progress.CompletedAt.Value.ToString(
+                                                "dd MMM yyyy, hh:mm tt")
                                         }
                                         else
                                         {
@@ -363,7 +407,7 @@
 
                                 </tr>
 
-                                counter++;
+                                progressCounter++;
                             }
 
                         </tbody>

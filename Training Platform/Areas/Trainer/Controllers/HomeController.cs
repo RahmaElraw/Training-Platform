@@ -6,6 +6,7 @@ using Training_Platform.Areas.Trainer.ViewModels;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;

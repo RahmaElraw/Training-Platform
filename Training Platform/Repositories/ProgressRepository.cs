@@ -47,13 +47,7 @@ namespace Training_Platform.Repositories
 
                     IsCompleted = e.IsCompleted,
 
-                    HasCertificate = e.Course.Certificates
-                        .Any(c => c.UserId == e.UserId),
-
-                    CertificateId = e.Course.Certificates
-                        .Where(c => c.UserId == e.UserId)
-                        .Select(c => (int?)c.Id)
-                        .FirstOrDefault()
+                    
                 })
                 .ToListAsync(cancellationToken);
 

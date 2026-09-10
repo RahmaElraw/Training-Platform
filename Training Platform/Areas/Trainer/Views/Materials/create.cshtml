@@ -1,0 +1,116 @@
+﻿@model Training_Platform.ViewModels.CourseMaterialVM
+
+@{
+    ViewData["Title"] = "Add Material";
+    string lessonTitle = ViewBag.LessonTitle ?? "Lesson";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col">
+
+            <h3 class="mb-1">
+                Add Material
+            </h3>
+
+            <p class="text-muted mb-0">
+                Add a material to:
+                <strong>@lessonTitle</strong>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <form asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       asp-for="LessonId" />
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label asp-for="Title"
+                           class="form-label">
+                        Material Title
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter material title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label asp-for="Url"
+                           class="form-label">
+                        Material URL
+                    </label>
+
+                    <input asp-for="Url"
+                           class="form-control"
+                           placeholder="https://example.com/material.pdf" />
+
+                    <span asp-validation-for="Url"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="fas fa-plus me-2"></i>
+                        Add Material
+
+                    </button>
+
+
+                    <a asp-area="Trainer"
+                       asp-controller="Materials"
+                       asp-action="Index"
+                       asp-route-lessonId="@Model.LessonId"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

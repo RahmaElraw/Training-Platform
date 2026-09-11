@@ -1,13 +1,7 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Training_Platform.Models;
-using Training_Platform.Repositories;
-
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
-    
     public class LessonsController : Controller
     {
         private readonly IRepository<Lesson> _lessonRepository;
@@ -22,7 +16,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int courseId)
+        public async Task<IActionResult> Index(
+            int courseId,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -32,7 +28,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == courseId &&
                      c.TrainerId == trainerId,
-                tracked: false);
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (course == null)
                 return NotFound();
@@ -43,7 +40,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 [
                     l => l.Course
                 ],
-                tracked: false);
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             lessons = lessons
                 .OrderBy(l => l.OrderNumber)
@@ -55,7 +53,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(int courseId)
+        public async Task<IActionResult> Create(
+            int courseId,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -65,7 +65,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == courseId &&
                      c.TrainerId == trainerId,
-                tracked: false);
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (course == null)
                 return NotFound();
@@ -82,7 +83,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LessonVM model)
+        public async Task<IActionResult> Create(
+            LessonVM model,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -91,7 +94,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == model.CourseId &&
-                     c.TrainerId == trainerId);
+                     c.TrainerId == trainerId,
+                cancellationToken: cancellationToken);
 
             if (course == null)
                 return NotFound();
@@ -101,11 +105,12 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 ViewBag.Course = course;
                 return View(model);
             }
-
             var titleExists = await _lessonRepository.GetOneAsync(
                 l => l.CourseId == model.CourseId &&
                      l.Title.ToLower().Trim() ==
-                     model.Title.ToLower().Trim());
+                     model.Title.ToLower().Trim(),
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (titleExists != null)
             {
@@ -119,7 +124,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             var orderExists = await _lessonRepository.GetOneAsync(
                 l => l.CourseId == model.CourseId &&
-                     l.OrderNumber == model.OrderNumber);
+                     l.OrderNumber == model.OrderNumber,
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (orderExists != null)
             {
@@ -140,25 +147,37 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 CourseId = model.CourseId
             };
 
-            await _lessonRepository.AddAsync(lesson);
+            await _lessonRepository.AddAsync(
+                lesson,
+                cancellationToken);
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            if (await _lessonRepository.CommitAsync(
+                cancellationToken) > 0)
             {
-                TempData["Success"] = "Lesson created successfully.";
+                TempData["Success"] =
+                    "Lesson created successfully.";
 
                 return RedirectToAction(
                     nameof(Index),
-                    new { courseId = model.CourseId });
+                    new
+                    {
+                        courseId = model.CourseId
+                    });
             }
 
-            TempData["Error"] = "Something went wrong while creating the lesson.";
+            TempData["Error"] =
+                "Something went wrong while creating the lesson.";
 
             ViewBag.Course = course;
+
             return View(model);
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(
+            int id,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -171,7 +190,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 [
                     l => l.Course
                 ],
-                tracked: false);
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (lesson == null)
                 return NotFound();
@@ -196,7 +216,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(LessonVM model)
+        public async Task<IActionResult> Edit(
+            LessonVM model,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -205,7 +227,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             var course = await _courseRepository.GetOneAsync(
                 c => c.Id == model.CourseId &&
-                     c.TrainerId == trainerId);
+                     c.TrainerId == trainerId,
+                cancellationToken: cancellationToken);
 
             if (course == null)
                 return NotFound();
@@ -215,10 +238,10 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 ViewBag.Course = course;
                 return View(model);
             }
-
             var lesson = await _lessonRepository.GetOneAsync(
                 l => l.Id == model.Id &&
-                     l.CourseId == model.CourseId);
+                     l.CourseId == model.CourseId,
+                cancellationToken: cancellationToken);
 
             if (lesson == null)
                 return NotFound();
@@ -227,7 +250,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 l => l.CourseId == model.CourseId &&
                      l.Title.ToLower().Trim() ==
                      model.Title.ToLower().Trim() &&
-                     l.Id != model.Id);
+                     l.Id != model.Id,
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (titleExists != null)
             {
@@ -242,7 +267,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
             var orderExists = await _lessonRepository.GetOneAsync(
                 l => l.CourseId == model.CourseId &&
                      l.OrderNumber == model.OrderNumber &&
-                     l.Id != model.Id);
+                     l.Id != model.Id,
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (orderExists != null)
             {
@@ -261,23 +288,32 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             _lessonRepository.Update(lesson);
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            if (await _lessonRepository.CommitAsync(
+                cancellationToken) > 0)
             {
-                TempData["Success"] = "Lesson updated successfully.";
+                TempData["Success"] =
+                    "Lesson updated successfully.";
 
                 return RedirectToAction(
                     nameof(Index),
-                    new { courseId = model.CourseId });
+                    new
+                    {
+                        courseId = model.CourseId
+                    });
             }
 
-            TempData["Error"] = "Something went wrong while updating the lesson.";
+            TempData["Error"] =
+                "Something went wrong while updating the lesson.";
 
             ViewBag.Course = course;
+
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(
+            int id,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
@@ -292,49 +328,58 @@ namespace Training_Platform.Areas.Trainer.Controllers
                     l => l.CourseMaterials,
                     l => l.UserProgresses
                 ],
-                tracked: false);
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (lesson == null)
                 return NotFound();
 
+            // Security check
             if (lesson.Course.TrainerId != trainerId)
                 return NotFound();
 
             return View(lesson);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, int courseId)
+        public async Task<IActionResult> Delete(
+            int id,
+            CancellationToken cancellationToken)
         {
             int trainerId = GetCurrentTrainerId();
 
             if (trainerId <= 0)
                 return Unauthorized();
-            var course = await _courseRepository.GetOneAsync(
-                c => c.Id == courseId &&
-                     c.TrainerId == trainerId);
-
-            if (course == null)
-                return NotFound();
 
             var lesson = await _lessonRepository.GetOneAsync(
-                l => l.Id == id &&
-                     l.CourseId == courseId,
+                l => l.Id == id,
                 includes:
                 [
+                    l => l.Course,
                     l => l.CourseMaterials,
                     l => l.UserProgresses
-                ]);
+                ],
+                tracked: true,
+                cancellationToken: cancellationToken);
 
             if (lesson == null)
                 return NotFound();
+            if (lesson.Course.TrainerId != trainerId)
+                return NotFound();
 
-            int materialsCount = lesson.CourseMaterials?.Count ?? 0;
-            int progressCount = lesson.UserProgresses?.Count ?? 0;
+            int courseId = lesson.CourseId;
+
+            int materialsCount =
+                lesson.CourseMaterials?.Count ?? 0;
+
+            int progressCount =
+                lesson.UserProgresses?.Count ?? 0;
 
             _lessonRepository.Delete(lesson);
 
-            if (await _lessonRepository.CommitAsync() > 0)
+            if (await _lessonRepository.CommitAsync(
+                cancellationToken) > 0)
             {
                 if (materialsCount > 0 || progressCount > 0)
                 {
@@ -357,8 +402,12 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             return RedirectToAction(
                 nameof(Index),
-                new { courseId });
+                new
+                {
+                    courseId
+                });
         }
+
         private int GetCurrentTrainerId()
         {
             var userId = User.FindFirstValue(
@@ -367,7 +416,9 @@ namespace Training_Platform.Areas.Trainer.Controllers
             if (string.IsNullOrWhiteSpace(userId))
                 return 0;
 
-            return int.TryParse(userId, out int trainerId)
+            return int.TryParse(
+                userId,
+                out int trainerId)
                 ? trainerId
                 : 0;
         }

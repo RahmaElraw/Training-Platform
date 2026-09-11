@@ -2,40 +2,304 @@
 
 @{
     ViewData["Title"] = "Trainee Progress";
+
+    var progressList = Model?.ToList()
+        ?? new List<Training_Platform.ViewModels.TrainerProgressVM>();
+
+    var totalEnrollments = progressList.Count;
+
+    var completedCount = progressList.Count(x => x.IsCompleted);
+
+    var inProgressCount = progressList.Count(x => !x.IsCompleted);
+
+    var averageProgress = progressList.Any()
+        ? progressList.Average(x => x.ProgressPercentage)
+        : 0;
 }
 
 <div class="container-fluid">
 
     <!-- Page Header -->
-    <div class="row mb-4">
-        <div class="col">
-            <h3 class="mb-1">Trainee Progress</h3>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="fas fa-chart-line me-2"></i>
+                Trainee Progress
+            </h2>
 
             <p class="text-muted mb-0">
                 Track the progress of trainees enrolled in your courses.
             </p>
         </div>
+
+        <a asp-area="@SD.Trainer_Area"
+           asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>
+            Back to Dashboard
+        </a>
+
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+
+            <form asp-area="@SD.Trainer_Area"
+                  asp-controller="Progress"
+                  asp-action="Index"
+                  method="get">
+
+                <div class="row align-items-end g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Filter by Course
+                        </label>
+
+                        <select name="courseId"
+                                class="form-select">
+
+                            <option value="">
+                                All Courses
+                            </option>
+
+                            @foreach (var course in ViewBag.Courses)
+                            {
+                                <option value="@course.Value"
+                                        selected="@course.Selected">
+                                    @course.Text
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+                            <i class="fas fa-filter me-1"></i>
+                            Filter
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <a asp-area="@SD.Trainer_Area"
+                           asp-controller="Progress"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-undo me-1"></i>
+                            Reset
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-4">
+
+        <!-- Total -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Total Enrollments
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                @totalEnrollments
+                            </h3>
+                        </div>
+
+                        <div class="bg-primary text-white rounded-circle p-3">
+                            <i class="fas fa-users fa-lg"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Completed -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Completed
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                @completedCount
+                            </h3>
+                        </div>
+
+                        <div class="bg-success text-white rounded-circle p-3">
+                            <i class="fas fa-check-circle fa-lg"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- In Progress -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                In Progress
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                @inProgressCount
+                            </h3>
+                        </div>
+
+                        <div class="bg-warning text-white rounded-circle p-3">
+                            <i class="fas fa-spinner fa-lg"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Average -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Average Progress
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                @averageProgress.ToString("0.##")%
+                            </h3>
+                        </div>
+
+                        <div class="bg-info text-white rounded-circle p-3">
+                            <i class="fas fa-chart-pie fa-lg"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
-    @if (Model != null && Model.Any())
-    {
-        <div class="card shadow-sm border-0">
+    <!-- Progress Table -->
+    <div class="card border-0 shadow-sm">
 
-            <div class="card-body">
+        <div class="card-header bg-white border-0 py-3">
 
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Trainee Progress
+                    </h5>
+
+                    <small class="text-muted">
+                        Progress of trainees in your courses
+                    </small>
+                </div>
+
+                <span class="badge bg-primary">
+                    @totalEnrollments Records
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body p-0">
+
+            @if (!progressList.Any())
+            {
+                <div class="text-center py-5">
+
+                    <i class="fas fa-users-slash fa-3x text-muted mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        No trainee progress available
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        There are currently no trainees enrolled in your courses.
+                    </p>
+
+                </div>
+            }
+            else
+            {
                 <div class="table-responsive">
 
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle mb-0">
 
                         <thead class="table-light">
 
                             <tr>
-                                <th>Trainee</th>
-                                <th>Email</th>
-                                <th>Course</th>
-                                <th>Progress</th>
-                                <th>Status</th>
+                                <th class="px-4">
+                                    Trainee
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Course
+                                </th>
+
+                                <th style="min-width: 220px;">
+                                    Progress
+                                </th>
+
+                                <th>
+                                    Lessons
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
                             </tr>
 
                         </thead>
@@ -43,79 +307,90 @@
 
                         <tbody>
 
-                            @foreach (var item in Model)
+                            @foreach (var item in progressList)
                             {
+                                var progress = Math.Clamp(
+                                    item.ProgressPercentage,
+                                    0,
+                                    100);
+
                                 <tr>
 
                                     <!-- Trainee -->
-                                    <td>
-                                        <div class="fw-semibold">
+                                    <td class="px-4">
 
-                                            @(string.IsNullOrWhiteSpace(item.TraineeName)
-                                                ? "Unknown"
-                                                : item.TraineeName)
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="bg-light rounded-circle p-2 me-2">
+                                                <i class="fas fa-user text-secondary"></i>
+                                            </div>
+
+                                            <div>
+                                                <div class="fw-semibold">
+                                                    @item.TraineeName
+                                                </div>
+                                            </div>
 
                                         </div>
+
                                     </td>
 
 
                                     <!-- Email -->
                                     <td>
-
                                         <span class="text-muted">
-
-                                            @(string.IsNullOrWhiteSpace(item.TraineeEmail)
-                                                ? "No email"
-                                                : item.TraineeEmail)
-
+                                            @item.TraineeEmail
                                         </span>
-
                                     </td>
 
 
                                     <!-- Course -->
                                     <td>
-
                                         <span class="fw-semibold">
                                             @item.CourseTitle
                                         </span>
-
                                     </td>
 
 
                                     <!-- Progress -->
-                                    <td style="min-width: 200px;">
+                                    <td>
 
                                         <div class="d-flex justify-content-between mb-1">
 
-                                            <small class="text-muted">
-
-                                                @item.CompletedLessons /
-                                                @item.TotalLessons Lessons
-
-                                            </small>
-
                                             <small class="fw-semibold">
-
-                                                @item.ProgressPercentage.ToString("0.##")%
-
+                                                @progress.ToString("0.##")%
                                             </small>
 
                                         </div>
 
-
                                         <div class="progress"
                                              style="height: 8px;">
 
-                                            <div class="progress-bar"
+                                            <div class="progress-bar @(item.IsCompleted
+                                                                                                ? "bg-success"
+                                                                                                : "bg-primary")"
                                                  role="progressbar"
-                                                 style="width: @item.ProgressPercentage%;"
-                                                 aria-valuenow="@item.ProgressPercentage"
+                                                 style="width: @progress.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%;"
+                                                 aria-valuenow="@progress"
                                                  aria-valuemin="0"
                                                  aria-valuemax="100">
                                             </div>
 
                                         </div>
+
+                                    </td>
+
+
+                                    <!-- Lessons -->
+                                    <td>
+
+                                        <span class="fw-semibold">
+                                            @item.CompletedLessons
+                                        </span>
+
+                                        <span class="text-muted">
+                                            / @item.TotalLessons
+                                        </span>
 
                                     </td>
 
@@ -126,21 +401,15 @@
                                         @if (item.IsCompleted)
                                         {
                                             <span class="badge bg-success">
-
                                                 <i class="fas fa-check me-1"></i>
-
                                                 Completed
-
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="badge bg-warning text-dark">
-
                                                 <i class="fas fa-clock me-1"></i>
-
                                                 In Progress
-
                                             </span>
                                         }
 
@@ -154,36 +423,10 @@
                     </table>
 
                 </div>
-
-            </div>
-
-        </div>
-    }
-    else
-    {
-        <!-- No Trainees -->
-
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body text-center py-5">
-
-                <div class="mb-3">
-
-                    <i class="fas fa-chart-line fa-3x text-muted"></i>
-
-                </div>
-
-                <h5>No Trainee Progress Yet</h5>
-
-                <p class="text-muted mb-0">
-
-                    No trainees have enrolled in your courses yet.
-
-                </p>
-
-            </div>
+            }
 
         </div>
-    }
+
+    </div>
 
 </div>

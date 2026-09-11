@@ -1,74 +1,84 @@
-﻿@model Training_Platform.Areas.Trainer.ViewModels.TrainerHomeVM
+﻿@using System.Text.Json
+@model Training_Platform.ViewModels.TrainerHomeVM
 
 @{
     ViewData["Title"] = "Trainer Dashboard";
+
+    var progressData = JsonSerializer.Serialize(new
+    {
+        completed = Model.CompletedEnrollments,
+        inProgress = Model.InProgressEnrollments
+    });
+
+    var courseStatistics = JsonSerializer.Serialize(
+        Model.CourseStatistics.Select(c => new
+        {
+            title = c.CourseTitle,
+            trainees = c.TraineesCount
+        })
+    );
 }
 
-<div class="container-fluid">
+<div class="trainer-dashboard">
 
-    <!-- ========================================= -->
-    <!-- Welcome -->
-    <!-- ========================================= -->
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-    <div class="row mb-4">
+    <div class="dashboard-header mb-4">
 
-        <div class="col">
+        <div>
+            <span class="dashboard-label">
+                TRAINER PANEL
+            </span>
 
-            <h3 class="mb-1">
-                Trainer Dashboard
-            </h3>
+            <h2 class="dashboard-title">
+                Welcome back, Trainer 👋
+            </h2>
 
-            <p class="text-muted mb-0">
-                Welcome back! Here's an overview of your training activities.
+            <p class="dashboard-subtitle">
+                Here's an overview of your courses and trainees.
             </p>
+        </div>
 
+        <div class="header-date">
+            <i class="bi bi-calendar3 me-2"></i>
+            @DateTime.Now.ToString("dd MMM yyyy")
         </div>
 
     </div>
 
 
-    <!-- ========================================= -->
-    <!-- Statistics Cards -->
-    <!-- ========================================= -->
+    <!-- =========================================================
+         STATISTICS
+         2 CARDS PER ROW
+    ========================================================== -->
 
-    <div class="row g-3 mb-4">
-
+    <div class="row g-4 mb-4">
 
         <!-- My Courses -->
+        <div class="col-xl-6 col-lg-6 col-md-6">
 
-        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
 
-            <div class="card h-100 shadow-sm border-0">
+                <div class="stat-icon courses-icon">
+                    <i class="bi bi-book"></i>
+                </div>
 
-                <div class="card-body">
+                <div class="stat-content">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <span>
+                        My Courses
+                    </span>
 
-                        <div>
+                    <h3>
+                        @Model.MyCourses
+                    </h3>
 
-                            <h6 class="text-muted mb-2">
-                                My Courses
-                            </h6>
-
-                            <h3 class="mb-0">
-                                @Model.MyCourses
-                            </h3>
-
-                        </div>
-
-                        <div class="avatar avatar-xl">
-
-                            <div class="avatar-name rounded-circle bg-primary">
-
-                                <span>
-                                    <i class="fas fa-book text-white"></i>
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <small>
+                        <i class="bi bi-collection me-1"></i>
+                        Courses assigned to you
+                    </small>
 
                 </div>
 
@@ -78,40 +88,28 @@
 
 
         <!-- Published Courses -->
+        <div class="col-xl-6 col-lg-6 col-md-6">
 
-        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
 
-            <div class="card h-100 shadow-sm border-0">
+                <div class="stat-icon published-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
 
-                <div class="card-body">
+                <div class="stat-content">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <span>
+                        Published Courses
+                    </span>
 
-                        <div>
+                    <h3>
+                        @Model.PublishedCourses
+                    </h3>
 
-                            <h6 class="text-muted mb-2">
-                                Published Courses
-                            </h6>
-
-                            <h3 class="mb-0">
-                                @Model.PublishedCourses
-                            </h3>
-
-                        </div>
-
-                        <div class="avatar avatar-xl">
-
-                            <div class="avatar-name rounded-circle bg-success">
-
-                                <span>
-                                    <i class="fas fa-check-circle text-white"></i>
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <small>
+                        <i class="bi bi-globe2 me-1"></i>
+                        Available courses
+                    </small>
 
                 </div>
 
@@ -121,40 +119,28 @@
 
 
         <!-- Total Trainees -->
+        <div class="col-xl-6 col-lg-6 col-md-6">
 
-        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
 
-            <div class="card h-100 shadow-sm border-0">
+                <div class="stat-icon trainees-icon">
+                    <i class="bi bi-people"></i>
+                </div>
 
-                <div class="card-body">
+                <div class="stat-content">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <span>
+                        Total Trainees
+                    </span>
 
-                        <div>
+                    <h3>
+                        @Model.TotalTrainees
+                    </h3>
 
-                            <h6 class="text-muted mb-2">
-                                Total Trainees
-                            </h6>
-
-                            <h3 class="mb-0">
-                                @Model.TotalTrainees
-                            </h3>
-
-                        </div>
-
-                        <div class="avatar avatar-xl">
-
-                            <div class="avatar-name rounded-circle bg-info">
-
-                                <span>
-                                    <i class="fas fa-users text-white"></i>
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <small>
+                        <i class="bi bi-person-check me-1"></i>
+                        Enrolled trainees
+                    </small>
 
                 </div>
 
@@ -163,81 +149,151 @@
         </div>
 
 
-        <!-- Quizzes -->
+        <!-- My Quizzes -->
+        <div class="col-xl-6 col-lg-6 col-md-6">
 
-        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
 
-            <div class="card h-100 shadow-sm border-0">
+                <div class="stat-icon quizzes-icon">
+                    <i class="bi bi-clipboard-check"></i>
+                </div>
 
-                <div class="card-body">
+                <div class="stat-content">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <span>
+                        My Quizzes
+                    </span>
 
-                        <div>
+                    <h3>
+                        @Model.MyQuizzes
+                    </h3>
 
-                            <h6 class="text-muted mb-2">
+                    <small>
+                        <i class="bi bi-question-circle me-1"></i>
+                        Created quizzes
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         QUICK ACTIONS + PROGRESS
+    ========================================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Quick Actions -->
+        <div class="col-lg-8">
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h5>
+                            Quick Actions
+                        </h5>
+
+                        <p>
+                            Quick access to your trainer tools.
+                        </p>
+                    </div>
+
+                    <i class="bi bi-lightning-charge"></i>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <!-- Courses -->
+
+                    <a asp-area="Trainer"
+                       asp-controller="Courses"
+                       asp-action="Index"
+                       class="quick-action">
+
+                        <div class="action-icon blue">
+                            <i class="bi bi-book"></i>
+                        </div>
+
+                        <div class="action-text">
+
+                            <strong>
+                                My Courses
+                            </strong>
+
+                            <span>
+                                View your courses
+                            </span>
+
+                        </div>
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                    <!-- Quizzes -->
+
+                    <a asp-area="Trainer"
+                       asp-controller="Quizzes"
+                       asp-action="Index"
+                       class="quick-action">
+
+                        <div class="action-icon purple">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+
+                        <div class="action-text">
+
+                            <strong>
                                 My Quizzes
-                            </h6>
+                            </strong>
 
-                            <h3 class="mb-0">
-                                @Model.MyQuizzes
-                            </h3>
-
-                        </div>
-
-                        <div class="avatar avatar-xl">
-
-                            <div class="avatar-name rounded-circle bg-warning">
-
-                                <span>
-                                    <i class="fas fa-question-circle text-white"></i>
-                                </span>
-
-                            </div>
+                            <span>
+                                Manage your quizzes
+                            </span>
 
                         </div>
 
-                    </div>
+                        <i class="bi bi-arrow-right"></i>
 
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+                    </a>
 
 
-    <!-- ========================================= -->
-    <!-- Charts -->
-    <!-- ========================================= -->
+                    <!-- Progress -->
 
-    <div class="row g-4 mb-4">
+                    <a asp-area="Trainer"
+                       asp-controller="Progress"
+                       asp-action="Index"
+                       class="quick-action">
 
+                        <div class="action-icon green">
+                            <i class="bi bi-bar-chart"></i>
+                        </div>
 
-        <!-- Trainee Progress -->
+                        <div class="action-text">
 
-        <div class="col-lg-5">
+                            <strong>
+                                Trainee Progress
+                            </strong>
 
-            <div class="card h-100 shadow-sm border-0">
+                            <span>
+                                Track trainee progress
+                            </span>
 
-                <div class="card-header bg-transparent">
+                        </div>
 
-                    <h5 class="mb-0">
-                        Trainee Progress
-                    </h5>
+                        <i class="bi bi-arrow-right"></i>
 
-                    <small class="text-muted">
-                        Course completion overview
-                    </small>
-
-                </div>
-
-                <div class="card-body">
-
-                    <div id="progressChart"
-                         style="height: 300px;">
-                    </div>
+                    </a>
 
                 </div>
 
@@ -246,69 +302,135 @@
         </div>
 
 
-        <!-- Trainees Per Course -->
-
-        <div class="col-lg-7">
-
-            <div class="card h-100 shadow-sm border-0">
-
-                <div class="card-header bg-transparent">
-
-                    <h5 class="mb-0">
-                        Trainees per Course
-                    </h5>
-
-                    <small class="text-muted">
-                        Number of trainees enrolled in your courses
-                    </small>
-
-                </div>
-
-                <div class="card-body">
-
-                    <div id="courseChart"
-                         style="height: 300px;">
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================================= -->
-    <!-- Additional Statistics -->
-    <!-- ========================================= -->
-
-    <div class="row g-4 mb-4">
-
-
-        <!-- Completion -->
+        <!-- Progress Summary -->
 
         <div class="col-lg-4">
 
-            <div class="card h-100 shadow-sm border-0">
+            <div class="dashboard-card progress-summary">
 
-                <div class="card-body text-center">
+                <div class="card-heading">
 
-                    <div class="mb-3">
+                    <div>
+                        <h5>
+                            Enrollment Progress
+                        </h5>
 
-                        <i class="fas fa-graduation-cap fa-3x text-primary"></i>
+                        <p>
+                            Overall trainee progress
+                        </p>
+                    </div>
+
+                    <i class="bi bi-pie-chart"></i>
+
+                </div>
+
+
+                <div id="progressChart"></div>
+
+
+                <div class="progress-legend">
+
+                    <div>
+
+                        <span class="legend-dot completed"></span>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong>
+                            @Model.CompletedEnrollments
+                        </strong>
 
                     </div>
 
-                    <h6 class="text-muted">
-                        Completed Enrollments
-                    </h6>
 
-                    <h2 class="mb-0">
-                        @Model.CompletedEnrollments
-                    </h2>
+                    <div>
+
+                        <span class="legend-dot progress"></span>
+
+                        <span>
+                            In Progress
+                        </span>
+
+                        <strong>
+                            @Model.InProgressEnrollments
+                        </strong>
+
+                    </div>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         COURSE STATISTICS
+    ========================================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-12">
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <h5>
+                            Trainees per Course
+                        </h5>
+
+                        <p>
+                            Number of trainees enrolled in each course.
+                        </p>
+
+                    </div>
+
+                    <i class="bi bi-bar-chart-line"></i>
+
+                </div>
+
+
+                <div id="courseChart"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         EXTRA STATISTICS
+    ========================================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Completed -->
+
+        <div class="col-md-4">
+
+            <div class="mini-stat completed-stat">
+
+                <div>
+
+                    <span>
+                        Completed Enrollments
+                    </span>
+
+                    <h3>
+                        @Model.CompletedEnrollments
+                    </h3>
+
+                </div>
+
+                <i class="bi bi-check2-circle"></i>
 
             </div>
 
@@ -317,27 +439,23 @@
 
         <!-- In Progress -->
 
-        <div class="col-lg-4">
+        <div class="col-md-4">
 
-            <div class="card h-100 shadow-sm border-0">
+            <div class="mini-stat progress-stat">
 
-                <div class="card-body text-center">
+                <div>
 
-                    <div class="mb-3">
-
-                        <i class="fas fa-spinner fa-3x text-warning"></i>
-
-                    </div>
-
-                    <h6 class="text-muted">
+                    <span>
                         In Progress
-                    </h6>
+                    </span>
 
-                    <h2 class="mb-0">
+                    <h3>
                         @Model.InProgressEnrollments
-                    </h2>
+                    </h3>
 
                 </div>
+
+                <i class="bi bi-hourglass-split"></i>
 
             </div>
 
@@ -346,27 +464,23 @@
 
         <!-- Certificates -->
 
-        <div class="col-lg-4">
+        <div class="col-md-4">
 
-            <div class="card h-100 shadow-sm border-0">
+            <div class="mini-stat certificate-stat">
 
-                <div class="card-body text-center">
+                <div>
 
-                    <div class="mb-3">
-
-                        <i class="fas fa-certificate fa-3x text-success"></i>
-
-                    </div>
-
-                    <h6 class="text-muted">
+                    <span>
                         Certificates Issued
-                    </h6>
+                    </span>
 
-                    <h2 class="mb-0">
+                    <h3>
                         @Model.CertificatesIssued
-                    </h2>
+                    </h3>
 
                 </div>
+
+                <i class="bi bi-award"></i>
 
             </div>
 
@@ -375,249 +489,386 @@
     </div>
 
 
-    <!-- ========================================= -->
-    <!-- Recent Courses -->
-    <!-- ========================================= -->
+    <!-- =========================================================
+         RECENT COURSES
+    ========================================================== -->
 
-    <div class="card shadow-sm border-0">
+    <div class="dashboard-card">
 
-        <div class="card-header bg-transparent">
+        <div class="card-heading">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div>
 
-                <div>
+                <h5>
+                    Recent Courses
+                </h5>
 
-                    <h5 class="mb-1">
-                        My Recent Courses
-                    </h5>
+                <p>
+                    Your recently created courses.
+                </p>
 
-                    <p class="text-muted mb-0">
-                        Your latest created courses.
-                    </p>
+            </div>
+
+
+            <a asp-area="Trainer"
+               asp-controller="Courses"
+               asp-action="Index"
+               class="view-all">
+
+                View All
+
+                <i class="bi bi-arrow-right ms-1"></i>
+
+            </a>
+
+        </div>
+
+
+        @if (Model.RecentCourses != null &&
+             Model.RecentCourses.Any())
+        {
+
+            <div class="table-responsive">
+
+                <table class="table dashboard-table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Course
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Trainees
+                            </th>
+
+                            <th>
+                                Created
+                            </th>
+
+                            <th class="text-end">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var course in Model.RecentCourses)
+                        {
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="course-name">
+
+                                        <div class="course-mini-icon">
+
+                                            <i class="bi bi-book"></i>
+
+                                        </div>
+
+                                        <span>
+                                            @course.Title
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    @if (course.IsPublished)
+                                    {
+
+                                        <span class="status-badge published">
+
+                                            <span></span>
+
+                                            Published
+
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+
+                                        <span class="status-badge draft">
+
+                                            <span></span>
+
+                                            Draft
+
+                                        </span>
+
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+                                    <strong>
+                                        @course.TraineesCount
+                                    </strong>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="created-date">
+                                        @course.CreatedAt.ToString("dd MMM yyyy")
+                                    </span>
+
+                                </td>
+
+
+                                <td class="text-end">
+
+                                    <a asp-area="Trainer"
+                                       asp-controller="Courses"
+                                       asp-action="Details"
+                                       asp-route-id="@course.Id"
+                                       class="btn btn-sm btn-outline-primary action-button"
+                                       title="View Course">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        }
+        else
+        {
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <i class="bi bi-book"></i>
 
                 </div>
+
+                <h5>
+                    No Courses Yet
+                </h5>
+
+                <p>
+                    You don't have any courses assigned to you yet.
+                </p>
 
                 <a asp-area="Trainer"
                    asp-controller="Courses"
                    asp-action="Index"
-                   class="btn btn-primary btn-sm">
+                   class="btn btn-primary">
 
-                    <i class="fas fa-book me-1"></i>
+                    <i class="bi bi-arrow-right me-1"></i>
 
-                    View All Courses
+                    Go to Courses
 
                 </a>
 
             </div>
 
-        </div>
-
-
-        <div class="card-body p-0">
-
-            @if (Model.RecentCourses.Any())
-            {
-                <div class="table-responsive">
-
-                    <table class="table table-hover mb-0 align-middle">
-
-                        <thead class="table-light">
-
-                            <tr>
-
-                                <th>
-                                    Course
-                                </th>
-
-                                <th>
-                                    Trainees
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Created
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            @foreach (var course in Model.RecentCourses)
-                            {
-                                <tr>
-
-                                    <td>
-
-                                        <span class="fw-semibold">
-                                            @course.Title
-                                        </span>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <span>
-
-                                            <i class="fas fa-users me-1 text-muted"></i>
-
-                                            @course.TraineesCount
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        @if (course.IsPublished)
-                                        {
-                                            <span class="badge bg-success">
-                                                Published
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">
-                                                Draft
-                                            </span>
-                                        }
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <span class="text-muted">
-
-                                            @course.CreatedAt.ToString("dd MMM yyyy")
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td>
-
-                                        <a asp-area="Trainer"
-                                           asp-controller="Courses"
-                                           asp-action="Details"
-                                           asp-route-id="@course.Id"
-                                           class="btn btn-sm btn-outline-primary">
-
-                                            <i class="fas fa-eye"></i>
-
-                                        </a>
-
-                                    </td>
-
-                                </tr>
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-            }
-            else
-            {
-                <div class="text-center py-5">
-
-                    <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-
-                    <h5>
-                        No Courses Yet
-                    </h5>
-
-                    <p class="text-muted">
-                        You haven't created any courses yet.
-                    </p>
-
-                    <a asp-area="Trainer"
-                       asp-controller="Courses"
-                       asp-action="Create"
-                       class="btn btn-primary">
-
-                        <i class="fas fa-plus me-1"></i>
-
-                        Create Course
-
-                    </a>
-
-                </div>
-            }
-
-        </div>
+        }
 
     </div>
 
 </div>
 
 
-@section Scripts
-{
-    <script>
+<!-- =============================================================
+     ECHARTS
+============================================================= -->
 
-        document.addEventListener("DOMContentLoaded", function() {
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
-            // =========================================
-            // Trainee Progress Chart
-            // =========================================
 
-            var progressElement =
-                document.getElementById('progressChart');
+<script>
 
-            if (progressElement) {
+    document.addEventListener("DOMContentLoaded", function() {
 
-                var progressChart =
-                    echarts.init(progressElement);
+        const progressData =
+                @Html.Raw(progressData);
 
-                var progressOption = {
+        const courseData =
+                @Html.Raw(courseStatistics);
+
+
+        /* =========================================================
+           CHECK DARK MODE
+        ========================================================= */
+
+        function isDarkMode() {
+
+            return document.body.classList.contains("dark-mode")
+                || document.body.classList.contains("dark")
+                || document.body.getAttribute("data-theme") === "dark"
+                || document.documentElement.classList.contains("dark-mode")
+                || document.documentElement.classList.contains("dark")
+                || document.documentElement.getAttribute("data-theme") === "dark";
+
+        }
+
+
+        function getTextColor() {
+
+            return isDarkMode()
+                ? "#e5e7eb"
+                : "#1e293b";
+
+        }
+
+
+        function getMutedColor() {
+
+            return isDarkMode()
+                ? "#94a3b8"
+                : "#64748b";
+
+        }
+
+
+        /* =========================================================
+           PROGRESS CHART
+        ========================================================= */
+
+        const progressElement =
+            document.getElementById("progressChart");
+
+        let progressChart = null;
+
+
+        if (progressElement) {
+
+            progressChart =
+                echarts.init(progressElement);
+
+
+            function renderProgressChart() {
+
+                const dark =
+                    isDarkMode();
+
+
+                progressChart.setOption({
+
+                    backgroundColor: "transparent",
 
                     tooltip: {
-                        trigger: 'item'
+                        trigger: "item"
                     },
 
                     legend: {
-                        bottom: '0'
+                        show: false
                     },
 
                     series: [
 
                         {
-                            name: 'Trainees',
+                            name: "Enrollment",
 
-                            type: 'pie',
+                            type: "pie",
 
-                            radius: ['45%', '70%'],
+                            radius: [
+                                "58%",
+                                "80%"
+                            ],
 
                             avoidLabelOverlap: false,
 
+                            itemStyle: {
+
+                                borderRadius: 8,
+
+                                borderColor:
+                                    dark
+                                        ? "#121821"
+                                        : "#ffffff",
+
+                                borderWidth: 4
+
+                            },
+
                             label: {
+
+                                show: true,
+
+                                position: "center",
+
+                                formatter: function() {
+
+                                    const total =
+                                        progressData.completed +
+                                        progressData.inProgress;
+
+                                    return total +
+                                        "\nEnrollments";
+
+                                },
+
+                                fontSize: 18,
+
+                                fontWeight: 700,
+
+                                lineHeight: 28,
+
+                                color:
+                                    getTextColor()
+
+                            },
+
+                            labelLine: {
                                 show: false
                             },
 
                             data: [
 
                                 {
-                                    value: @Model.CompletedEnrollments,
-                                    name: 'Completed'
+                                    value:
+                                        progressData.completed,
+
+                                    name:
+                                        "Completed",
+
+                                    itemStyle: {
+                                        color: "#22c55e"
+                                    }
                                 },
 
                                 {
-                                    value: @Model.InProgressEnrollments,
-                                    name: 'In Progress'
+                                    value:
+                                        progressData.inProgress,
+
+                                    name:
+                                        "In Progress",
+
+                                    itemStyle: {
+                                        color: "#3b82f6"
+                                    }
                                 }
 
                             ]
@@ -626,118 +877,979 @@
 
                     ]
 
-                };
-
-                progressChart.setOption(progressOption);
-
-
-                window.addEventListener('resize', function() {
-                    progressChart.resize();
                 });
 
             }
 
 
-            // =========================================
-            // Trainees Per Course Chart
-            // =========================================
+            renderProgressChart();
 
-            var courseElement =
-                document.getElementById('courseChart');
-
-            if (courseElement) {
-
-                var courseChart =
-                    echarts.init(courseElement);
+        }
 
 
-                var courseNames = [
+        /* =========================================================
+           COURSE BAR CHART
+        ========================================================= */
 
-                            @foreach (var course in Model.CourseStatistics)
-                    {
-                        @: '@Html.Raw(
-                                        course.CourseTitle
-                                                .Replace("\\", "\\\\")
-                                                .Replace("'", "\\'")
-                                                .Replace("\r", "")
-                                                .Replace("\n", " ")
-                            )',
-                                }
+        const courseElement =
+            document.getElementById("courseChart");
 
-                ];
+        let courseChart = null;
 
 
-                    var traineeCounts = [
+        if (courseElement) {
 
-                                            @foreach (var course in Model.CourseStatistics)
-                        {
-                            @: @course.TraineesCount,
+            courseChart =
+                echarts.init(courseElement);
+
+
+            function renderCourseChart() {
+
+                const dark =
+                    isDarkMode();
+
+
+                courseChart.setOption({
+
+                    backgroundColor: "transparent",
+
+                    tooltip: {
+
+                        trigger: "axis",
+
+                        axisPointer: {
+                            type: "shadow"
                         }
 
-                            ];
+                    },
 
+                    grid: {
 
-                    var courseOption = {
+                        left: "3%",
 
-                        tooltip: {
-                            trigger: 'axis'
+                        right: "4%",
+
+                        bottom: "10%",
+
+                        top: "8%",
+
+                        containLabel: true
+
+                    },
+
+                    xAxis: {
+
+                        type: "category",
+
+                        data:
+                            courseData.map(
+                                item => item.title
+                            ),
+
+                        axisLabel: {
+
+                            interval: 0,
+
+                            rotate:
+                                courseData.length > 5
+                                    ? 25
+                                    : 0,
+
+                            color:
+                                getMutedColor()
+
                         },
 
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '15%',
-                            containLabel: true
+                        axisLine: {
+
+                            lineStyle: {
+
+                                color:
+                                    dark
+                                        ? "#334155"
+                                        : "#e2e8f0"
+
+                            }
+
+                        }
+
+                    },
+
+                    yAxis: {
+
+                        type: "value",
+
+                        minInterval: 1,
+
+                        axisLabel: {
+
+                            color:
+                                getMutedColor()
+
                         },
 
-                        xAxis: {
+                        splitLine: {
 
-                            type: 'category',
+                            lineStyle: {
 
-                            data: courseNames,
+                                color:
+                                    dark
+                                        ? "#1e293b"
+                                        : "#e2e8f0"
 
-                            axisLabel: {
-                                rotate: 25
                             }
 
                         },
 
-                        yAxis: {
+                        axisLine: {
 
-                            type: 'value',
+                            lineStyle: {
 
-                            minInterval: 1
+                                color:
+                                    dark
+                                        ? "#334155"
+                                        : "#e2e8f0"
 
-                        },
+                            }
+
+                        }
+
+                    },
+
+                    series: [
+
+                        {
+
+                            name: "Trainees",
+
+                            type: "bar",
+
+                            data:
+                                courseData.map(
+                                    item => item.trainees
+                                ),
+
+                            barWidth: "45%",
+
+                            itemStyle: {
+
+                                color: "#3b82f6",
+
+                                borderRadius: [
+                                    6,
+                                    6,
+                                    0,
+                                    0
+                                ]
+
+                            }
+
+                        }
+
+                    ]
+
+                });
+
+            }
+
+
+            renderCourseChart();
+
+        }
+
+
+        /* =========================================================
+           RESIZE
+        ========================================================= */
+
+        window.addEventListener(
+            "resize",
+            function() {
+
+                if (progressChart) {
+                    progressChart.resize();
+                }
+
+                if (courseChart) {
+                    courseChart.resize();
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           WATCH THEME CHANGES
+        ========================================================= */
+
+        const observer =
+            new MutationObserver(function() {
+
+                if (progressChart) {
+
+                    progressChart.resize();
+
+                    progressChart.setOption({
 
                         series: [
-
                             {
-                                name: 'Trainees',
+                                label: {
+                                    color:
+                                        getTextColor()
+                                },
 
-                                type: 'bar',
+                                itemStyle: {
 
-                                data: traineeCounts,
+                                    borderColor:
+                                        isDarkMode()
+                                            ? "#121821"
+                                            : "#ffffff"
 
-                                barMaxWidth: 45
+                                }
 
                             }
-
                         ]
 
-                    };
-
-
-                    courseChart.setOption(courseOption);
-
-
-                    window.addEventListener('resize', function() {
-                        courseChart.resize();
                     });
+
+                }
+
+
+                if (courseChart) {
+
+                    courseChart.resize();
 
                 }
 
             });
 
-        </script>
+
+        observer.observe(
+            document.body,
+            {
+                attributes: true,
+                attributeFilter: [
+                    "class",
+                    "data-theme"
+                ]
+            }
+        );
+
+
+        observer.observe(
+            document.documentElement,
+            {
+                attributes: true,
+                attributeFilter: [
+                    "class",
+                    "data-theme"
+                ]
+            }
+        );
+
+    });
+
+</script>
+
+
+<style>
+
+    /* =========================================================
+           LIGHT MODE VARIABLES
+        ========================================================= */
+
+    .trainer-dashboard {
+        --bg: #ffffff;
+        --card: #ffffff;
+        --card-hover: #f8fafc;
+        --text: #0f172a;
+        --text-secondary: #475569;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --border-light: #edf2f7;
+        --table-head: #f8fafc;
+        --shadow: rgba(15, 23, 42, .06);
+        --shadow-hover: rgba(15, 23, 42, .12);
+        padding: 10px 5px 40px;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        transition: background .3s ease, color .3s ease;
     }
+
+
+    /* =========================================================
+           DARK MODE
+        ========================================================= */
+
+    body.dark-mode .trainer-dashboard,
+    body.dark .trainer-dashboard,
+    body[data-theme="dark"] .trainer-dashboard,
+    html.dark-mode .trainer-dashboard,
+    html.dark .trainer-dashboard,
+    html[data-theme="dark"] .trainer-dashboard {
+        --bg: #090d13;
+        --card: #121821;
+        --card-hover: #18212d;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --muted: #94a3b8;
+        --border: #263241;
+        --border-light: #202b38;
+        --table-head: #18212d;
+        --shadow: rgba(0, 0, 0, .25);
+        --shadow-hover: rgba(0, 0, 0, .4);
+    }
+
+
+    /* =========================================================
+           HEADER
+        ========================================================= */
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 28px 30px;
+        background: linear-gradient( 135deg, #0f172a, #1e3a8a );
+        border-radius: 18px;
+        color: #ffffff;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, .15);
+    }
+
+
+    .dashboard-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        font-weight: 700;
+        opacity: .7;
+    }
+
+
+    .dashboard-title {
+        margin: 6px 0 5px;
+        font-weight: 700;
+    }
+
+
+    .dashboard-subtitle {
+        margin: 0;
+        opacity: .75;
+    }
+
+
+    .header-date {
+        padding: 10px 16px;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+
+    /* =========================================================
+           STAT CARDS
+           2 x 2
+        ========================================================= */
+
+    .stat-card {
+        width: 100%;
+        min-height: 130px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: var(--card);
+        padding: 22px 26px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 6px 20px var(--shadow);
+        transition: transform .25s ease, box-shadow .25s ease, background .3s ease, border-color .3s ease;
+    }
+
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px var(--shadow-hover);
+        }
+
+
+    .stat-icon {
+        flex-shrink: 0;
+        width: 62px;
+        height: 62px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+    }
+
+
+    .courses-icon {
+        background: #e8f1ff;
+        color: #2563eb;
+    }
+
+
+    .published-icon {
+        background: #e9f9f0;
+        color: #16a34a;
+    }
+
+
+    .trainees-icon {
+        background: #f3eaff;
+        color: #7c3aed;
+    }
+
+
+    .quizzes-icon {
+        background: #fff3df;
+        color: #ea580c;
+    }
+
+
+    .stat-content {
+        min-width: 0;
+    }
+
+
+        .stat-content span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+
+        .stat-content h3 {
+            margin: 4px 0;
+            font-size: 30px;
+            font-weight: 750;
+            color: var(--text);
+        }
+
+
+        .stat-content small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+
+    /* =========================================================
+           DASHBOARD CARD
+        ========================================================= */
+
+    .dashboard-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 6px 20px var(--shadow);
+        transition: background .3s ease, border-color .3s ease;
+    }
+
+
+    .card-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+
+        .card-heading h5 {
+            margin: 0;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+
+        .card-heading p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+
+        .card-heading > i {
+            color: #3b82f6;
+            font-size: 22px;
+        }
+
+
+    /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+    .quick-actions {
+        display: grid;
+        gap: 10px;
+    }
+
+
+    .quick-action {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        border-radius: 12px;
+        text-decoration: none;
+        border: 1px solid var(--border-light);
+        background: transparent;
+        transition: .2s ease;
+    }
+
+
+        .quick-action:hover {
+            background: var(--card-hover);
+            transform: translateX(4px);
+        }
+
+
+        .quick-action .action-text {
+            flex: 1;
+        }
+
+
+        .quick-action strong {
+            display: block;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+
+        .quick-action span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+
+        .quick-action > i {
+            color: var(--muted);
+        }
+
+
+    .action-icon {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        flex-shrink: 0;
+    }
+
+
+        .action-icon.blue {
+            background: #e8f1ff;
+            color: #2563eb;
+        }
+
+
+        .action-icon.purple {
+            background: #f3eaff;
+            color: #7c3aed;
+        }
+
+
+        .action-icon.green {
+            background: #e9f9f0;
+            color: #16a34a;
+        }
+
+
+    /* =========================================================
+           PROGRESS CHART
+        ========================================================= */
+
+    #progressChart {
+        height: 220px;
+        width: 100%;
+    }
+
+
+    .progress-legend {
+        display: grid;
+        gap: 10px;
+    }
+
+
+        .progress-legend > div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+
+        .progress-legend strong {
+            margin-left: auto;
+            color: var(--text);
+        }
+
+
+    .legend-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+    }
+
+
+        .legend-dot.completed {
+            background: #22c55e;
+        }
+
+
+        .legend-dot.progress {
+            background: #3b82f6;
+        }
+
+
+    /* =========================================================
+           COURSE CHART
+        ========================================================= */
+
+    #courseChart {
+        width: 100%;
+        height: 360px;
+    }
+
+
+    /* =========================================================
+           MINI STATS
+        ========================================================= */
+
+    .mini-stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 105px;
+        padding: 20px;
+        border-radius: 15px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        box-shadow: 0 5px 18px var(--shadow);
+        transition: background .3s ease, border-color .3s ease;
+    }
+
+
+        .mini-stat span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+
+        .mini-stat h3 {
+            margin: 5px 0 0;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+
+        .mini-stat > i {
+            font-size: 28px;
+        }
+
+
+    .completed-stat > i {
+        color: #22c55e;
+    }
+
+
+    .progress-stat > i {
+        color: #3b82f6;
+    }
+
+
+    .certificate-stat > i {
+        color: #f59e0b;
+    }
+
+
+    /* =========================================================
+           TABLE
+        ========================================================= */
+
+    .dashboard-table {
+        margin: 0;
+        color: var(--text);
+    }
+
+
+        .dashboard-table thead th {
+            background: var(--table-head);
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            border-bottom: 1px solid var(--border);
+            padding: 14px;
+        }
+
+
+        .dashboard-table tbody td {
+            padding: 16px 14px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            background: transparent;
+        }
+
+
+        .dashboard-table tbody tr {
+            background: transparent;
+        }
+
+
+            .dashboard-table tbody tr:hover td {
+                background: var(--card-hover);
+            }
+
+
+    .course-name {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+
+    .course-mini-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 9px;
+        background: #e8f1ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+
+    .created-date {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+           DARK TABLE FIX
+        ========================================================= */
+
+    body.dark-mode .dashboard-table,
+    body.dark .dashboard-table,
+    body[data-theme="dark"] .dashboard-table,
+    html.dark-mode .dashboard-table,
+    html.dark .dashboard-table,
+    html[data-theme="dark"] .dashboard-table {
+        --bs-table-bg: transparent;
+        --bs-table-color: #e5e7eb;
+        --bs-table-border-color: #263241;
+    }
+
+
+    /* =========================================================
+           STATUS
+        ========================================================= */
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+        .status-badge span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+
+        .status-badge.published {
+            background: #ecfdf3;
+            color: #15803d;
+        }
+
+
+            .status-badge.published span {
+                background: #22c55e;
+            }
+
+
+        .status-badge.draft {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+
+            .status-badge.draft span {
+                background: #94a3b8;
+            }
+
+
+    /* =========================================================
+           VIEW ALL
+        ========================================================= */
+
+    .view-all {
+        color: #3b82f6;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+        .view-all:hover {
+            color: #2563eb;
+        }
+
+
+    .action-button {
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+
+    .empty-icon {
+        width: 65px;
+        height: 65px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 27px;
+    }
+
+
+    .empty-state h5 {
+        margin-top: 15px;
+        color: var(--text);
+    }
+
+
+    .empty-state p {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+           DARK MODE - BOOTSTRAP TEXT OVERRIDES
+        ========================================================= */
+
+    body.dark-mode .text-muted,
+    body.dark .text-muted,
+    body[data-theme="dark"] .text-muted,
+    html.dark-mode .text-muted,
+    html.dark .text-muted,
+    html[data-theme="dark"] .text-muted {
+        color: #94a3b8 !important;
+    }
+
+
+    /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+    @@media (max-width: 991px) {
+
+        .dashboard-header {
+            padding: 24px;
+        }
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .trainer-dashboard {
+            padding: 10px 0 30px;
+        }
+
+
+        .dashboard-header {
+            padding: 22px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+
+        .dashboard-title {
+            font-size: 22px;
+        }
+
+
+        .stat-card {
+            min-height: 115px;
+            padding: 18px;
+        }
+
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            font-size: 22px;
+        }
+
+
+        .stat-content h3 {
+            font-size: 26px;
+        }
+
+
+        #courseChart {
+            height: 300px;
+        }
+
+
+        .dashboard-card {
+            padding: 18px;
+        }
+    }
+
+
+    @@media (max-width: 480px) {
+
+        .stat-card {
+            gap: 14px;
+        }
+
+
+        .stat-content small {
+            font-size: 10px;
+        }
+
+
+        .header-date {
+            font-size: 12px;
+        }
+    }
+
+</style>

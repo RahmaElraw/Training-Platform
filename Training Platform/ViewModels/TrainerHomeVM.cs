@@ -1,4 +1,4 @@
-﻿namespace Training_Platform.Areas.Trainer.ViewModels
+﻿namespace Training_Platform.ViewModels
 {
     public class TrainerHomeVM
     {

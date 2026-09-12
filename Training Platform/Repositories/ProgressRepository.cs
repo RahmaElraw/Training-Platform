@@ -15,8 +15,9 @@ namespace Training_Platform.Repositories
         }
 
         public async Task<IEnumerable<TrainerProgressVM>> GetTrainerProgressAsync(
-            int trainerId,
-            CancellationToken cancellationToken = default)
+    int trainerId,
+    int? courseId,
+    CancellationToken cancellationToken = default)
         {
             var result = await _context.Enrollments
                 .AsNoTracking()

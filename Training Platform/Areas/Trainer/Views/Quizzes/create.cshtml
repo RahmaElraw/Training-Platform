@@ -1,5 +1,4 @@
-﻿@using Training_Platform.ViewModels
-@model QuizVM
+﻿@model Training_Platform.ViewModels.QuizVM
 
 @{
     ViewData["Title"] = "Create Quiz";
@@ -7,155 +6,185 @@
 
 <div class="container-fluid">
 
-    <!-- Header -->
-    <div class="mb-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-plus-circle me-2"></i>
+                Create Quiz
+            </h2>
 
-        <h2 class="fw-bold">
-            Create Quiz
-        </h2>
+            <p class="text-muted mb-0">
+                Create a new quiz for one of your courses.
+            </p>
+        </div>
 
-        <p class="text-muted">
-            Add a new quiz to your course
-        </p>
-
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Quizzes
+        </a>
     </div>
 
 
-    <!-- Form -->
-    <div class="card shadow-sm">
+    <!-- Create Quiz Card -->
+    <div class="card shadow-sm border-0">
 
-        <div class="card-header bg-white">
-
-            <h5 class="mb-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-semibold">
+                <i class="bi bi-clipboard-plus me-2"></i>
                 Quiz Information
             </h5>
-
         </div>
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
             <form asp-action="Create" method="post">
 
                 @Html.AntiForgeryToken()
 
-                <input asp-for="CourseId"
-                       type="hidden" />
-
-
-                <!-- Validation -->
+                <!-- Validation Summary -->
                 <div asp-validation-summary="ModelOnly"
-                     class="text-danger mb-3">
+                     class="alert alert-danger"
+                     role="alert">
                 </div>
 
 
-                <!-- Title -->
-                <div class="mb-3">
+                <div class="row">
 
-                    <label asp-for="Title"
-                           class="form-label">
+                    <!-- Course -->
+                    <div class="col-md-12 mb-4">
 
-                        Quiz Title
+                        <label asp-for="CourseId"
+                               class="form-label fw-semibold">
+                            Course
+                        </label>
 
-                    </label>
+                        <select asp-for="CourseId"
+                                asp-items="ViewBag.Courses"
+                                class="form-select">
 
-                    <input asp-for="Title"
-                           class="form-control"
-                           placeholder="Enter quiz title" />
+                            <option value="">
+                                -- Select Course --
+                            </option>
 
-                    <span asp-validation-for="Title"
-                          class="text-danger">
-                    </span>
+                        </select>
 
-                </div>
+                        <span asp-validation-for="CourseId"
+                              class="text-danger">
+                        </span>
+
+                        <small class="text-muted">
+                            Select the course that this quiz belongs to.
+                        </small>
+
+                    </div>
 
 
-                <!-- Passing Score -->
-                <div class="mb-3">
+                    <!-- Title -->
+                    <div class="col-md-12 mb-4">
 
-                    <label asp-for="PassingScore"
-                           class="form-label">
+                        <label asp-for="Title"
+                               class="form-label fw-semibold">
+                            Quiz Title
+                        </label>
 
-                        Passing Score
-
-                    </label>
-
-                    <div class="input-group">
-
-                        <input asp-for="PassingScore"
-                               type="number"
-                               min="0"
-                               max="100"
+                        <input asp-for="Title"
                                class="form-control"
-                               placeholder="60" />
+                               placeholder="Enter quiz title..." />
 
-                        <span class="input-group-text">
-                            %
+                        <span asp-validation-for="Title"
+                              class="text-danger">
                         </span>
 
                     </div>
 
-                    <span asp-validation-for="PassingScore"
-                          class="text-danger">
-                    </span>
 
-                    <small class="text-muted">
-                        The minimum percentage required to pass the quiz.
-                    </small>
+                    <!-- Passing Score -->
+                    <div class="col-md-6 mb-4">
 
-                </div>
+                        <label asp-for="PassingScore"
+                               class="form-label fw-semibold">
+                            Passing Score
+                        </label>
 
+                        <div class="input-group">
 
-                <!-- Time Limit -->
-                <div class="mb-4">
+                            <input asp-for="PassingScore"
+                                   type="number"
+                                   class="form-control"
+                                   min="0"
+                                   max="100"
+                                   placeholder="e.g. 60" />
 
-                    <label asp-for="TimeLimit"
-                           class="form-label">
+                            <span class="input-group-text">
+                                %
+                            </span>
 
-                        Time Limit
+                        </div>
 
-                    </label>
-
-                    <div class="input-group">
-
-                        <input asp-for="TimeLimit"
-                               type="number"
-                               min="1"
-                               max="300"
-                               class="form-control"
-                               placeholder="30" />
-
-                        <span class="input-group-text">
-                            minutes
+                        <span asp-validation-for="PassingScore"
+                              class="text-danger">
                         </span>
+
+                        <small class="text-muted">
+                            Minimum score required to pass the quiz.
+                        </small>
 
                     </div>
 
-                    <span asp-validation-for="TimeLimit"
-                          class="text-danger">
-                    </span>
 
-                    <small class="text-muted">
-                        Maximum allowed time for completing the quiz.
-                    </small>
+                    <!-- Time Limit -->
+                    <div class="col-md-6 mb-4">
+
+                        <label asp-for="TimeLimit"
+                               class="form-label fw-semibold">
+                            Time Limit
+                        </label>
+
+                        <div class="input-group">
+
+                            <input asp-for="TimeLimit"
+                                   type="number"
+                                   class="form-control"
+                                   min="1"
+                                   max="300"
+                                   placeholder="e.g. 30" />
+
+                            <span class="input-group-text">
+                                Minutes
+                            </span>
+
+                        </div>
+
+                        <span asp-validation-for="TimeLimit"
+                              class="text-danger">
+                        </span>
+
+                        <small class="text-muted">
+                            Maximum time allowed to complete the quiz.
+                        </small>
+
+                    </div>
 
                 </div>
 
 
-                <!-- Buttons -->
-                <div class="d-flex gap-2">
+                <!-- Actions -->
+                <div class="d-flex gap-2 pt-3 border-top">
 
                     <button type="submit"
-                            class="btn btn-primary">
+                            class="btn btn-primary px-4">
 
-                        <i class="bi bi-check-lg"></i>
+                        <i class="bi bi-check-lg me-1"></i>
                         Create Quiz
 
                     </button>
 
-                    <a asp-action="Index"
-                       asp-route-courseId="@Model.CourseId"
-                       class="btn btn-outline-secondary">
 
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary px-4">
+
+                        <i class="bi bi-x-lg me-1"></i>
                         Cancel
 
                     </a>

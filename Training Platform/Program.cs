@@ -53,10 +53,11 @@ namespace Training_Platform
             // 3. Application Services & Repositories
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-            builder.Services.AddScoped(
-                typeof(IRepository<>),
-                typeof(Repository<>)
-            );
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+
+            builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
 
             builder.Services.AddScoped<IAccountService, AccountService>();
 

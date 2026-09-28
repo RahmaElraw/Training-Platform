@@ -1,459 +1,458 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Training_Platform.Models;
+using Training_Platform.Repositories;
+using Training_Platform.ViewModels;
 
-[Area(SD.Trainer_Area)]
-public class QuizzesController : Controller
+namespace Training_Platform.Areas.Trainer.Controllers
 {
-    private readonly IRepository<Quiz> _quizRepository;
-    private readonly IQuizRepository _quizDetailsRepository;
-    private readonly IRepository<Course> _courseRepository;
-
-    public QuizzesController(
-    IRepository<Quiz> quizRepository,
-    IQuizRepository quizDetailsRepository,
-    IRepository<Course> courseRepository)
+    [Area(SD.Trainer_Area)]
+    public class QuizzesController : Controller
     {
-        _quizRepository = quizRepository;
-        _quizDetailsRepository = quizDetailsRepository;
-        _courseRepository = courseRepository;
-    }
+        private readonly IRepository<Quiz> _quizRepository;
+        private readonly IRepository<Course> _courseRepository;
 
-    [HttpGet]
-    public async Task<IActionResult> Index(
-        CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-        var quizzes = await _quizRepository.GetAsync(
-            q => q.Course.TrainerId == trainerId,
-            includes:
-            [
-                q => q.Course,
-                q => q.Questions
-            ],
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-        quizzes = quizzes
-            .OrderBy(q => q.Course.Title)
-            .ThenBy(q => q.Title);
-
-        return View(quizzes);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Create(
-    CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-        var courses = await GetTrainerCourses(
-            trainerId,
-            cancellationToken);
-
-        if (!courses.Any())
+        public QuizzesController(
+            IRepository<Quiz> quizRepository,
+            IRepository<Course> courseRepository)
         {
-            TempData["Warning"] =
-                "You cannot create a quiz because you do not have any courses yet.";
-
-            return RedirectToAction(nameof(Index));
+            _quizRepository = quizRepository;
+            _courseRepository = courseRepository;
         }
 
-        await LoadCourses(courses);
+        // =====================================================
+        // INDEX
+        // =====================================================
 
-        return View(new QuizVM());
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(
-    QuizVM model,
-    CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-
-        // Make sure the selected Course belongs
-        // to the current Trainer
-        var course = await _courseRepository.GetOneAsync(
-            c => c.Id == model.CourseId &&
-                 c.TrainerId == trainerId,
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-
-        if (course == null)
+        [HttpGet]
+        public async Task<IActionResult> Index(
+            CancellationToken cancellationToken)
         {
-            ModelState.AddModelError(
-                nameof(model.CourseId),
-                "The selected course does not belong to you.");
+            int trainerId = GetCurrentTrainerId();
 
-            await LoadCourses(
-                await GetTrainerCourses(
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var quizzes = await _quizRepository.GetAsync(
+                q => q.Course.TrainerId == trainerId,
+                includes:
+                [
+                    q => q.Course
+                ],
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            quizzes = quizzes
+                .OrderBy(q => q.Course.Title)
+                .ThenBy(q => q.Title);
+
+            return View(quizzes);
+        }
+
+
+        // =====================================================
+        // CREATE - GET
+        // =====================================================
+
+        [HttpGet]
+        public async Task<IActionResult> Create(
+            int? courseId,
+            CancellationToken cancellationToken)
+        {
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            // Coming from Course Details
+            if (courseId.HasValue)
+            {
+                var course = await _courseRepository.GetOneAsync(
+                    c => c.Id == courseId.Value &&
+                         c.TrainerId == trainerId,
+                    tracked: false,
+                    cancellationToken: cancellationToken);
+
+                if (course == null)
+                    return NotFound();
+
+                ViewBag.Course = course;
+                ViewBag.IsCoursePreselected = true;
+
+                return View(new QuizVM
+                {
+                    CourseId = course.Id
+                });
+            }
+
+            // Coming from Quizzes Index / Dashboard
+            var courses = await _courseRepository.GetAsync(
+                c => c.TrainerId == trainerId,
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            ViewBag.Courses = courses
+                .OrderBy(c => c.Title)
+                .ToList();
+
+            ViewBag.IsCoursePreselected = false;
+
+            return View(new QuizVM());
+        }
+
+
+        // =====================================================
+        // CREATE - POST
+        // =====================================================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            QuizVM model,
+            bool isCoursePreselected,
+            CancellationToken cancellationToken)
+        {
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var course = await _courseRepository.GetOneAsync(
+                c => c.Id == model.CourseId &&
+                     c.TrainerId == trainerId,
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            if (course == null)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+            {
+                await PrepareCreateView(
+                    model,
                     trainerId,
-                    cancellationToken));
+                    isCoursePreselected,
+                    cancellationToken);
 
-            return View(model);
-        }
+                return View(model);
+            }
 
+            string normalizedTitle =
+                model.Title.Trim().ToLower();
 
-        // Validate ViewModel
-        if (!ModelState.IsValid)
-        {
-            await LoadCourses(
-                await GetTrainerCourses(
+            var existingQuiz = await _quizRepository.GetOneAsync(
+                q => q.CourseId == model.CourseId &&
+                     q.Title.ToLower() == normalizedTitle,
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            if (existingQuiz != null)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Title),
+                    "A quiz with this title already exists in this course.");
+
+                await PrepareCreateView(
+                    model,
                     trainerId,
-                    cancellationToken));
+                    isCoursePreselected,
+                    cancellationToken);
 
-            return View(model);
-        }
+                return View(model);
+            }
 
+            var quiz = new Quiz
+            {
+                Title = model.Title.Trim(),
+                PassingScore = model.PassingScore,
+                TimeLimit = model.TimeLimit,
+                CourseId = model.CourseId
+            };
 
-        // Check duplicate Quiz title
-        // inside the same Course
-        string normalizedTitle =
-            model.Title.Trim().ToLower();
+            await _quizRepository.AddAsync(
+                quiz,
+                cancellationToken);
 
+            if (await _quizRepository.CommitAsync(
+                    cancellationToken) > 0)
+            {
+                TempData["Success"] =
+                    "Quiz created successfully.";
 
-        var existingQuiz = await _quizRepository.GetOneAsync(
-            q => q.CourseId == model.CourseId &&
-                 q.Title.ToLower() == normalizedTitle,
-            tracked: false,
-            cancellationToken: cancellationToken);
+                return RedirectToAction(
+                    nameof(Index));
+            }
 
+            TempData["Error"] =
+                "Something went wrong while creating the quiz.";
 
-        if (existingQuiz != null)
-        {
-            ModelState.AddModelError(
-                nameof(model.Title),
-                "You already have a quiz with this title in this course.");
-
-            await LoadCourses(
-                await GetTrainerCourses(
-                    trainerId,
-                    cancellationToken));
-
-            return View(model);
-        }
-
-
-        // Create Quiz
-        var quiz = new Quiz
-        {
-            Title = model.Title.Trim(),
-            PassingScore = model.PassingScore,
-            TimeLimit = model.TimeLimit,
-            CourseId = model.CourseId
-        };
-
-
-        await _quizRepository.AddAsync(
-            quiz,
-            cancellationToken);
-
-
-        int result = await _quizRepository.CommitAsync(
-            cancellationToken);
-
-
-        if (result > 0)
-        {
-            TempData["Success"] =
-                "Quiz created successfully.";
-
-            return RedirectToAction(nameof(Index));
-        }
-
-
-        TempData["Error"] =
-            "Something went wrong while creating the quiz.";
-
-
-        await LoadCourses(
-            await GetTrainerCourses(
+            await PrepareCreateView(
+                model,
                 trainerId,
-                cancellationToken));
-
-        return View(model);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Details(
-    int id,
-    CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-        var quiz = await _quizDetailsRepository.GetQuizForTrainerDetailsAsync(
-            id,
-            trainerId,
-            cancellationToken);
-
-        if (quiz == null)
-            return NotFound();
-
-        return View(quiz);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(
-        int id,
-        CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-
-        var quiz = await _quizRepository.GetOneAsync(
-            q => q.Id == id,
-            includes:
-            [
-                q => q.Course
-            ],
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-
-        if (quiz == null)
-            return NotFound();
-
-
-        if (quiz.Course == null ||
-            quiz.Course.TrainerId != trainerId)
-        {
-            return NotFound();
-        }
-
-
-        var model = new QuizVM
-        {
-            Id = quiz.Id,
-            Title = quiz.Title,
-            PassingScore = quiz.PassingScore,
-            TimeLimit = quiz.TimeLimit,
-            CourseId = quiz.CourseId
-        };
-
-
-        ViewBag.Course = quiz.Course;
-
-        return View(model);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(
-        QuizVM model,
-        CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-        var course = await _courseRepository.GetOneAsync(
-            c => c.Id == model.CourseId &&
-                 c.TrainerId == trainerId,
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-
-        if (course == null)
-            return NotFound();
-
-
-        ViewBag.Course = course;
-
-        var quiz = await _quizRepository.GetOneAsync(
-            q => q.Id == model.Id &&
-                 q.CourseId == model.CourseId,
-            cancellationToken: cancellationToken);
-
-
-        if (quiz == null)
-            return NotFound();
-
-
-        if (!ModelState.IsValid)
-            return View(model);
-
-        string normalizedTitle = model.Title.Trim().ToLower();
-
-        var existingQuiz = await _quizRepository.GetOneAsync(
-            q => q.CourseId == model.CourseId &&
-                 q.Title.ToLower() == normalizedTitle &&
-                 q.Id != model.Id,
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-
-        if (existingQuiz != null)
-        {
-            ModelState.AddModelError(
-                nameof(model.Title),
-                "You already have a quiz with this title in this course.");
+                isCoursePreselected,
+                cancellationToken);
 
             return View(model);
         }
 
 
-        quiz.Title = model.Title.Trim();
-        quiz.PassingScore = model.PassingScore;
-        quiz.TimeLimit = model.TimeLimit;
+        // =====================================================
+        // DETAILS
+        // =====================================================
 
-
-        _quizRepository.Update(quiz);
-
-
-        int result = await _quizRepository.CommitAsync(
-            cancellationToken);
-
-
-        if (result > 0)
+        [HttpGet]
+        public async Task<IActionResult> Details(
+            int id,
+            CancellationToken cancellationToken)
         {
-            TempData["Success"] =
-                "Quiz updated successfully.";
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var quiz = await _quizRepository.GetOneAsync(
+                q => q.Id == id &&
+                     q.Course.TrainerId == trainerId,
+                includes:
+                [
+                    q => q.Course,
+                    q => q.Questions,
+                    q => q.QuizResults
+                ],
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            if (quiz == null)
+                return NotFound();
+
+            return View(quiz);
+        }
+
+
+        // =====================================================
+        // EDIT - GET
+        // =====================================================
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(
+            int id,
+            CancellationToken cancellationToken)
+        {
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var quiz = await _quizRepository.GetOneAsync(
+                q => q.Id == id &&
+                     q.Course.TrainerId == trainerId,
+                includes:
+                [
+                    q => q.Course
+                ],
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            if (quiz == null)
+                return NotFound();
+
+            var model = new QuizVM
+            {
+                Id = quiz.Id,
+                Title = quiz.Title,
+                PassingScore = quiz.PassingScore,
+                TimeLimit = quiz.TimeLimit,
+                CourseId = quiz.CourseId
+            };
+
+            ViewBag.Course = quiz.Course;
+
+            return View(model);
+        }
+
+
+        // =====================================================
+        // EDIT - POST
+        // =====================================================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            QuizVM model,
+            CancellationToken cancellationToken)
+        {
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var quiz = await _quizRepository.GetOneAsync(
+                q => q.Id == model.Id &&
+                     q.Course.TrainerId == trainerId,
+                includes:
+                [
+                    q => q.Course
+                ],
+                cancellationToken: cancellationToken);
+
+            if (quiz == null)
+                return NotFound();
+
+            // Course cannot be changed from Edit
+            model.CourseId = quiz.CourseId;
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Course = quiz.Course;
+                return View(model);
+            }
+
+            string normalizedTitle =
+                model.Title.Trim().ToLower();
+
+            var existingQuiz = await _quizRepository.GetOneAsync(
+                q => q.CourseId == quiz.CourseId &&
+                     q.Id != quiz.Id &&
+                     q.Title.ToLower() == normalizedTitle,
+                tracked: false,
+                cancellationToken: cancellationToken);
+
+            if (existingQuiz != null)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Title),
+                    "A quiz with this title already exists in this course.");
+
+                ViewBag.Course = quiz.Course;
+
+                return View(model);
+            }
+
+            quiz.Title = model.Title.Trim();
+            quiz.PassingScore = model.PassingScore;
+            quiz.TimeLimit = model.TimeLimit;
+
+            _quizRepository.Update(quiz);
+
+            if (await _quizRepository.CommitAsync(
+                    cancellationToken) > 0)
+            {
+                TempData["Success"] =
+                    "Quiz updated successfully.";
+
+                return RedirectToAction(
+                    nameof(Details),
+                    new { id = quiz.Id });
+            }
+
+            TempData["Error"] =
+                "Something went wrong while updating the quiz.";
+
+            ViewBag.Course = quiz.Course;
+
+            return View(model);
+        }
+
+
+        // =====================================================
+        // DELETE
+        // =====================================================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(
+            int id,
+            CancellationToken cancellationToken)
+        {
+            int trainerId = GetCurrentTrainerId();
+
+            if (trainerId <= 0)
+                return Unauthorized();
+
+            var quiz = await _quizRepository.GetOneAsync(
+                q => q.Id == id &&
+                     q.Course.TrainerId == trainerId,
+                cancellationToken: cancellationToken);
+
+            if (quiz == null)
+                return NotFound();
+
+            int courseId = quiz.CourseId;
+
+            _quizRepository.Delete(quiz);
+
+            if (await _quizRepository.CommitAsync(
+                    cancellationToken) > 0)
+            {
+                TempData["Success"] =
+                    "Quiz and its related data were deleted successfully.";
+            }
+            else
+            {
+                TempData["Error"] =
+                    "Something went wrong while deleting the quiz.";
+            }
 
             return RedirectToAction(
-                nameof(Details),
-                new
-                {
-                    id = quiz.Id
-                });
+                nameof(Index));
         }
 
 
-        TempData["Error"] =
-            "Something went wrong while updating the quiz.";
+        // =====================================================
+        // PREPARE CREATE VIEW
+        // =====================================================
 
-        return View(model);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(
-        int id,
-        CancellationToken cancellationToken)
-    {
-        int trainerId = GetCurrentTrainerId();
-
-        if (trainerId <= 0)
-            return Unauthorized();
-
-
-        var quiz = await _quizRepository.GetOneAsync(
-            q => q.Id == id,
-            includes:
-            [
-                q => q.Course,
-                q => q.Questions,
-                q => q.QuizResults
-            ],
-            cancellationToken: cancellationToken);
-
-
-        if (quiz == null)
-            return NotFound();
-
-
-        if (quiz.Course == null ||
-            quiz.Course.TrainerId != trainerId)
+        private async Task PrepareCreateView(
+            QuizVM model,
+            int trainerId,
+            bool isCoursePreselected,
+            CancellationToken cancellationToken)
         {
-            return NotFound();
-        }
+            ViewBag.IsCoursePreselected =
+                isCoursePreselected;
 
-
-        int questionsCount =
-            quiz.Questions?.Count ?? 0;
-
-        int resultsCount =
-            quiz.QuizResults?.Count ?? 0;
-
-
-        int courseId = quiz.CourseId;
-
-
-        _quizRepository.Delete(quiz);
-
-
-        int result = await _quizRepository.CommitAsync(
-            cancellationToken);
-
-
-        if (result > 0)
-        {
-            TempData["Success"] =
-                questionsCount > 0 || resultsCount > 0
-                    ? $"Quiz deleted successfully. " +
-                      $"{questionsCount} question(s) and " +
-                      $"{resultsCount} result(s) were also deleted."
-                    : "Quiz deleted successfully.";
-        }
-        else
-        {
-            TempData["Error"] =
-                "Something went wrong while deleting the quiz.";
-        }
-
-        return RedirectToAction(
-            "Details",
-            "Courses",
-            new
+            if (isCoursePreselected)
             {
-                area = SD.Trainer_Area,
-                id = courseId
-            });
-    }
+                var course = await _courseRepository.GetOneAsync(
+                    c => c.Id == model.CourseId &&
+                         c.TrainerId == trainerId,
+                    tracked: false,
+                    cancellationToken: cancellationToken);
 
-    private int GetCurrentTrainerId()
-    {
-        var userIdValue =
-            User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        return int.TryParse(userIdValue, out int trainerId)
-            ? trainerId
-            : 0;
-    }
-
-    private async Task<IEnumerable<Course>> GetTrainerCourses(
-    int trainerId,
-    CancellationToken cancellationToken)
-    {
-        var courses = await _courseRepository.GetAsync(
-            c => c.TrainerId == trainerId,
-            tracked: false,
-            cancellationToken: cancellationToken);
-
-        return courses
-            .OrderBy(c => c.Title)
-            .ToList();
-    }
-
-    private async Task LoadCourses(
-    IEnumerable<Course> courses)
-    {
-        ViewBag.Courses = courses
-            .Select(c => new SelectListItem
+                ViewBag.Course = course;
+            }
+            else
             {
-                Value = c.Id.ToString(),
-                Text = c.Title
-            })
-            .ToList();
+                var courses = await _courseRepository.GetAsync(
+                    c => c.TrainerId == trainerId,
+                    tracked: false,
+                    cancellationToken: cancellationToken);
+
+                ViewBag.Courses = courses
+                    .OrderBy(c => c.Title)
+                    .ToList();
+            }
+        }
+
+
+        // =====================================================
+        // CURRENT TRAINER ID
+        // =====================================================
+
+        private int GetCurrentTrainerId()
+        {
+            var userId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrWhiteSpace(userId))
+                return 0;
+
+            return int.TryParse(
+                userId,
+                out int trainerId)
+                ? trainerId
+                : 0;
+        }
     }
 }

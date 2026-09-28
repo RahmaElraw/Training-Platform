@@ -37,7 +37,6 @@ namespace Training_Platform.Areas.Trainer.Controllers
             return View(orderedCourses);
         }
 
-        // GET: Trainer/Courses/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(
             int id,
@@ -49,16 +48,16 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 return Unauthorized();
 
             var course = await _courseRepository.GetOneAsync(
-    c => c.Id == id &&
-         c.TrainerId == trainerId,
-    includes:
-    [
-        c => c.Category,
-        c => c.Lessons,
-        c => c.Quizzes
-    ],
-    tracked: false,
-    cancellationToken: cancellationToken);
+                c => c.Id == id &&
+                     c.TrainerId == trainerId,
+                includes:
+                [
+                    c => c.Category,
+            c => c.Lessons,
+            c => c.Quizzes
+                ],
+                tracked: false,
+                cancellationToken: cancellationToken);
 
             if (course == null)
                 return NotFound();

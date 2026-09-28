@@ -1,71 +1,142 @@
 ﻿@model Training_Platform.ViewModels.QuizVM
 
+@using Training_Platform.Models
+
 @{
     ViewData["Title"] = "Create Quiz";
+
+    var isCoursePreselected =
+        ViewBag.IsCoursePreselected as bool? ?? false;
+
+    var course =
+        ViewBag.Course as Course;
+
+    var courses =
+        ViewBag.Courses as IEnumerable<Course>;
 }
 
-<div class="container-fluid">
+<div class="container py-4">
 
-    <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
+
         <div>
             <h2 class="fw-bold mb-1">
-                <i class="bi bi-plus-circle me-2"></i>
+                <i class="bi bi-clipboard-plus me-2"></i>
                 Create Quiz
             </h2>
 
             <p class="text-muted mb-0">
-                Create a new quiz for one of your courses.
+                Create a new quiz.
             </p>
         </div>
 
-        <a asp-action="Index" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left me-1"></i>
-            Back to Quizzes
-        </a>
+        @if (isCoursePreselected && course != null)
+        {
+            <a asp-area="Trainer"
+               asp-controller="Courses"
+               asp-action="Details"
+               asp-route-id="@course.Id"
+               class="btn btn-outline-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Course
+
+            </a>
+        }
+        else
+        {
+            <a asp-area="Trainer"
+               asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Dashboard
+
+            </a>
+        }
+
     </div>
 
 
-    <!-- Create Quiz Card -->
     <div class="card shadow-sm border-0">
 
         <div class="card-header bg-white py-3">
+
             <h5 class="mb-0 fw-semibold">
-                <i class="bi bi-clipboard-plus me-2"></i>
+                <i class="bi bi-info-circle me-2"></i>
                 Quiz Information
             </h5>
+
         </div>
 
-        <div class="card-body p-4">
 
-            <form asp-action="Create" method="post">
+        <div class="card-body">
+
+            <form asp-action="Create"
+                  method="post">
 
                 @Html.AntiForgeryToken()
 
-                <!-- Validation Summary -->
+                <input type="hidden"
+                       name="isCoursePreselected"
+                       value="@isCoursePreselected.ToString().ToLower()" />
+
+
                 <div asp-validation-summary="ModelOnly"
-                     class="alert alert-danger"
-                     role="alert">
+                     class="alert alert-danger">
                 </div>
 
 
-                <div class="row">
+                <!-- COURSE -->
+                @if (isCoursePreselected && course != null)
+                {
+                    <div class="mb-4">
 
-                    <!-- Course -->
-                    <div class="col-md-12 mb-4">
-
-                        <label asp-for="CourseId"
-                               class="form-label fw-semibold">
+                        <label class="form-label fw-semibold">
                             Course
                         </label>
 
+                        <div class="form-control bg-light">
+
+                            <i class="bi bi-book me-2 text-primary"></i>
+
+                            @course.Title
+
+                        </div>
+
+                        <input type="hidden"
+                               asp-for="CourseId" />
+
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-4">
+
+                        <label asp-for="CourseId"
+                               class="form-label fw-semibold">
+
+                            Course
+
+                        </label>
+
                         <select asp-for="CourseId"
-                                asp-items="ViewBag.Courses"
                                 class="form-select">
 
                             <option value="">
                                 -- Select Course --
                             </option>
+
+                            @if (courses != null)
+                            {
+                                foreach (var item in courses)
+                                {
+                                    <option value="@item.Id">
+                                        @item.Title
+                                    </option>
+                                }
+                            }
 
                         </select>
 
@@ -73,48 +144,52 @@
                               class="text-danger">
                         </span>
 
-                        <small class="text-muted">
-                            Select the course that this quiz belongs to.
-                        </small>
-
                     </div>
+                }
 
 
-                    <!-- Title -->
-                    <div class="col-md-12 mb-4">
+                <!-- TITLE -->
 
-                        <label asp-for="Title"
-                               class="form-label fw-semibold">
-                            Quiz Title
-                        </label>
+                <div class="mb-4">
 
-                        <input asp-for="Title"
-                               class="form-control"
-                               placeholder="Enter quiz title..." />
+                    <label asp-for="Title"
+                           class="form-label fw-semibold">
 
-                        <span asp-validation-for="Title"
-                              class="text-danger">
-                        </span>
+                        Quiz Title
 
-                    </div>
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter quiz title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
 
 
-                    <!-- Passing Score -->
-                    <div class="col-md-6 mb-4">
+                <!-- PASSING SCORE / TIME -->
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
 
                         <label asp-for="PassingScore"
                                class="form-label fw-semibold">
+
                             Passing Score
+
                         </label>
 
                         <div class="input-group">
 
                             <input asp-for="PassingScore"
-                                   type="number"
                                    class="form-control"
+                                   type="number"
                                    min="0"
-                                   max="100"
-                                   placeholder="e.g. 60" />
+                                   max="100" />
 
                             <span class="input-group-text">
                                 %
@@ -126,32 +201,28 @@
                               class="text-danger">
                         </span>
 
-                        <small class="text-muted">
-                            Minimum score required to pass the quiz.
-                        </small>
-
                     </div>
 
 
-                    <!-- Time Limit -->
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6">
 
                         <label asp-for="TimeLimit"
                                class="form-label fw-semibold">
+
                             Time Limit
+
                         </label>
 
                         <div class="input-group">
 
                             <input asp-for="TimeLimit"
-                                   type="number"
                                    class="form-control"
+                                   type="number"
                                    min="1"
-                                   max="300"
-                                   placeholder="e.g. 30" />
+                                   max="300" />
 
                             <span class="input-group-text">
-                                Minutes
+                                minutes
                             </span>
 
                         </div>
@@ -160,34 +231,46 @@
                               class="text-danger">
                         </span>
 
-                        <small class="text-muted">
-                            Maximum time allowed to complete the quiz.
-                        </small>
-
                     </div>
 
                 </div>
 
 
-                <!-- Actions -->
-                <div class="d-flex gap-2 pt-3 border-top">
+                <!-- BUTTONS -->
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    @if (isCoursePreselected && course != null)
+                    {
+                        <a asp-area="Trainer"
+                           asp-controller="Courses"
+                           asp-action="Details"
+                           asp-route-id="@course.Id"
+                           class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Trainer"
+                           asp-controller="Home"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+                    }
 
                     <button type="submit"
-                            class="btn btn-primary px-4">
+                            class="btn btn-primary">
 
                         <i class="bi bi-check-lg me-1"></i>
                         Create Quiz
 
                     </button>
-
-
-                    <a asp-action="Index"
-                       class="btn btn-outline-secondary px-4">
-
-                        <i class="bi bi-x-lg me-1"></i>
-                        Cancel
-
-                    </a>
 
                 </div>
 

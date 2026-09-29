@@ -54,7 +54,15 @@ namespace Training_Platform.Services
                     break;
             }
 
-            await _emailSender.SendEmailAsync(user.Email!, subject, message);
+            try
+            {
+                await _emailSender.SendEmailAsync(user.Email!, subject, message);
+            }
+            catch (Exception)
+            {
+                // Email settings may not be configured in development; the OTP is already saved to the database,
+                // so the forgot-password flow can continue without crashing.
+            }
         }
     }
 }

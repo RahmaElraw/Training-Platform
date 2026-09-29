@@ -73,4 +73,7 @@
   <data name="RememberMe" xml:space="preserve">
     <value>تذكرني</value>
   </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>نسيت كلمة المرور؟</value>
+  </data>
 </root>

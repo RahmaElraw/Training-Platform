@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.Areas.Admin.Controllers;
 
@@ -15,16 +16,19 @@ namespace Training_Platform.Areas.Identity.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
         private readonly IRepository<ApplicationUserOTP> _applicationUserOtpRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, IEmailSender emailSender,IAccountService accountService,
-            IRepository<ApplicationUserOTP> applicationUserOtpRepository)
+            IRepository<ApplicationUserOTP> applicationUserOtpRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _accountService = accountService;
             _applicationUserOtpRepository = applicationUserOtpRepository;
+            _localizer = localizer;
         }
 
 
@@ -77,15 +81,15 @@ namespace Training_Platform.Areas.Identity.Controllers
 
             if (user is null)
             {
-                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), "Invalid Username or Email.");
-                ModelState.AddModelError(nameof(loginVM.Password), "Invalid Password.");
+                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), _localizer["InvalidUsernameOrEmail"]);
+                ModelState.AddModelError(nameof(loginVM.Password), _localizer["InvalidPassword"]);
                 return View(loginVM);
             }
 
 
             if (!user.IsApproved)
             {
-                TempData["error"] = "Your account is still pending approval from the administration.";
+                TempData["error"] = _localizer["AccountPendingApproval"].ToString();
                 return RedirectToAction(nameof(Login));
             }
 
@@ -95,31 +99,31 @@ namespace Training_Platform.Areas.Identity.Controllers
 
             if (result.IsNotAllowed)
             {
-                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), "Email not confirmed. Please check your email for confirmation link.");
+                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), _localizer["EmailNotConfirmed"]);
                 return View(loginVM);
             }
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), "Invalid Username or Email.");
-                ModelState.AddModelError(nameof(loginVM.Password), "Invalid Password.");
+                ModelState.AddModelError(nameof(loginVM.EmailOrUserName), _localizer["InvalidUsernameOrEmail"]);
+                ModelState.AddModelError(nameof(loginVM.Password), _localizer["InvalidPassword"]);
                 return View(loginVM);
             }
            
 
-            TempData["success"] = $"Login successful. Welcome";
+            TempData["success"] = _localizer["LoginSuccessfulWelcome"].ToString();
 
-            if (User.IsInRole(RoleNames.SUPER_ADMIN))
+            if (await _userManager.IsInRoleAsync(user, RoleNames.SUPER_ADMIN))
             {
                 return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Admin_Area });
             }
 
-            if (User.IsInRole(RoleNames.TRAINER))
+            if (await _userManager.IsInRoleAsync(user, RoleNames.TRAINER))
             {
                 return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainer_Area });
             }
 
-            if (User.IsInRole(RoleNames.TRAINEE))
+            if (await _userManager.IsInRoleAsync(user, RoleNames.TRAINEE))
             {
                 return RedirectToAction(nameof(HomeController.Index), SD.Home_Controller, new { area = SD.Trainee_Area });
             }
@@ -141,12 +145,16 @@ namespace Training_Platform.Areas.Identity.Controllers
                 return View(forgotPasswordVM);
             }
             var user = await _userManager.FindByEmailAsync(forgotPasswordVM.Email);
-            if(user is not null)
+            if (user is null)
             {
-               await _accountService.SendEmailAsync(user, Url, Request, EmailType.ForgotPassword);
+                ModelState.AddModelError(nameof(forgotPasswordVM.Email), _localizer["EmailNotRegistered"]);
+                return View(forgotPasswordVM);
             }
-            TempData["success"] = "Otp number sent successfully. Please check your email.";
-            TempData["userId"] = user?.Id ?? 0;
+
+            await _accountService.SendEmailAsync(user, Url, Request, EmailType.ForgotPassword);
+
+            TempData["success"] = _localizer["OtpSentSuccessfully"].ToString();
+            TempData["userId"] = user.Id;
             return RedirectToAction(nameof(ValidateOTP));
         }
 
@@ -154,6 +162,10 @@ namespace Training_Platform.Areas.Identity.Controllers
         public IActionResult ValidateOTP()
         {
             if (TempData.Peek("userId") is null)
+            {
+                return NotFound();
+            }
+            if (!int.TryParse(TempData.Peek("userId")?.ToString(), out int userId) || userId == 0)
             {
                 return NotFound();
             }
@@ -172,11 +184,14 @@ namespace Training_Platform.Areas.Identity.Controllers
             if (!int.TryParse(userIdValue, out int userId))
                 return NotFound();
 
+            if (userId == 0)
+                return NotFound();
+
             var totalOtp = (await _applicationUserOtpRepository.GetAsync(e => e.ApplicationUserId == userId && e.CreateAt >= DateTime.Now.AddHours(-24))).Count();
 
             if (totalOtp > 3)
             {
-                ModelState.AddModelError(nameof(validateOTPVM.OTP), "You have exceeded the maximum number of OTP attempts. Please try again later.");
+                ModelState.AddModelError(nameof(validateOTPVM.OTP), _localizer["OtpAttemptsExceeded"]);
                 return View(validateOTPVM);
             }
 
@@ -187,7 +202,7 @@ namespace Training_Platform.Areas.Identity.Controllers
                      e.ExpireAt >= DateTime.Now);
             if (otp is null)
             {
-                ModelState.AddModelError(nameof(validateOTPVM.OTP), "Invalid OTP or OTP expired.");
+                ModelState.AddModelError(nameof(validateOTPVM.OTP), _localizer["InvalidOtp"]);
                 return View(validateOTPVM);
             }
             otp.IsUsed = true;
@@ -205,14 +220,15 @@ namespace Training_Platform.Areas.Identity.Controllers
             if (!int.TryParse(userIdValue, out int userId))
                 return NotFound();
 
-            if (userId != 0)
-            {
-                var totalOtp = (await _applicationUserOtpRepository.GetAsync(
+            if (userId == 0)
+                return NotFound();
+
+            var totalOtp = (await _applicationUserOtpRepository.GetAsync(
                     e => e.ApplicationUserId == userId && e.CreateAt >= DateTime.Now.AddHours(-24))).Count();
 
                 if (totalOtp > 3)
                 {
-                    TempData["error"] = "You have exceeded the maximum number of OTP attempts. Please try again later.";
+                    TempData["error"] = _localizer["OtpAttemptsExceeded"].ToString();
                     return RedirectToAction(nameof(ValidateOTP));
                 }
 
@@ -221,16 +237,16 @@ namespace Training_Platform.Areas.Identity.Controllers
                 {
                     await _accountService.SendEmailAsync(user, Url, Request, EmailType.ForgotPassword);
                 }
-            }
 
-            TempData["success"] = "Otp number sent successfully. Please check your email.";
+            TempData["success"] = _localizer["OtpSentSuccessfully"].ToString();
             return RedirectToAction(nameof(ValidateOTP));
         }
         [HttpGet]
         public IActionResult ResetPassword()
         {
             if(TempData.Peek("userId") is null)  return NotFound();
-            
+            if (!int.TryParse(TempData.Peek("userId")?.ToString(), out int userId) || userId == 0)
+                return NotFound();
             return View();
         }
         [HttpPost]
@@ -244,12 +260,23 @@ namespace Training_Platform.Areas.Identity.Controllers
                 return NotFound();
             if (!int.TryParse(userIdValue, out int userId))
                 return NotFound();
+            if (userId == 0)
+                return NotFound();
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null) return NotFound();
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user,token, resetPasswordVM.Password);
-            
-            TempData["success"] = "Password reset successfully. You can now log in with your new password.";
+            var result = await _userManager.ResetPasswordAsync(user,token, resetPasswordVM.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(resetPasswordVM);
+            }
+
+            TempData["success"] = _localizer["PasswordResetSuccessfully"].ToString();
             TempData["userId"] = null;
             return RedirectToAction(nameof(Login));
         }
@@ -338,7 +365,7 @@ namespace Training_Platform.Areas.Identity.Controllers
                 var existingUser = await _userManager.FindByNameAsync(profileVM.Username);
                 if (existingUser is not null)
                 {
-                    ModelState.AddModelError(nameof(profileVM.Username), "This username is already taken.");
+                    ModelState.AddModelError(nameof(profileVM.Username), _localizer["UsernameTaken"]);
                 }
             }
 
@@ -356,7 +383,7 @@ namespace Training_Platform.Areas.Identity.Controllers
 
                 if (!allowedExtensions.Contains(extension))
                 {
-                    ModelState.AddModelError(nameof(profileVM.ProfileImageFile), "Only .jpg, .jpeg, .png, and .webp files are allowed.");
+                    ModelState.AddModelError(nameof(profileVM.ProfileImageFile), _localizer["InvalidImageFormat"]);
                     profileVM.Email = user.Email!;
                     profileVM.ProfileImage = user.ProfileImage;
                     return View(profileVM);
@@ -364,7 +391,7 @@ namespace Training_Platform.Areas.Identity.Controllers
 
                 if (profileVM.ProfileImageFile.Length > 2 * 1024 * 1024)
                 {
-                    ModelState.AddModelError(nameof(profileVM.ProfileImageFile), "Image size must not exceed 2MB.");
+                    ModelState.AddModelError(nameof(profileVM.ProfileImageFile), _localizer["ImageSizeLimit"]);
                     profileVM.Email = user.Email!;
                     profileVM.ProfileImage = user.ProfileImage;
                     return View(profileVM);
@@ -418,7 +445,7 @@ namespace Training_Platform.Areas.Identity.Controllers
 
             await _signInManager.RefreshSignInAsync(user);
 
-            TempData["success"] = "Profile updated successfully.";
+            TempData["success"] = _localizer["ProfileUpdated"].ToString();
             return RedirectToAction(nameof(Profile));
         }
 
@@ -457,86 +484,10 @@ namespace Training_Platform.Areas.Identity.Controllers
 
             await _signInManager.RefreshSignInAsync(user);
 
-            TempData["success"] = "Password changed successfully.";
+            TempData["success"] = _localizer["PasswordChanged"].ToString();
             return RedirectToAction(nameof(Profile));
         }
 
-
-        [HttpPost]
-        public IActionResult ExternalLogin(string provider, string? returnUrl = null)
-        {
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { area = SD.Identity_Area, returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
-        {
-            if (remoteError is not null)
-            {
-                TempData["error"] = $"Error from external provider: {remoteError}";
-                return RedirectToAction(nameof(Login));
-            }
-
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info is null)
-            {
-                TempData["error"] = "Error loading external login information.";
-                return RedirectToAction(nameof(Login));
-            }
-
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(
-                info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-
-            if (signInResult.Succeeded)
-            {
-                return RedirectToAction(nameof(Profile));
-            }
-
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            if (email is null)
-            {
-                TempData["error"] = "Email not received from external provider.";
-                return RedirectToAction(nameof(Login));
-            }
-
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user is null)
-            {
-                var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName) ?? "";
-                var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname) ?? "";
-
-                user = new ApplicationUser
-                {
-                    UserName = email,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    EmailConfirmed = true 
-                };
-
-                var createResult = await _userManager.CreateAsync(user);
-                if (!createResult.Succeeded)
-                {
-                    TempData["error"] = string.Join(", ", createResult.Errors.Select(e => e.Description));
-                    return RedirectToAction(nameof(Login));
-                }
-            }
-
-            var addLoginResult = await _userManager.AddLoginAsync(user, info);
-            if (!addLoginResult.Succeeded)
-            {
-                TempData["error"] = "Failed to link external login.";
-                return RedirectToAction(nameof(Login));
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-
-            TempData["success"] = $"Login successful. Welcome, {user.FirstName} {user.LastName}";
-            return RedirectToAction(nameof(Profile));
-        }
 
 
 
@@ -547,7 +498,7 @@ namespace Training_Platform.Areas.Identity.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            TempData["success"] = "You have been logged out successfully.";
+            TempData["success"] = _localizer["LoggedOutSuccessfully"].ToString();
             return RedirectToAction(nameof(Login));
         }
        

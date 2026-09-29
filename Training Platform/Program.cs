@@ -51,7 +51,8 @@ namespace Training_Platform
                 options.Lockout.MaxFailedAccessAttempts = 3;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders()
+            .AddErrorDescriber<LocalizedIdentityErrorDescriber>();
 
             // 5. Authentication Cookie Settings
             builder.Services.ConfigureApplicationCookie(options =>

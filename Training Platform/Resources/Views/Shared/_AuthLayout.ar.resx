@@ -64,4 +64,10 @@
   <data name="GrowYourSkills" xml:space="preserve">
     <value>طوّر مهاراتك من خلال دوراتنا ومدربينا الخبراء.</value>
   </data>
+  <data name="SwitchToLightTheme" xml:space="preserve">
+    <value>التبديل إلى الوضع الفاتح</value>
+  </data>
+  <data name="SwitchToDarkTheme" xml:space="preserve">
+    <value>التبديل إلى الوضع الداكن</value>
+  </data>
 </root>

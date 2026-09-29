@@ -45,4 +45,124 @@
   <data name="The {0} field is not a valid e-mail address." xml:space="preserve">
     <value>الحقل {0} ليس بريداً إلكترونياً صالحاً.</value>
   </data>
+  <data name="InvalidUsernameOrEmail" xml:space="preserve">
+    <value>اسم المستخدم أو البريد الإلكتروني غير صحيح.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>كلمة المرور غير صحيحة.</value>
+  </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>لم يتم تأكيد البريد الإلكتروني. يرجى مراجعة بريدك لرابط التأكيد.</value>
+  </data>
+  <data name="AccountPendingApproval" xml:space="preserve">
+    <value>لا يزال حسابك قيد موافقة الإدارة.</value>
+  </data>
+  <data name="LoginSuccessfulWelcome" xml:space="preserve">
+    <value>تم تسجيل الدخول بنجاح. مرحباً</value>
+  </data>
+  <data name="OtpSentSuccessfully" xml:space="preserve">
+    <value>تم إرسال رمز التحقق بنجاح. يرجى مراجعة بريدك الإلكتروني.</value>
+  </data>
+  <data name="OtpAttemptsExceeded" xml:space="preserve">
+    <value>لقد تجاوزت الحد الأقصى لمحاولات رمز التحقق. يرجى المحاولة لاحقاً.</value>
+  </data>
+  <data name="InvalidOtp" xml:space="preserve">
+    <value>رمز التحقق غير صحيح أو منتهي الصلاحية.</value>
+  </data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve">
+    <value>تمت إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.</value>
+  </data>
+  <data name="UsernameTaken" xml:space="preserve">
+    <value>اسم المستخدم هذا مستخدم بالفعل.</value>
+  </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>مسموح فقط بملفات .jpg و .jpeg و .png و .webp.</value>
+  </data>
+  <data name="ImageSizeLimit" xml:space="preserve">
+    <value>يجب ألا يتجاوز حجم الصورة 2 ميجابايت.</value>
+  </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>تم تحديث الملف الشخصي بنجاح.</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>تم تغيير كلمة المرور بنجاح.</value>
+  </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>تم تسجيل الخروج بنجاح.</value>
+  </data>
+  <data name="DefaultError" xml:space="preserve">
+    <value>حدث خطأ غير معروف.</value>
+  </data>
+  <data name="ConcurrencyFailure" xml:space="preserve">
+    <value>فشل التزامن، تم تعديل الكائن.</value>
+  </data>
+  <data name="PasswordMismatch" xml:space="preserve">
+    <value>كلمة المرور غير صحيحة.</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>الرمز غير صالح.</value>
+  </data>
+  <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
+    <value>فشل استرداد رمز الاسترداد.</value>
+  </data>
+  <data name="LoginAlreadyAssociated" xml:space="preserve">
+    <value>يوجد مستخدم مرتبط ببيانات الدخول هذه بالفعل.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>اسم المستخدم '{0}' غير صالح، يمكن أن يحتوي على أحرف أو أرقام فقط.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>البريد الإلكتروني '{0}' غير صالح.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>اسم المستخدم '{0}' مستخدم بالفعل.</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>البريد الإلكتروني '{0}' مستخدم بالفعل.</value>
+  </data>
+  <data name="InvalidRoleName" xml:space="preserve">
+    <value>اسم الدور '{0}' غير صالح.</value>
+  </data>
+  <data name="DuplicateRoleName" xml:space="preserve">
+    <value>اسم الدور '{0}' مستخدم بالفعل.</value>
+  </data>
+  <data name="UserAlreadyHasPassword" xml:space="preserve">
+    <value>المستخدم لديه كلمة مرور بالفعل.</value>
+  </data>
+  <data name="UserLockoutNotEnabled" xml:space="preserve">
+    <value>القفل غير مفعّل لهذا المستخدم.</value>
+  </data>
+  <data name="UserAlreadyInRole" xml:space="preserve">
+    <value>المستخدم موجود في الدور '{0}' بالفعل.</value>
+  </data>
+  <data name="UserNotInRole" xml:space="preserve">
+    <value>المستخدم ليس في الدور '{0}'.</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+    <value>يجب أن تتكون كلمة المرور من {0} أحرف على الأقل.</value>
+  </data>
+  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
+    <value>يجب أن تستخدم كلمة المرور {0} أحرف مختلفة على الأقل.</value>
+  </data>
+  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على حرف غير أبجدي رقمي واحد على الأقل.</value>
+  </data>
+  <data name="PasswordRequiresDigit" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على رقم واحد ('0'-'9') على الأقل.</value>
+  </data>
+  <data name="PasswordRequiresLower" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على حرف صغير واحد ('a'-'z') على الأقل.</value>
+  </data>
+  <data name="PasswordRequiresUpper" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على حرف كبير واحد ('A'-'Z') على الأقل.</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="OTP Number" xml:space="preserve">
+    <value>رقم رمز التحقق</value>
+  </data>
+  <data name="EmailNotRegistered" xml:space="preserve">
+    <value>هذا البريد الإلكتروني غير مسجل.</value>
+  </data>
 </root>

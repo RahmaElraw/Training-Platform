@@ -23,7 +23,7 @@
     </p>
 </div>
 
-@if (Model.Roles.Contains("Trainee"))
+@if (Model.Roles.Contains(Training_Platform.Utilities.RoleNames.TRAINEE))
 {
     <div class="row g-2 mb-4">
         <div class="col-4">
@@ -46,7 +46,7 @@
         </div>
     </div>
 }
-else if (Model.Roles.Contains("Trainer"))
+else if (Model.Roles.Contains(Training_Platform.Utilities.RoleNames.TRAINER))
 {
     <div class="row g-2 mb-4">
         <div class="col-6">

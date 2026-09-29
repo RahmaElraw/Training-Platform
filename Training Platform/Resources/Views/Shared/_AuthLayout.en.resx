@@ -64,4 +64,10 @@
   <data name="GrowYourSkills" xml:space="preserve">
     <value>Grow your skills with our courses and expert trainers.</value>
   </data>
+  <data name="SwitchToLightTheme" xml:space="preserve">
+    <value>Switch to light theme</value>
+  </data>
+  <data name="SwitchToDarkTheme" xml:space="preserve">
+    <value>Switch to dark theme</value>
+  </data>
 </root>

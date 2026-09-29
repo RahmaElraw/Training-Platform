@@ -1,0 +1,149 @@
+﻿@model Training_Platform.ViewModels.QuizVM
+
+@{
+    ViewData["Title"] = "Edit Quiz";
+}
+
+<div class="container">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white">
+            <h4 class="mb-0">
+                <i class="bi bi-pencil-square me-2"></i>
+                Edit Quiz
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <!-- Quiz Id -->
+                <input asp-for="Id" type="hidden" />
+
+                <!-- Course Id -->
+                <input asp-for="CourseId" type="hidden" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+
+                <!-- Course -->
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Course
+                    </label>
+
+                    <div class="form-control bg-light">
+                        <i class="bi bi-book me-2"></i>
+                        @(ViewBag.Course?.Title ?? "Unknown Course")
+                    </div>
+
+                    <small class="text-muted">
+                        The course cannot be changed after the quiz is created.
+                    </small>
+
+                </div>
+
+
+                <!-- Quiz Title -->
+                <div class="mb-3">
+
+                    <label asp-for="Title"
+                           class="form-label fw-semibold">
+                        Quiz Title
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter quiz title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Passing Score -->
+                <div class="mb-3">
+
+                    <label asp-for="PassingScore"
+                           class="form-label fw-semibold">
+                        Passing Score (%)
+                    </label>
+
+                    <input asp-for="PassingScore"
+                           type="number"
+                           class="form-control"
+                           min="0"
+                           max="100" />
+
+                    <span asp-validation-for="PassingScore"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Time Limit -->
+                <div class="mb-4">
+
+                    <label asp-for="TimeLimit"
+                           class="form-label fw-semibold">
+                        Time Limit (minutes)
+                    </label>
+
+                    <input asp-for="TimeLimit"
+                           type="number"
+                           class="form-control"
+                           min="1"
+                           max="300" />
+
+                    <span asp-validation-for="TimeLimit"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-check-lg me-1"></i>
+                        Save Changes
+
+                    </button>
+
+
+                    <a asp-action="Details"
+                       asp-route-id="@Model.Id"
+                       class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to Quiz
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

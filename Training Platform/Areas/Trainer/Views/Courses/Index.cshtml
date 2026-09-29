@@ -1,0 +1,197 @@
+﻿@using Training_Platform.Models
+@model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "My Courses";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">My Courses</h2>
+            <p class="text-muted mb-0">
+                Manage the content of the courses assigned to you.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Courses Card -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+            <h5 class="mb-0">
+                <i class="bi bi-journal-bookmark me-2"></i>
+                Assigned Courses
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course</th>
+                                <th>Category</th>
+                                <th>Level</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @{
+                                int counter = 1;
+                            }
+
+                            @foreach (var course in Model)
+                            {
+                                <tr>
+
+                                    <!-- Number -->
+                                    <td>
+                                        @counter
+                                    </td>
+
+
+                                    <!-- Course -->
+                                    <td>
+                                        <div class="fw-semibold">
+                                            @course.Title
+                                        </div>
+
+                                        @if (!string.IsNullOrWhiteSpace(course.Description))
+                                        {
+                                            <small class="text-muted">
+                                                @(course.Description.Length > 60
+                                                    ? course.Description.Substring(0, 60) + "..."
+                                                    : course.Description)
+                                            </small>
+                                        }
+                                    </td>
+
+
+                                    <!-- Category -->
+                                    <td>
+                                        @(course.Category?.Name ?? "N/A")
+                                    </td>
+
+
+                                    <!-- Level -->
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            @course.Level
+                                        </span>
+                                    </td>
+
+
+                                    <!-- Duration -->
+                                    <td>
+                                        @course.DurationInHours hrs
+                                    </td>
+
+
+                                    <!-- Status -->
+                                    <td>
+                                        @if (course.IsPublished)
+                                        {
+                                            <span class="badge bg-success">
+                                                Published
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                Draft
+                                            </span>
+                                        }
+                                    </td>
+
+
+                                    <!-- Created At -->
+                                    <td>
+                                        @course.CreatedAt.ToString("MMM dd, yyyy")
+                                    </td>
+
+
+                                    <!-- Actions -->
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-1">
+
+                                            <!-- Details -->
+                                            <a asp-action="Details"
+                                               asp-route-id="@course.Id"
+                                               class="btn btn-sm btn-outline-info"
+                                               title="View Course Details">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+
+
+                                            <!-- Add Lesson -->
+                                            <a asp-area="Trainer"
+                                               asp-controller="Lessons"
+                                               asp-action="Create"
+                                               asp-route-courseId="@course.Id"
+                                               class="btn btn-sm btn-outline-primary"
+                                               title="Add Lesson">
+                                                <i class="bi bi-book-open"></i>
+                                            </a>
+
+
+                                            <!-- Add Quiz -->
+                                            <a asp-area="Trainer"
+                                               asp-controller="Quizzes"
+                                               asp-action="Create"
+                                               asp-route-courseId="@course.Id"
+                                               class="btn btn-sm btn-outline-success"
+                                               title="Add Quiz">
+                                                <i class="bi bi-clipboard-plus"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                counter++;
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <!-- Empty State -->
+                <div class="text-center py-5">
+
+                    <i class="bi bi-journal-x fs-1 text-muted"></i>
+
+                    <h5 class="mt-3">
+                        No Courses Found
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        No courses have been assigned to you yet.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

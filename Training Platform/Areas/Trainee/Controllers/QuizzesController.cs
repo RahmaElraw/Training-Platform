@@ -51,6 +51,17 @@ namespace Training_Platform.Areas.Trainee.Controllers
             if (quiz is null)
                 return NotFound();
 
+            var enrollment = await _enrollmentRepository.GetOneAsync(
+                e => e.UserId == userId && e.CourseId == quiz.CourseId,
+                tracked: false, 
+                cancellationToken: cancellationToken
+            );
+
+            if (enrollment == null)
+            {
+                return Forbid();
+            }
+
             var questions = await _questionRepository.GetAsync(
                 q => q.QuizId == id,
                 includes: [q => q.QuestionOptions],

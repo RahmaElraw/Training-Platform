@@ -1,0 +1,194 @@
+﻿@model IEnumerable<Training_Platform.ViewModels.CourseMaterialVM>
+
+@{
+    ViewData["Title"] = "Course Materials";
+    int lessonId = Model.FirstOrDefault()?.LessonId ?? 0;
+    string lessonTitle = ViewBag.LessonTitle ?? "Lesson";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+
+        <div class="col">
+
+            <h3 class="mb-1">
+                Course Materials
+            </h3>
+
+            <p class="text-muted mb-0">
+                Materials for:
+                <strong>@lessonTitle</strong>
+            </p>
+
+        </div>
+
+        <div class="col-auto">
+
+            <a asp-area="Trainer"
+               asp-controller="Materials"
+               asp-action="Create"
+               asp-route-lessonId="@lessonId"
+               class="btn btn-primary">
+
+                <i class="fas fa-plus me-2"></i>
+                Add Material
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Title</th>
+
+                                <th>Material</th>
+
+                                <th class="text-end">Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var material in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        <div class="fw-semibold">
+
+                                            <i class="fas fa-file-alt text-primary me-2"></i>
+
+                                            @material.Title
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <a href="@material.Url"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-sm btn-outline-primary">
+
+                                            <i class="fas fa-external-link-alt me-1"></i>
+
+                                            Open Material
+
+                                        </a>
+
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <a asp-area="Trainer"
+                                           asp-controller="Materials"
+                                           asp-action="Edit"
+                                           asp-route-id="@material.Id"
+                                           class="btn btn-sm btn-outline-primary me-1">
+
+                                            <i class="fas fa-edit"></i>
+
+                                        </a>
+
+
+                                        <form asp-area="Trainer"
+                                              asp-controller="Materials"
+                                              asp-action="Delete"
+                                              method="post"
+                                              class="d-inline">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@material.Id" />
+
+                                            <input type="hidden"
+                                                   name="lessonId"
+                                                   value="@material.LessonId" />
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Are you sure you want to delete this material?');">
+
+                                                <i class="fas fa-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body text-center py-5">
+
+                <div class="mb-3">
+
+                    <i class="fas fa-folder-open fa-3x text-muted"></i>
+
+                </div>
+
+                <h5>
+                    No Materials Yet
+                </h5>
+
+                <p class="text-muted mb-4">
+                    No materials have been added to this lesson yet.
+                </p>
+
+                <a asp-area="Trainer"
+                   asp-controller="Materials"
+                   asp-action="Create"
+                   asp-route-lessonId="@ViewBag.LessonId"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-plus me-2"></i>
+                    Add First Material
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+
+</div>

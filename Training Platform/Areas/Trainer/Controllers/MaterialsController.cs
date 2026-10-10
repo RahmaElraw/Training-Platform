@@ -8,6 +8,8 @@ using Training_Platform.ViewModels;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
+
     public class MaterialsController : Controller
     {
         private readonly IRepository<CourseMaterial> _materialRepository;

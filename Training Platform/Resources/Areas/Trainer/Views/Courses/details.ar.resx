@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CourseDetails" xml:space="preserve"><value>تفاصيل الدورة</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>إدارة الدروس والاختبارات الخاصة بهذه الدورة.</value></data>
+  <data name="BackToCourses" xml:space="preserve"><value>العودة إلى الدورات</value></data>
+  <data name="CourseInformation" xml:space="preserve"><value>معلومات الدورة</value></data>
+  <data name="Category" xml:space="preserve"><value>التصنيف:</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>غير متاح</value></data>
+  <data name="Level" xml:space="preserve"><value>المستوى:</value></data>
+  <data name="Duration" xml:space="preserve"><value>المدة:</value></data>
+  <data name="Hours" xml:space="preserve"><value>ساعة</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة:</value></data>
+  <data name="Published" xml:space="preserve"><value>منشور</value></data>
+  <data name="Draft" xml:space="preserve"><value>مسودة</value></data>
+  <data name="Lessons" xml:space="preserve"><value>الدروس</value></data>
+  <data name="AddLesson" xml:space="preserve"><value>إضافة درس</value></data>
+  <data name="ViewLessonDetails" xml:space="preserve"><value>عرض تفاصيل الدرس</value></data>
+  <data name="EditLesson" xml:space="preserve"><value>تعديل الدرس</value></data>
+  <data name="DeleteLessonConfirm" xml:space="preserve"><value>هل أنت متأكد من حذف هذا الدرس؟ سيتم أيضاً حذف المواد والتقدم المرتبطين به.</value></data>
+  <data name="DeleteLesson" xml:space="preserve"><value>حذف الدرس</value></data>
+  <data name="NoLessonsYet" xml:space="preserve"><value>لا توجد دروس بعد</value></data>
+  <data name="NoLessonsYetSubtitle" xml:space="preserve"><value>لا تحتوي هذه الدورة على أي دروس حتى الآن.</value></data>
+  <data name="AddFirstLesson" xml:space="preserve"><value>إضافة أول درس</value></data>
+  <data name="Quizzes" xml:space="preserve"><value>الاختبارات</value></data>
+  <data name="AddQuiz" xml:space="preserve"><value>إضافة اختبار</value></data>
+  <data name="PassingScore" xml:space="preserve"><value>درجة النجاح:</value></data>
+  <data name="Time" xml:space="preserve"><value>الوقت:</value></data>
+  <data name="Min" xml:space="preserve"><value>دقيقة</value></data>
+  <data name="ViewQuizDetails" xml:space="preserve"><value>عرض تفاصيل الاختبار</value></data>
+  <data name="EditQuiz" xml:space="preserve"><value>تعديل الاختبار</value></data>
+  <data name="DeleteQuizConfirm" xml:space="preserve"><value>هل أنت متأكد من حذف هذا الاختبار؟ سيتم أيضاً حذف جميع الأسئلة والخيارات المرتبطة به.</value></data>
+  <data name="DeleteQuiz" xml:space="preserve"><value>حذف الاختبار</value></data>
+  <data name="NoQuizzesYet" xml:space="preserve"><value>لا توجد اختبارات بعد</value></data>
+  <data name="NoQuizzesYetSubtitle" xml:space="preserve"><value>لا تحتوي هذه الدورة على أي اختبارات حتى الآن.</value></data>
+  <data name="AddFirstQuiz" xml:space="preserve"><value>إضافة أول اختبار</value></data>
+  <data name="TraineeProgress" xml:space="preserve"><value>تقدم المتدربين</value></data>
+  <data name="ProgressSubtitle" xml:space="preserve"><value>اعرض تقدم المتدربين المسجلين في هذه الدورة.</value></data>
+  <data name="ViewProgress" xml:space="preserve"><value>عرض التقدم</value></data>
+</root>

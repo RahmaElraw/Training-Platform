@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Training_Platform.ViewModels.CourseMaterialVM>
 
 @{
-    ViewData["Title"] = "Course Materials";
+    ViewData["Title"] = Localizer["CourseMaterials"];
     int lessonId = Model.FirstOrDefault()?.LessonId ?? 0;
-    string lessonTitle = ViewBag.LessonTitle ?? "Lesson";
+    string lessonTitle = ViewBag.LessonTitle ?? Localizer["Lesson"].Value;
 }
 
 <div class="container-fluid">
@@ -14,11 +14,11 @@
         <div class="col">
 
             <h3 class="mb-1">
-                Course Materials
+                @Localizer["CourseMaterials"]
             </h3>
 
             <p class="text-muted mb-0">
-                Materials for:
+                @Localizer["MaterialsFor"]
                 <strong>@lessonTitle</strong>
             </p>
 
@@ -33,7 +33,7 @@
                class="btn btn-primary">
 
                 <i class="fas fa-plus me-2"></i>
-                Add Material
+                @Localizer["AddMaterial"]
 
             </a>
 
@@ -56,11 +56,11 @@
 
                             <tr>
 
-                                <th>Title</th>
+                                <th>@Localizer["Title"]</th>
 
-                                <th>Material</th>
+                                <th>@Localizer["Material"]</th>
 
-                                <th class="text-end">Actions</th>
+                                <th class="text-end">@Localizer["Actions"]</th>
 
                             </tr>
 
@@ -94,7 +94,7 @@
 
                                             <i class="fas fa-external-link-alt me-1"></i>
 
-                                            Open Material
+                                            @Localizer["OpenMaterial"]
 
                                         </a>
 
@@ -132,7 +132,7 @@
 
                                             <button type="submit"
                                                     class="btn btn-sm btn-outline-danger"
-                                                    onclick="return confirm('Are you sure you want to delete this material?');">
+                                                    onclick="return confirm('@Localizer["ConfirmDeleteMaterial"]');">
 
                                                 <i class="fas fa-trash"></i>
 
@@ -168,11 +168,11 @@
                 </div>
 
                 <h5>
-                    No Materials Yet
+                    @Localizer["NoMaterialsYet"]
                 </h5>
 
                 <p class="text-muted mb-4">
-                    No materials have been added to this lesson yet.
+                    @Localizer["NoMaterialsForLesson"]
                 </p>
 
                 <a asp-area="Trainer"
@@ -182,7 +182,7 @@
                    class="btn btn-primary">
 
                     <i class="fas fa-plus me-2"></i>
-                    Add First Material
+                    @Localizer["AddFirstMaterial"]
 
                 </a>
 

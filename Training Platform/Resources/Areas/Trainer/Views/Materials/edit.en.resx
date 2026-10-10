@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="EditMaterial" xml:space="preserve"><value>Edit Material</value></data>
+  <data name="Lesson" xml:space="preserve"><value>Lesson</value></data>
+  <data name="UpdateMaterialFor" xml:space="preserve"><value>Update material for:</value></data>
+  <data name="MaterialTitle" xml:space="preserve"><value>Material Title</value></data>
+  <data name="MaterialUrl" xml:space="preserve"><value>Material URL</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Save Changes</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+</root>

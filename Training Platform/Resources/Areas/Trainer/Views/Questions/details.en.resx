@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="QuestionDetails" xml:space="preserve"><value>Question Details</value></data>
+  <data name="ViewQuestionInfo" xml:space="preserve"><value>View question information and answers</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="BackToQuestions" xml:space="preserve"><value>Back to Questions</value></data>
+  <data name="QuestionInformation" xml:space="preserve"><value>Question Information</value></data>
+  <data name="Quiz" xml:space="preserve"><value>Quiz</value></data>
+  <data name="NA" xml:space="preserve"><value>N/A</value></data>
+  <data name="Type" xml:space="preserve"><value>Type</value></data>
+  <data name="MultipleChoice" xml:space="preserve"><value>Multiple Choice</value></data>
+  <data name="TrueFalse" xml:space="preserve"><value>True / False</value></data>
+  <data name="Mark" xml:space="preserve"><value>Mark</value></data>
+  <data name="AnswerOptions" xml:space="preserve"><value>Answer Options</value></data>
+  <data name="Option" xml:space="preserve"><value>Option</value></data>
+  <data name="CorrectAnswer" xml:space="preserve"><value>Correct Answer</value></data>
+  <data name="Correct" xml:space="preserve"><value>Correct</value></data>
+  <data name="Incorrect" xml:space="preserve"><value>Incorrect</value></data>
+  <data name="NoOptionsFound" xml:space="preserve"><value>No options found for this question.</value></data>
+</root>

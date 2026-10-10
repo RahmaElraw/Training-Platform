@@ -142,9 +142,10 @@
                                         var hasReviews = course.Reviews != null && course.Reviews.Any();
                                         var avgRating = hasReviews ? Math.Round(course.Reviews.Average(r => r.Rating), 1) : 0;
                                         var reviewCount = hasReviews ? course.Reviews.Count : 0;
+                                        var ratingTitle = avgRating + " " + Localizer["OutOfFiveStars"].Value;
                                     }
 
-                                    <div class="text-warning small d-flex align-items-center flex-shrink-0" title="@avgRating out of 5 stars">
+                                    <div class="text-warning small d-flex align-items-center flex-shrink-0" title="@ratingTitle">
                                         <i class="fas fa-star me-1"></i>
                                         <span class="fw-bold text-dark me-1">@(avgRating > 0 ? avgRating.ToString("0.0") : "N/A")</span>
                                         <span class="text-secondary small">(@reviewCount)</span>
@@ -168,7 +169,7 @@
         @if (ViewBag.TotalPages > 1)
         {
             <div class="d-flex justify-content-center mt-4">
-                <nav aria-label="Course page navigation">
+                <nav aria-label="@Localizer["CourseNavigation"]">
                     <ul class="pagination pagination-sm mb-0">
 
                         <!-- Previous Button -->
@@ -179,7 +180,7 @@
                                asp-route-categoryId="@ViewBag.CategoryId"
                                asp-route-level="@ViewBag.Level"
                                asp-route-page="@(ViewBag.CurrentPage - 1)"
-                               aria-label="Previous">
+                               aria-label="@Localizer["Previous"]">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -207,7 +208,7 @@
                                asp-route-categoryId="@ViewBag.CategoryId"
                                asp-route-level="@ViewBag.Level"
                                asp-route-page="@(ViewBag.CurrentPage + 1)"
-                               aria-label="Next">
+                               aria-label="@Localizer["Next"]">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

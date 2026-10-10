@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Training_Platform.Areas.Trainee.Controllers
@@ -10,15 +11,18 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<UserProgress> _progressRepository;
         private readonly IRepository<Enrollment> _enrollmentRepository;
         private readonly IRepository<Lesson> _lessonRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public UserProgressesController(
             IRepository<UserProgress> progressRepository,
             IRepository<Enrollment> enrollmentRepository,
-            IRepository<Lesson> lessonRepository)
+            IRepository<Lesson> lessonRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _progressRepository = progressRepository;
             _enrollmentRepository = enrollmentRepository;
             _lessonRepository = lessonRepository;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(

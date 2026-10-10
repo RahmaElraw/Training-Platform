@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Training_Platform.Models;
 using Training_Platform.Repositories;
 using Training_Platform.ViewModels;
@@ -7,20 +8,25 @@ using Training_Platform.ViewModels;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
+
     public class QuestionsController : Controller
     {
         private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<QuestionOption> _questionOptionRepository;
         private readonly IRepository<Quiz> _quizRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public QuestionsController(
             IRepository<Question> questionRepository,
             IRepository<QuestionOption> questionOptionRepository,
-            IRepository<Quiz> quizRepository)
+            IRepository<Quiz> quizRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _questionRepository = questionRepository;
             _questionOptionRepository = questionOptionRepository;
             _quizRepository = quizRepository;
+            _localizer = localizer;
         }
         [HttpGet]
         public async Task<IActionResult> Index(int quizId)
@@ -118,7 +124,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionText),
-                    "You already have a question with this text in this quiz.");
+                    _localizer["DuplicateQuestionText"]);
 
                 ViewBag.Quiz = quiz;
                 return View(model);
@@ -145,7 +151,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             if (await _questionRepository.CommitAsync() > 0)
             {
-                TempData["Success"] = "Question created successfully.";
+                TempData["Success"] =
+                    _localizer["QuestionCreatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Index),
@@ -153,7 +160,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             }
 
             TempData["Error"] =
-                "Something went wrong while creating the question.";
+                _localizer["QuestionCreateFailed"].ToString();
 
             ViewBag.Quiz = quiz;
 
@@ -250,7 +257,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionText),
-                    "You already have a question with this text in this quiz.");
+                    _localizer["DuplicateQuestionText"]);
 
                 ViewBag.Quiz = question.Quiz;
 
@@ -279,7 +286,8 @@ namespace Training_Platform.Areas.Trainer.Controllers
 
             if (await _questionRepository.CommitAsync() > 0)
             {
-                TempData["Success"] = "Question updated successfully.";
+                TempData["Success"] =
+                    _localizer["QuestionUpdatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Index),
@@ -287,7 +295,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             }
 
             TempData["Error"] =
-                "Something went wrong while updating the question.";
+                _localizer["QuestionUpdateFailed"].ToString();
 
             ViewBag.Quiz = question.Quiz;
 
@@ -339,12 +347,12 @@ namespace Training_Platform.Areas.Trainer.Controllers
             if (await _questionRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Question and its options were deleted successfully.";
+                    _localizer["QuestionDeletedSuccess"].ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong while deleting the question.";
+                    _localizer["QuestionDeleteFailed"].ToString();
             }
 
             return RedirectToAction(
@@ -362,14 +370,14 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(QuestionVM.QuestionOptions),
-                        "True/False questions must have exactly 2 options.");
+                        _localizer["TrueFalseExactlyTwoOptions"]);
                 }
 
                 if (options.Count(o => o.IsCorrect) != 1)
                 {
                     ModelState.AddModelError(
                         nameof(QuestionVM.QuestionOptions),
-                        "True/False questions must have exactly one correct option.");
+                        _localizer["TrueFalseExactlyOneCorrectOption"]);
                 }
             }
             else
@@ -378,14 +386,14 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(QuestionVM.QuestionOptions),
-                        "Multiple choice questions must have at least 2 options.");
+                        _localizer["MultipleChoiceAtLeastTwoOptions"]);
                 }
 
                 if (!options.Any(o => o.IsCorrect))
                 {
                     ModelState.AddModelError(
                         nameof(QuestionVM.QuestionOptions),
-                        "You must select at least one correct option.");
+                        _localizer["MustSelectAtLeastOneCorrectOption"]);
                 }
             }
         }

@@ -26,4 +26,5 @@
   <data name="NoReviewsYet" xml:space="preserve"><value>لا توجد مراجعات بعد</value></data>
   <data name="NoReviewsMessage" xml:space="preserve"><value>لم تقدم أي مراجعات للدورات.</value></data>
   <data name="BrowseCourses" xml:space="preserve"><value>تصفح الدورات</value></data>
+<data name="NoComment" xml:space="preserve"><value>لا يوجد تعليق</value></data>
 </root>

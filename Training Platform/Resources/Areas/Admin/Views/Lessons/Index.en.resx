@@ -26,4 +26,5 @@
   <data name="Details" xml:space="preserve"><value>Details</value></data>
   <data name="Edit" xml:space="preserve"><value>Edit</value></data>
   <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+<data name="LessonsPagination" xml:space="preserve"><value>Lessons pagination</value></data>
 </root>

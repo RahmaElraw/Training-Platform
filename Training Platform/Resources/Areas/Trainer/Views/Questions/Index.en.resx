@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Questions" xml:space="preserve"><value>Questions</value></data>
+  <data name="ManageQuestionsFor" xml:space="preserve"><value>Manage questions for</value></data>
+  <data name="Quiz" xml:space="preserve"><value>Quiz</value></data>
+  <data name="BackToQuiz" xml:space="preserve"><value>Back to Quiz</value></data>
+  <data name="AddQuestion" xml:space="preserve"><value>Add Question</value></data>
+  <data name="QuizQuestions" xml:space="preserve"><value>Quiz Questions</value></data>
+  <data name="Question" xml:space="preserve"><value>Question</value></data>
+  <data name="Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Mark" xml:space="preserve"><value>Mark</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="MultipleChoice" xml:space="preserve"><value>Multiple Choice</value></data>
+  <data name="TrueFalse" xml:space="preserve"><value>True / False</value></data>
+  <data name="Details" xml:space="preserve"><value>Details</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="DeleteQuestionConfirm" xml:space="preserve"><value>Are you sure you want to delete this question?</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="NoQuestionsFound" xml:space="preserve"><value>No questions found</value></data>
+  <data name="StartAddingQuestion" xml:space="preserve"><value>Start by adding a question to this quiz.</value></data>
+</root>

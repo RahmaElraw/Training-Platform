@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>تعديل الاختبار</value></data>
+  <data name="Course" xml:space="preserve"><value>الدورة</value></data>
+  <data name="CourseLockedHint" xml:space="preserve"><value>لا يمكن تغيير الدورة بعد إنشاء الاختبار.</value></data>
+  <data name="QuizTitle" xml:space="preserve"><value>عنوان الاختبار</value></data>
+  <data name="EnterQuizTitle" xml:space="preserve"><value>أدخل عنوان الاختبار</value></data>
+  <data name="PassingScorePercent" xml:space="preserve"><value>درجة النجاح (%)</value></data>
+  <data name="TimeLimitMinutes" xml:space="preserve"><value>المدة (بالدقائق)</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>حفظ التغييرات</value></data>
+  <data name="BackToQuiz" xml:space="preserve"><value>العودة إلى الاختبار</value></data>
+<data name="UnknownCourse" xml:space="preserve"><value>كورس غير معروف</value></data>
+</root>

@@ -8,9 +8,11 @@ namespace Training_Platform.ViewModels
 
         [Required]
         [MaxLength(100)]
+        [Display(Name = "Title")]
         public string Title { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Url")]
         public string Url { get; set; } = string.Empty;
 
         [Required]

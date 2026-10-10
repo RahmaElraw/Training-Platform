@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 
@@ -14,6 +15,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<UserProgress> _progressRepository;
         private readonly IRepository<Quiz> _quizRepository;
         private readonly IRepository<QuizResult> _quizResultRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public LessonsController(
             IRepository<Lesson> lessonRepository,
@@ -21,7 +23,8 @@ namespace Training_Platform.Areas.Trainee.Controllers
             IRepository<Enrollment> enrollmentRepository,
             IRepository<UserProgress> progressRepository,
             IRepository<Quiz> quizRepository,
-            IRepository<QuizResult> quizResultRepository)
+            IRepository<QuizResult> quizResultRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _lessonRepository = lessonRepository;
             _courseRepository = courseRepository;
@@ -29,6 +32,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             _progressRepository = progressRepository;
             _quizRepository = quizRepository;
             _quizResultRepository = quizResultRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -55,7 +59,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             if (enrollment is null)
             {
-                TempData["Error"] = "You must enroll in this course first.";
+                TempData["Error"] = _localizer["MustEnrollInCourseFirst"].ToString();
                 return RedirectToAction("Details", "Courses", new { area = SD.Trainee_Area, id = courseId });
             }
 
@@ -204,7 +208,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             if (enrollment is null)
             {
                 TempData["Error"] =
-                    "You must enroll in this course first.";
+                    _localizer["MustEnrollInCourseFirst"].ToString();
 
                 return RedirectToAction(
                     "Details",
@@ -331,7 +335,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
                 cancellationToken);
 
             TempData["Success"] =
-                "Lesson completed successfully.";
+                _localizer["LessonCompletedSuccessfully"].ToString();
 
             return RedirectToAction(
                 nameof(Details),

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CourseDetails" xml:space="preserve"><value>Course Details</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>Manage the lessons and quizzes of this course.</value></data>
+  <data name="BackToCourses" xml:space="preserve"><value>Back to Courses</value></data>
+  <data name="CourseInformation" xml:space="preserve"><value>Course Information</value></data>
+  <data name="Category" xml:space="preserve"><value>Category:</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>N/A</value></data>
+  <data name="Level" xml:space="preserve"><value>Level:</value></data>
+  <data name="Duration" xml:space="preserve"><value>Duration:</value></data>
+  <data name="Hours" xml:space="preserve"><value>hours</value></data>
+  <data name="Status" xml:space="preserve"><value>Status:</value></data>
+  <data name="Published" xml:space="preserve"><value>Published</value></data>
+  <data name="Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Lessons" xml:space="preserve"><value>Lessons</value></data>
+  <data name="AddLesson" xml:space="preserve"><value>Add Lesson</value></data>
+  <data name="ViewLessonDetails" xml:space="preserve"><value>View Lesson Details</value></data>
+  <data name="EditLesson" xml:space="preserve"><value>Edit Lesson</value></data>
+  <data name="DeleteLessonConfirm" xml:space="preserve"><value>Are you sure you want to delete this lesson? Related materials and progress will also be deleted.</value></data>
+  <data name="DeleteLesson" xml:space="preserve"><value>Delete Lesson</value></data>
+  <data name="NoLessonsYet" xml:space="preserve"><value>No Lessons Yet</value></data>
+  <data name="NoLessonsYetSubtitle" xml:space="preserve"><value>This course doesn't have any lessons yet.</value></data>
+  <data name="AddFirstLesson" xml:space="preserve"><value>Add First Lesson</value></data>
+  <data name="Quizzes" xml:space="preserve"><value>Quizzes</value></data>
+  <data name="AddQuiz" xml:space="preserve"><value>Add Quiz</value></data>
+  <data name="PassingScore" xml:space="preserve"><value>Passing Score:</value></data>
+  <data name="Time" xml:space="preserve"><value>Time:</value></data>
+  <data name="Min" xml:space="preserve"><value>min</value></data>
+  <data name="ViewQuizDetails" xml:space="preserve"><value>View Quiz Details</value></data>
+  <data name="EditQuiz" xml:space="preserve"><value>Edit Quiz</value></data>
+  <data name="DeleteQuizConfirm" xml:space="preserve"><value>Are you sure you want to delete this quiz? All related questions and options will also be deleted.</value></data>
+  <data name="DeleteQuiz" xml:space="preserve"><value>Delete Quiz</value></data>
+  <data name="NoQuizzesYet" xml:space="preserve"><value>No Quizzes Yet</value></data>
+  <data name="NoQuizzesYetSubtitle" xml:space="preserve"><value>This course doesn't have any quizzes yet.</value></data>
+  <data name="AddFirstQuiz" xml:space="preserve"><value>Add First Quiz</value></data>
+  <data name="TraineeProgress" xml:space="preserve"><value>Trainee Progress</value></data>
+  <data name="ProgressSubtitle" xml:space="preserve"><value>View the progress of trainees enrolled in this course.</value></data>
+  <data name="ViewProgress" xml:space="preserve"><value>View Progress</value></data>
+</root>

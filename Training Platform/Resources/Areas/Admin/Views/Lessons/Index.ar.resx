@@ -26,4 +26,5 @@
   <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
   <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
   <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+<data name="LessonsPagination" xml:space="preserve"><value>ترقيم صفحات الدروس</value></data>
 </root>

@@ -27,4 +27,5 @@
   <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
   <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
   <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+<data name="DeleteEnrollmentConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد حذف هذا التسجيل؟</value></data>
 </root>

@@ -2,7 +2,7 @@
 @model Training_Platform.ViewModels.TrainerHomeVM
 
 @{
-    ViewData["Title"] = "Trainer Dashboard";
+    ViewData["Title"] = @Localizer["TrainerDashboard"];
 
     var progressData = JsonSerializer.Serialize(new
     {
@@ -29,15 +29,15 @@
 
         <div>
             <span class="dashboard-label">
-                TRAINER PANEL
+                @Localizer["TrainerPanel"]
             </span>
 
             <h2 class="dashboard-title">
-                Welcome back, Trainer 👋
+                @Localizer["WelcomeBackTrainer"]
             </h2>
 
             <p class="dashboard-subtitle">
-                Here's an overview of your courses and trainees.
+                @Localizer["DashboardSubtitle"]
             </p>
         </div>
 
@@ -68,7 +68,7 @@
                 <div class="stat-content">
 
                     <span>
-                        My Courses
+                        @Localizer["MyCourses"]
                     </span>
 
                     <h3>
@@ -77,7 +77,7 @@
 
                     <small>
                         <i class="bi bi-collection me-1"></i>
-                        Courses assigned to you
+                        @Localizer["CoursesAssignedToYou"]
                     </small>
 
                 </div>
@@ -99,7 +99,7 @@
                 <div class="stat-content">
 
                     <span>
-                        Published Courses
+                        @Localizer["PublishedCourses"]
                     </span>
 
                     <h3>
@@ -108,7 +108,7 @@
 
                     <small>
                         <i class="bi bi-globe2 me-1"></i>
-                        Available courses
+                        @Localizer["AvailableCourses"]
                     </small>
 
                 </div>
@@ -130,7 +130,7 @@
                 <div class="stat-content">
 
                     <span>
-                        Total Trainees
+                        @Localizer["TotalTrainees"]
                     </span>
 
                     <h3>
@@ -139,7 +139,7 @@
 
                     <small>
                         <i class="bi bi-person-check me-1"></i>
-                        Enrolled trainees
+                        @Localizer["EnrolledTrainees"]
                     </small>
 
                 </div>
@@ -161,7 +161,7 @@
                 <div class="stat-content">
 
                     <span>
-                        My Quizzes
+                        @Localizer["MyQuizzes"]
                     </span>
 
                     <h3>
@@ -170,7 +170,7 @@
 
                     <small>
                         <i class="bi bi-question-circle me-1"></i>
-                        Created quizzes
+                        @Localizer["CreatedQuizzes"]
                     </small>
 
                 </div>
@@ -197,11 +197,11 @@
 
                     <div>
                         <h5>
-                            Quick Actions
+                            @Localizer["QuickActions"]
                         </h5>
 
                         <p>
-                            Quick access to your trainer tools.
+                            @Localizer["QuickActionsSubtitle"]
                         </p>
                     </div>
 
@@ -226,11 +226,11 @@
                         <div class="action-text">
 
                             <strong>
-                                My Courses
+                                @Localizer["MyCourses"]
                             </strong>
 
                             <span>
-                                View your courses
+                                @Localizer["ViewYourCourses"]
                             </span>
 
                         </div>
@@ -254,11 +254,11 @@
                         <div class="action-text">
 
                             <strong>
-                                My Quizzes
+                                @Localizer["MyQuizzes"]
                             </strong>
 
                             <span>
-                                Manage your quizzes
+                                @Localizer["ManageYourQuizzes"]
                             </span>
 
                         </div>
@@ -282,11 +282,11 @@
                         <div class="action-text">
 
                             <strong>
-                                Trainee Progress
+                                @Localizer["TraineeProgress"]
                             </strong>
 
                             <span>
-                                Track trainee progress
+                                @Localizer["TrackTraineeProgress"]
                             </span>
 
                         </div>
@@ -312,11 +312,11 @@
 
                     <div>
                         <h5>
-                            Enrollment Progress
+                            @Localizer["EnrollmentProgress"]
                         </h5>
 
                         <p>
-                            Overall trainee progress
+                            @Localizer["OverallTraineeProgress"]
                         </p>
                     </div>
 
@@ -335,7 +335,7 @@
                         <span class="legend-dot completed"></span>
 
                         <span>
-                            Completed
+                            @Localizer["Completed"]
                         </span>
 
                         <strong>
@@ -350,7 +350,7 @@
                         <span class="legend-dot progress"></span>
 
                         <span>
-                            In Progress
+                            @Localizer["InProgress"]
                         </span>
 
                         <strong>
@@ -383,11 +383,11 @@
                     <div>
 
                         <h5>
-                            Trainees per Course
+                            @Localizer["TraineesPerCourse"]
                         </h5>
 
                         <p>
-                            Number of trainees enrolled in each course.
+                            @Localizer["TraineesPerCourseSubtitle"]
                         </p>
 
                     </div>
@@ -421,7 +421,7 @@
                 <div>
 
                     <span>
-                        Completed Enrollments
+                        @Localizer["CompletedEnrollments"]
                     </span>
 
                     <h3>
@@ -446,7 +446,7 @@
                 <div>
 
                     <span>
-                        In Progress
+                        @Localizer["InProgress"]
                     </span>
 
                     <h3>
@@ -471,7 +471,7 @@
                 <div>
 
                     <span>
-                        Certificates Issued
+                        @Localizer["CertificatesIssued"]
                     </span>
 
                     <h3>
@@ -500,11 +500,11 @@
             <div>
 
                 <h5>
-                    Recent Courses
+                    @Localizer["RecentCourses"]
                 </h5>
 
                 <p>
-                    Your recently created courses.
+                    @Localizer["RecentCoursesSubtitle"]
                 </p>
 
             </div>
@@ -515,7 +515,7 @@
                asp-action="Index"
                class="view-all">
 
-                View All
+                @Localizer["ViewAll"]
 
                 <i class="bi bi-arrow-right ms-1"></i>
 
@@ -537,23 +537,23 @@
                         <tr>
 
                             <th>
-                                Course
+                                @Localizer["Course"]
                             </th>
 
                             <th>
-                                Status
+                                @Localizer["Status"]
                             </th>
 
                             <th>
-                                Trainees
+                                @Localizer["Trainees"]
                             </th>
 
                             <th>
-                                Created
+                                @Localizer["Created"]
                             </th>
 
                             <th class="text-end">
-                                Action
+                                @Localizer["Action"]
                             </th>
 
                         </tr>
@@ -596,7 +596,7 @@
 
                                             <span></span>
 
-                                            Published
+                                            @Localizer["Published"]
 
                                         </span>
 
@@ -608,7 +608,7 @@
 
                                             <span></span>
 
-                                            Draft
+                                            @Localizer["Draft"]
 
                                         </span>
 
@@ -642,7 +642,7 @@
                                        asp-action="Details"
                                        asp-route-id="@course.Id"
                                        class="btn btn-sm btn-outline-primary action-button"
-                                       title="View Course">
+                                       title="@Localizer["ViewCourse"]">
 
                                         <i class="bi bi-eye"></i>
 
@@ -673,11 +673,11 @@
                 </div>
 
                 <h5>
-                    No Courses Yet
+                    @Localizer["NoCoursesYet"]
                 </h5>
 
                 <p>
-                    You don't have any courses assigned to you yet.
+                    @Localizer["NoCoursesYetSubtitle"]
                 </p>
 
                 <a asp-area="Trainer"
@@ -687,7 +687,7 @@
 
                     <i class="bi bi-arrow-right me-1"></i>
 
-                    Go to Courses
+                    @Localizer["GoToCourses"]
 
                 </a>
 
@@ -789,7 +789,7 @@
                     series: [
 
                         {
-                            name: "Enrollment",
+                            name: '@Localizer["Enrollment"]',
 
                             type: "pie",
 
@@ -826,7 +826,7 @@
                                         progressData.inProgress;
 
                                     return total +
-                                        "\nEnrollments";
+                                        "\n" + '@Localizer["Enrollments"]';
 
                                 },
 
@@ -852,7 +852,7 @@
                                         progressData.completed,
 
                                     name:
-                                        "Completed",
+                                        '@Localizer["Completed"]',
 
                                     itemStyle: {
                                         color: "#22c55e"
@@ -864,7 +864,7 @@
                                         progressData.inProgress,
 
                                     name:
-                                        "In Progress",
+                                        '@Localizer["InProgress"]',
 
                                     itemStyle: {
                                         color: "#3b82f6"
@@ -1020,7 +1020,7 @@
 
                         {
 
-                            name: "Trainees",
+                            name: '@Localizer["Trainees"]',
 
                             type: "bar",
 

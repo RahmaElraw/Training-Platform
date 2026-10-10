@@ -189,7 +189,7 @@
         <div class="content">
             <!-- Top Navbar -->
             <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
-                <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation">
+                <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="@Localizer["ToggleNavigation"]">
                     <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
                 </button>
                 <a class="navbar-brand me-1 me-sm-3" href="/Trainee/Home/Index">
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="scrollbar-overlay" style="max-height:19rem">
                                     <div class="list-group list-group-flush fw-normal fs--1">
-                                        <div class="list-group-title border-bottom">NEW</div>
+                                        <div class="list-group-title border-bottom">@Localizer["New"]</div>
                                         <!-- Notification Items -->
                                         <div class="list-group-item">
                                             <a class="notification notification-flush notification-unread" href="#!">
@@ -360,6 +360,8 @@
             });
         });
 </script>
+
+@await Html.PartialAsync("~/Views/Shared/_PasswordToggle.cshtml")
 
 @RenderSection("Scripts", required: false)
 </body>

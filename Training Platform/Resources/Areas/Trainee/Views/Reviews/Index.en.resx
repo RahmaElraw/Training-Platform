@@ -26,4 +26,5 @@
   <data name="NoReviewsYet" xml:space="preserve"><value>No reviews yet</value></data>
   <data name="NoReviewsMessage" xml:space="preserve"><value>You haven't submitted any course reviews.</value></data>
   <data name="BrowseCourses" xml:space="preserve"><value>Browse Courses</value></data>
+<data name="NoComment" xml:space="preserve"><value>No comment</value></data>
 </root>

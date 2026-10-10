@@ -2,7 +2,7 @@
 @model Training_Platform.ViewModels.QuestionVM
 
 @{
-    ViewData["Title"] = "Create Question";
+    ViewData["Title"] = Localizer["CreateQuestion"].Value;
 
     var quiz = ViewBag.Quiz as Quiz;
 }
@@ -13,12 +13,12 @@
     <div class="mb-4">
 
         <h2 class="fw-bold">
-            Create Question
+            @Localizer["CreateQuestion"]
         </h2>
 
         <p class="text-muted mb-0">
-            Add a new question to
-            <strong>@(quiz?.Title ?? "Quiz")</strong>
+            @Localizer["AddNewQuestionTo"]
+            <strong>@(quiz?.Title ?? Localizer["Quiz"].Value)</strong>
         </p>
 
     </div>
@@ -27,7 +27,7 @@
 
         <div class="card-header bg-white">
             <h5 class="mb-0">
-                Question Information
+                @Localizer["QuestionInformation"]
             </h5>
         </div>
 
@@ -48,13 +48,13 @@
 
                     <label asp-for="QuestionText"
                            class="form-label fw-semibold">
-                        Question
+                        @Localizer["Question"]
                     </label>
 
                     <textarea asp-for="QuestionText"
                               class="form-control"
                               rows="4"
-                              placeholder="Enter the question"></textarea>
+                              placeholder="@Localizer["EnterQuestionPlaceholder"]"></textarea>
 
                     <span asp-validation-for="QuestionText"
                           class="text-danger">
@@ -69,7 +69,7 @@
 
                         <label asp-for="Mark"
                                class="form-label fw-semibold">
-                            Mark
+                            @Localizer["Mark"]
                         </label>
 
                         <input asp-for="Mark"
@@ -89,18 +89,18 @@
 
                         <label asp-for="QuestionType"
                                class="form-label fw-semibold">
-                            Question Type
+                            @Localizer["QuestionType"]
                         </label>
 
                         <select asp-for="QuestionType"
                                 class="form-select">
 
                             <option value="MultipleChoice">
-                                Multiple Choice
+                                @Localizer["MultipleChoice"]
                             </option>
 
                             <option value="TrueFalse">
-                                True / False
+                                @Localizer["TrueFalse"]
                             </option>
 
                         </select>
@@ -120,11 +120,11 @@
 
                     <div>
                         <h5 class="mb-1">
-                            Question Options
+                            @Localizer["QuestionOptions"]
                         </h5>
 
                         <small class="text-muted">
-                            Add at least two options and select the correct answer.
+                            @Localizer["OptionsHelpText"]
                         </small>
                     </div>
 
@@ -132,7 +132,7 @@
                             id="addOption"
                             class="btn btn-outline-primary">
                         <i class="bi bi-plus-lg"></i>
-                        Add Option
+                        @Localizer["AddOption"]
                     </button>
 
                 </div>
@@ -146,12 +146,12 @@
                             <div class="col-md-9">
 
                                 <label class="form-label">
-                                    Option
+                                    @Localizer["Option"]
                                 </label>
 
                                 <input name="QuestionOptions[0].OptionText"
                                        class="form-control"
-                                       placeholder="Enter option" />
+                                       placeholder="@Localizer["EnterOptionPlaceholder"]" />
 
                             </div>
 
@@ -169,7 +169,7 @@
                                            value="false" />
 
                                     <label class="form-check-label">
-                                        Correct Answer
+                                        @Localizer["CorrectAnswer"]
                                     </label>
 
                                 </div>
@@ -187,12 +187,12 @@
                             <div class="col-md-9">
 
                                 <label class="form-label">
-                                    Option
+                                    @Localizer["Option"]
                                 </label>
 
                                 <input name="QuestionOptions[1].OptionText"
                                        class="form-control"
-                                       placeholder="Enter option" />
+                                       placeholder="@Localizer["EnterOptionPlaceholder"]" />
 
                             </div>
 
@@ -210,7 +210,7 @@
                                            value="false" />
 
                                     <label class="form-check-label">
-                                        Correct Answer
+                                        @Localizer["CorrectAnswer"]
                                     </label>
 
                                 </div>
@@ -233,13 +233,13 @@
                     <a asp-action="Index"
                        asp-route-quizId="@Model.QuizId"
                        class="btn btn-outline-secondary">
-                        Cancel
+                        @Localizer["Cancel"]
                     </a>
 
                     <button type="submit"
                             class="btn btn-primary">
                         <i class="bi bi-check-lg"></i>
-                        Create Question
+                        @Localizer["CreateQuestion"]
                     </button>
 
                 </div>
@@ -278,13 +278,13 @@
                                 <div class="col-md-9">
 
                                     <label class="form-label">
-                                        Option
+                                        @Localizer["Option"]
                                     </label>
 
                                     <input
                                         name="QuestionOptions[${optionIndex}].OptionText"
                                         class="form-control"
-                                        placeholder="Enter option" />
+                                        placeholder="@Localizer["EnterOptionPlaceholder"]" />
 
                                 </div>
 
@@ -304,7 +304,7 @@
                                             value="false" />
 
                                         <label class="form-check-label">
-                                            Correct Answer
+                                            @Localizer["CorrectAnswer"]
                                         </label>
 
                                     </div>

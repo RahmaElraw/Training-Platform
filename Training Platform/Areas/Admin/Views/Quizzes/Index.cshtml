@@ -151,9 +151,7 @@
 
                             <button type="submit"
                                     class="btn btn-danger w-100"
-                                    onclick="return confirm(
-                                'Warning: Deleting this quiz will also delete all questions, options, and quiz results. Are you sure you want to continue?'
-                                );">
+                                    onclick="return confirm('@Localizer["DeleteQuizCascadeWarning"]');">
 
                                 <i class="fas fa-trash-alt me-1"></i>
                                 @Localizer["Delete"]

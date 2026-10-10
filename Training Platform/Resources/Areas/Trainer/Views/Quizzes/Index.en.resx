@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>My Quizzes</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>Manage and review quizzes belonging to your courses.</value></data>
+  <data name="CreateQuiz" xml:space="preserve"><value>Create Quiz</value></data>
+  <data name="TotalQuizzes" xml:space="preserve"><value>Total Quizzes</value></data>
+  <data name="TotalQuestions" xml:space="preserve"><value>Total Questions</value></data>
+  <data name="ReadyQuizzes" xml:space="preserve"><value>Ready Quizzes</value></data>
+  <data name="NeedQuestions" xml:space="preserve"><value>Need Questions</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Search by quiz or course...</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="AllCourses" xml:space="preserve"><value>All Courses</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="All" xml:space="preserve"><value>All</value></data>
+  <data name="Ready" xml:space="preserve"><value>Ready</value></data>
+  <data name="NoQuestions" xml:space="preserve"><value>No Questions</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="Showing" xml:space="preserve"><value>Showing</value></data>
+  <data name="QuizCountSuffix" xml:space="preserve"><value>quiz(es)</value></data>
+  <data name="AllQuizzes" xml:space="preserve"><value>All Quizzes</value></data>
+  <data name="TableSubtitle" xml:space="preserve"><value>Select a quiz to view its questions and results.</value></data>
+  <data name="Quiz" xml:space="preserve"><value>Quiz</value></data>
+  <data name="Questions" xml:space="preserve"><value>Questions</value></data>
+  <data name="PassingScore" xml:space="preserve"><value>Passing Score</value></data>
+  <data name="TimeLimit" xml:space="preserve"><value>Time Limit</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="NoQuestionsYet" xml:space="preserve"><value>No questions yet</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>N/A</value></data>
+  <data name="Min" xml:space="preserve"><value>min</value></data>
+  <data name="NoLimit" xml:space="preserve"><value>No limit</value></data>
+  <data name="ViewDetails" xml:space="preserve"><value>View Details</value></data>
+  <data name="EditQuiz" xml:space="preserve"><value>Edit Quiz</value></data>
+  <data name="DeleteQuizConfirm" xml:space="preserve"><value>Are you sure you want to delete this quiz? All related questions, options, and quiz results will also be deleted.</value></data>
+  <data name="DeleteQuiz" xml:space="preserve"><value>Delete Quiz</value></data>
+  <data name="NoQuizzesFoundSearch" xml:space="preserve"><value>No quizzes found</value></data>
+  <data name="TryChangeFilters" xml:space="preserve"><value>Try changing your search or filters.</value></data>
+  <data name="NoQuizzesFound" xml:space="preserve"><value>No Quizzes Found</value></data>
+  <data name="NoQuizzesCreatedYet" xml:space="preserve"><value>You haven't created any quizzes yet.</value></data>
+  <data name="CreateFirstQuiz" xml:space="preserve"><value>Create Your First Quiz</value></data>
+</root>

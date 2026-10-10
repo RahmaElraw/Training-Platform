@@ -6,7 +6,7 @@
 
         <h5 class="mb-0">
             <i class="fas fa-edit me-1"></i>
-            Edit Course Material
+            @Localizer["EditCourseMaterial"]
         </h5>
 
     </div>
@@ -38,7 +38,7 @@
                 <label asp-for="Title"
                        class="form-label">
 
-                    Material Title
+                    @Localizer["MaterialTitle"]
                     <span class="text-danger">*</span>
 
                 </label>
@@ -46,7 +46,7 @@
                 <input asp-for="Title"
                        class="form-control"
                        maxlength="100"
-                       placeholder="Enter material title" />
+                       placeholder="@Localizer["MaterialTitlePlaceholder"]" />
 
                 <span asp-validation-for="Title"
                       class="text-danger">
@@ -62,7 +62,7 @@
                 <label asp-for="Url"
                        class="form-label">
 
-                    Material URL
+                    @Localizer["MaterialUrl"]
                     <span class="text-danger">*</span>
 
                 </label>
@@ -87,7 +87,7 @@
                         class="btn btn-primary">
 
                     <i class="fas fa-save me-1"></i>
-                    Save Changes
+                    @Localizer["SaveChanges"]
 
                 </button>
 
@@ -96,7 +96,7 @@
                    class="btn btn-secondary">
 
                     <i class="fas fa-arrow-left me-1"></i>
-                    Cancel
+                    @Localizer["Cancel"]
 
                 </a>
 

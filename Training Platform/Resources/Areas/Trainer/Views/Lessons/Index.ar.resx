@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CourseLessons" xml:space="preserve"><value>دروس الدورة</value></data>
+  <data name="ManageLessonsFor" xml:space="preserve"><value>إدارة دروس</value></data>
+  <data name="AddLesson" xml:space="preserve"><value>إضافة درس</value></data>
+  <data name="Lessons" xml:space="preserve"><value>الدروس</value></data>
+  <data name="Title" xml:space="preserve"><value>العنوان</value></data>
+  <data name="Description" xml:space="preserve"><value>الوصف</value></data>
+  <data name="Order" xml:space="preserve"><value>الترتيب</value></data>
+  <data name="Video" xml:space="preserve"><value>الفيديو</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="NoDescription" xml:space="preserve"><value>لا يوجد وصف</value></data>
+  <data name="Watch" xml:space="preserve"><value>مشاهدة</value></data>
+  <data name="NoVideo" xml:space="preserve"><value>لا يوجد فيديو</value></data>
+  <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+  <data name="ConfirmDeleteLesson" xml:space="preserve"><value>هل أنت متأكد من حذف هذا الدرس؟ سيتم أيضاً حذف المواد المرتبطة والتقدم الذي تم تحقيقه.</value></data>
+  <data name="NoLessonsFound" xml:space="preserve"><value>لا توجد دروس</value></data>
+  <data name="NoLessonsYet" xml:space="preserve"><value>لا تحتوي هذه الدورة على أي دروس حتى الآن.</value></data>
+  <data name="CreateFirstLesson" xml:space="preserve"><value>إنشاء أول درس</value></data>
+</root>

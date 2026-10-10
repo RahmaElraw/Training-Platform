@@ -70,4 +70,7 @@
   <data name="SwitchToDarkTheme" xml:space="preserve">
     <value>التبديل إلى الوضع الداكن</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>اللغة</value>
+  </data>
 </root>

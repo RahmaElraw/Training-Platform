@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="MyCourses" xml:space="preserve"><value>دوراتي</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>إدارة محتوى الدورات المسندة إليك.</value></data>
+  <data name="AssignedCourses" xml:space="preserve"><value>الدورات المسندة</value></data>
+  <data name="Course" xml:space="preserve"><value>الدورة</value></data>
+  <data name="Category" xml:space="preserve"><value>التصنيف</value></data>
+  <data name="Level" xml:space="preserve"><value>المستوى</value></data>
+  <data name="Duration" xml:space="preserve"><value>المدة</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>غير متاح</value></data>
+  <data name="Hrs" xml:space="preserve"><value>س</value></data>
+  <data name="Published" xml:space="preserve"><value>منشور</value></data>
+  <data name="Draft" xml:space="preserve"><value>مسودة</value></data>
+  <data name="ViewCourseDetails" xml:space="preserve"><value>عرض تفاصيل الدورة</value></data>
+  <data name="AddLesson" xml:space="preserve"><value>إضافة درس</value></data>
+  <data name="AddQuiz" xml:space="preserve"><value>إضافة اختبار</value></data>
+  <data name="NoCoursesFound" xml:space="preserve"><value>لا توجد دورات</value></data>
+  <data name="NoCoursesFoundSubtitle" xml:space="preserve"><value>لم يتم إسناد أي دورات إليك حتى الآن.</value></data>
+</root>

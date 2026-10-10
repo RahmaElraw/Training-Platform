@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 
@@ -11,15 +12,18 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<Enrollment> _enrollmentRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<Review> _reviewRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public EnrollmentsController(
             IRepository<Enrollment> enrollmentRepository,
             IRepository<Course> courseRepository,
-            IRepository<Review> reviewRepository)
+            IRepository<Review> reviewRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _enrollmentRepository = enrollmentRepository;
             _courseRepository = courseRepository;
             _reviewRepository = reviewRepository;
+            _localizer = localizer;
         }
 
         private int GetCurrentUserId()
@@ -90,7 +94,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             if (existingEnrollment is not null)
             {
-                TempData["Info"] = "You are already enrolled in this course.";
+                TempData["Info"] = _localizer["AlreadyEnrolledInCourse"].ToString();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -105,7 +109,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             await _enrollmentRepository.AddAsync(enrollment, cancellationToken);
             await _enrollmentRepository.CommitAsync(cancellationToken);
 
-            TempData["Success"] = "Enrolled successfully! Enjoy learning.";
+            TempData["Success"] = _localizer["EnrolledSuccessfullyEnjoyLearning"].ToString();
             return RedirectToAction(nameof(Index));
         }
 
@@ -125,7 +129,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             {
                 _enrollmentRepository.Delete(enrollment);
                 await _enrollmentRepository.CommitAsync(cancellationToken);
-                TempData["Success"] = "You have unenrolled from the course.";
+                TempData["Success"] = _localizer["UnenrolledFromCourse"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

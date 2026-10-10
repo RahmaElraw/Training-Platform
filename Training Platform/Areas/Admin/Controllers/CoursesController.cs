@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -12,17 +13,20 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<ApplicationUser> _userRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
         public CoursesController(
             IRepository<Course> courseRepository,
             IRepository<Category> categoryRepository,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _courseRepository = courseRepository;
             _categoryRepository = categoryRepository;
             _userRepository = userRepository;
+            _localizer = localizer;
         }
         public async Task<IActionResult> Index(
             string? query,
@@ -89,7 +93,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CategoryId),
-                    "Selected category does not exist.");
+                    _localizer["SelectedCategoryDoesNotExist"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -101,7 +105,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.TrainerId),
-                    "Selected trainer does not exist.");
+                    _localizer["SelectedTrainerDoesNotExist"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -114,7 +118,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "Course title already exists.");
+                    _localizer["CourseTitleAlreadyExists"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -146,13 +150,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _courseRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Course created successfully.";
+                    _localizer["CourseCreatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadCourseData(model);
 
@@ -214,7 +218,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CategoryId),
-                    "Selected category does not exist.");
+                    _localizer["SelectedCategoryDoesNotExist"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -226,7 +230,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.TrainerId),
-                    "Selected trainer does not exist.");
+                    _localizer["SelectedTrainerDoesNotExist"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -240,7 +244,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "Course title already exists.");
+                    _localizer["CourseTitleAlreadyExists"]);
 
                 await LoadCourseData(model);
                 return View(model);
@@ -272,13 +276,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _courseRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Course updated successfully.";
+                    _localizer["CourseUpdatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadCourseData(model);
 
@@ -330,7 +334,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (course.Enrollments.Count > 0)
             {
                 TempData["Error"] =
-                    "Cannot delete course because it has enrollments.";
+                    _localizer["CourseCannotDeleteWithEnrollments"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -338,7 +343,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (course.Lessons.Count > 0)
             {
                 TempData["Error"] =
-                    "Cannot delete course because it has lessons.";
+                    _localizer["CourseCannotDeleteWithLessons"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -346,7 +352,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (course.Quizzes.Count > 0)
             {
                 TempData["Error"] =
-                    "Cannot delete course because it has quizzes.";
+                    _localizer["CourseCannotDeleteWithQuizzes"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -354,7 +361,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (course.Certificates.Count > 0)
             {
                 TempData["Error"] =
-                    "Cannot delete course because it has certificates.";
+                    _localizer["CourseCannotDeleteWithCertificates"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -362,7 +370,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (course.Reviews.Count > 0)
             {
                 TempData["Error"] =
-                    "Cannot delete course because it has reviews.";
+                    _localizer["CourseCannotDeleteWithReviews"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -372,12 +381,12 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _courseRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Course deleted successfully.";
+                    _localizer["CourseDeletedSuccessfully"].ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong.";
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

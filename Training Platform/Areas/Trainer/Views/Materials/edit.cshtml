@@ -1,8 +1,8 @@
 ﻿@model Training_Platform.ViewModels.CourseMaterialVM
 
 @{
-    ViewData["Title"] = "Edit Material";
-    string lessonTitle = ViewBag.LessonTitle ?? "Lesson";
+    ViewData["Title"] = Localizer["EditMaterial"];
+    string lessonTitle = ViewBag.LessonTitle ?? Localizer["Lesson"].Value;
 }
 
 <div class="container-fluid">
@@ -12,11 +12,11 @@
         <div class="col">
 
             <h3 class="mb-1">
-                Edit Material
+                @Localizer["EditMaterial"]
             </h3>
 
             <p class="text-muted mb-0">
-                Update material for:
+                @Localizer["UpdateMaterialFor"]
                 <strong>@lessonTitle</strong>
             </p>
 
@@ -50,7 +50,7 @@
 
                     <label asp-for="Title"
                            class="form-label">
-                        Material Title
+                        @Localizer["MaterialTitle"]
                     </label>
 
                     <input asp-for="Title"
@@ -67,7 +67,7 @@
 
                     <label asp-for="Url"
                            class="form-label">
-                        Material URL
+                        @Localizer["MaterialUrl"]
                     </label>
 
                     <input asp-for="Url"
@@ -86,7 +86,7 @@
                             class="btn btn-primary">
 
                         <i class="fas fa-save me-2"></i>
-                        Save Changes
+                        @Localizer["SaveChanges"]
 
                     </button>
 
@@ -97,7 +97,7 @@
                        asp-route-lessonId="@Model.LessonId"
                        class="btn btn-secondary">
 
-                        Cancel
+                        @Localizer["Cancel"]
 
                     </a>
 

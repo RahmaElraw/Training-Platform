@@ -1,7 +1,10 @@
-﻿namespace Training_Platform.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Training_Platform.ViewModels
 {
     public class TakeQuizViewModel
     {
+        [Display(Name = "Quiz Id")]
         public int QuizId { get; set; }
 
         public string QuizTitle { get; set; } = string.Empty;
@@ -13,6 +16,7 @@
     {
         public int QuestionId { get; set; }
 
+        [Display(Name = "Question Text")]
         public string QuestionText { get; set; } = string.Empty;
 
         public List<OptionViewModel> Options { get; set; } = new();
@@ -22,6 +26,7 @@
     {
         public int Id { get; set; }
 
+        [Display(Name = "Option Text")]
         public string OptionText { get; set; } = string.Empty;
     }
 }

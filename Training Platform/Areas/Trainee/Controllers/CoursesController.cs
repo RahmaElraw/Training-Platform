@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 
@@ -13,19 +14,22 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<UserProgress> _progressRepository;
         private readonly IRepository<Review> _reviewRepository;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public CoursesController(
             IRepository<Course> courseRepository,
             IRepository<Enrollment> enrollmentRepository,
             IRepository<UserProgress> progressRepository,
             IRepository<Review> reviewRepository,
-            IRepository<Category> categoryRepository)
+            IRepository<Category> categoryRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _courseRepository = courseRepository;
             _enrollmentRepository = enrollmentRepository;
             _progressRepository = progressRepository;
             _reviewRepository = reviewRepository;
             _categoryRepository = categoryRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -214,7 +218,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             if (existingEnrollment is not null)
             {
                 TempData["Error"] =
-                    "You are already enrolled in this course.";
+                    _localizer["AlreadyEnrolledInCourse"].ToString();
 
                 return RedirectToAction(
                     nameof(Details),
@@ -242,7 +246,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
 
             TempData["Success"] =
-                "You have enrolled successfully.";
+                _localizer["EnrolledSuccessfully"].ToString();
 
 
             return RedirectToAction(
@@ -260,7 +264,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
         {
             if (rating < 1 || rating > 5)
             {
-                TempData["Error"] = "Rating must be between 1 and 5 stars.";
+                TempData["Error"] = _localizer["RatingMustBeBetweenOneAndFiveStars"].ToString();
                 return RedirectToAction(nameof(Details), new { id = courseId });
             }
 
@@ -274,7 +278,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             if (enrollment is null)
             {
-                TempData["Error"] = "Only enrolled trainees can leave a review.";
+                TempData["Error"] = _localizer["OnlyEnrolledTraineesCanReview"].ToString();
                 return RedirectToAction(nameof(Details), new { id = courseId });
             }
 
@@ -305,7 +309,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             await _reviewRepository.CommitAsync(cancellationToken);
 
-            TempData["Success"] = "Your review has been saved.";
+            TempData["Success"] = _localizer["ReviewSaved"].ToString();
             return RedirectToAction(nameof(Details), new { id = courseId });
         }
 

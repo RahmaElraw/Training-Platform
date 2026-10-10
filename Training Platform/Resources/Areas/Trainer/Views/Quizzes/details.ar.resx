@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>تفاصيل الاختبار</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>عرض معلومات الاختبار وأسئلته ونتائج المتدربين.</value></data>
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="BackToQuizzes" xml:space="preserve"><value>العودة إلى الاختبارات</value></data>
+  <data name="QuizInformation" xml:space="preserve"><value>معلومات الاختبار</value></data>
+  <data name="QuizTitle" xml:space="preserve"><value>عنوان الاختبار</value></data>
+  <data name="Course" xml:space="preserve"><value>الدورة</value></data>
+  <data name="PassingScore" xml:space="preserve"><value>درجة النجاح</value></data>
+  <data name="TimeLimit" xml:space="preserve"><value>المدة</value></data>
+  <data name="Minutes" xml:space="preserve"><value>دقيقة</value></data>
+  <data name="Questions" xml:space="preserve"><value>الأسئلة</value></data>
+  <data name="TotalMarks" xml:space="preserve"><value>إجمالي الدرجات</value></data>
+  <data name="QuestionsSubtitle" xml:space="preserve"><value>إدارة أسئلة هذا الاختبار.</value></data>
+  <data name="AddQuestion" xml:space="preserve"><value>إضافة سؤال</value></data>
+  <data name="Question" xml:space="preserve"><value>السؤال</value></data>
+  <data name="Mark" xml:space="preserve"><value>الدرجة</value></data>
+  <data name="Type" xml:space="preserve"><value>النوع</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="MultipleChoice" xml:space="preserve"><value>اختيار متعدد</value></data>
+  <data name="TrueFalse" xml:space="preserve"><value>صواب / خطأ</value></data>
+  <data name="ViewDetails" xml:space="preserve"><value>عرض التفاصيل</value></data>
+  <data name="EditQuestion" xml:space="preserve"><value>تعديل السؤال</value></data>
+  <data name="DeleteQuestionConfirm" xml:space="preserve"><value>هل أنت متأكد من حذف هذا السؤال؟</value></data>
+  <data name="DeleteQuestion" xml:space="preserve"><value>حذف السؤال</value></data>
+  <data name="NoQuestionsYet" xml:space="preserve"><value>لا توجد أسئلة بعد</value></data>
+  <data name="NoQuestionsInQuiz" xml:space="preserve"><value>لا يحتوي هذا الاختبار على أي أسئلة حتى الآن.</value></data>
+  <data name="AddFirstQuestion" xml:space="preserve"><value>أضف أول سؤال</value></data>
+  <data name="QuizResults" xml:space="preserve"><value>نتائج الاختبار</value></data>
+  <data name="ResultsSubtitle" xml:space="preserve"><value>النتائج التي قام المتدربون بتسجيلها.</value></data>
+  <data name="Trainee" xml:space="preserve"><value>المتدرب</value></data>
+  <data name="Score" xml:space="preserve"><value>الدرجة</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+  <data name="SubmittedAt" xml:space="preserve"><value>تاريخ التسليم</value></data>
+  <data name="Passed" xml:space="preserve"><value>ناجح</value></data>
+  <data name="Failed" xml:space="preserve"><value>راسب</value></data>
+  <data name="NoResultsYet" xml:space="preserve"><value>لا توجد نتائج بعد</value></data>
+  <data name="NoTraineesSubmitted" xml:space="preserve"><value>لم يقم أي متدرب بتسليم هذا الاختبار بعد.</value></data>
+<data name="UnknownCourse" xml:space="preserve"><value>كورس غير معروف</value></data>
+  <data name="UnknownUser" xml:space="preserve"><value>غير معروف</value></data>
+</root>

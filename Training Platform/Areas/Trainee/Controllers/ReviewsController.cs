@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 
@@ -11,15 +12,18 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<Review> _reviewRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<Enrollment> _enrollmentRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public ReviewsController(
             IRepository<Review> reviewRepository,
             IRepository<Course> courseRepository,
-            IRepository<Enrollment> enrollmentRepository)
+            IRepository<Enrollment> enrollmentRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _reviewRepository = reviewRepository;
             _courseRepository = courseRepository;
             _enrollmentRepository = enrollmentRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -69,7 +73,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             if (enrollment is null)
             {
-                TempData["Error"] = "You must be enrolled in this course to leave a review.";
+                TempData["Error"] = _localizer["MustBeEnrolledToReview"].ToString();
                 return RedirectToAction("Details", "Courses", new { id = courseId });
             }
 
@@ -81,7 +85,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
             if (existingReview is not null)
             {
-                TempData["Info"] = "You have already reviewed this course.";
+                TempData["Info"] = _localizer["AlreadyReviewedCourse"].ToString();
                 return RedirectToAction("Details", "Courses", new { id = courseId });
             }
 
@@ -131,7 +135,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             await _reviewRepository.AddAsync(review, cancellationToken);
             await _reviewRepository.CommitAsync(cancellationToken);
 
-            TempData["Success"] = "Thank you! Your review has been submitted.";
+            TempData["Success"] = _localizer["ReviewSubmittedThankYou"].ToString();
             return RedirectToAction("Details", "Courses", new { id = vm.CourseId });
         }
         [HttpGet]
@@ -185,7 +189,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             _reviewRepository.Update(review);
             await _reviewRepository.CommitAsync(cancellationToken);
 
-            TempData["Success"] = "Your review has been updated successfully.";
+            TempData["Success"] = _localizer["ReviewUpdatedSuccessfully"].ToString();
             return RedirectToAction(nameof(Index));
         }
 
@@ -205,7 +209,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
             {
                 _reviewRepository.Delete(review);
                 await _reviewRepository.CommitAsync(cancellationToken);
-                TempData["Success"] = "Your review was successfully deleted.";
+                TempData["Success"] = _localizer["ReviewDeletedSuccessfully"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Training_Platform.Models;
 using Training_Platform.Repositories;
 using Training_Platform.ViewModels;
@@ -7,17 +8,22 @@ using Training_Platform.ViewModels;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
+
     public class QuizzesController : Controller
     {
         private readonly IRepository<Quiz> _quizRepository;
         private readonly IRepository<Course> _courseRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public QuizzesController(
             IRepository<Quiz> quizRepository,
-            IRepository<Course> courseRepository)
+            IRepository<Course> courseRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _quizRepository = quizRepository;
             _courseRepository = courseRepository;
+            _localizer = localizer;
         }
 
         // =====================================================
@@ -150,7 +156,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "A quiz with this title already exists in this course.");
+                    _localizer["DuplicateQuizTitle"]);
 
                 await PrepareCreateView(
                     model,
@@ -177,14 +183,14 @@ namespace Training_Platform.Areas.Trainer.Controllers
                     cancellationToken) > 0)
             {
                 TempData["Success"] =
-                    "Quiz created successfully.";
+                    _localizer["QuizCreatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Index));
             }
 
             TempData["Error"] =
-                "Something went wrong while creating the quiz.";
+                _localizer["QuizCreateFailed"].ToString();
 
             await PrepareCreateView(
                 model,
@@ -321,7 +327,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "A quiz with this title already exists in this course.");
+                    _localizer["DuplicateQuizTitle"]);
 
                 ViewBag.Course = quiz.Course;
 
@@ -338,7 +344,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
                     cancellationToken) > 0)
             {
                 TempData["Success"] =
-                    "Quiz updated successfully.";
+                    _localizer["QuizUpdatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Details),
@@ -346,7 +352,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             }
 
             TempData["Error"] =
-                "Something went wrong while updating the quiz.";
+                _localizer["QuizUpdateFailed"].ToString();
 
             ViewBag.Course = quiz.Course;
 
@@ -385,12 +391,12 @@ namespace Training_Platform.Areas.Trainer.Controllers
                     cancellationToken) > 0)
             {
                 TempData["Success"] =
-                    "Quiz and its related data were deleted successfully.";
+                    _localizer["QuizDeletedSuccess"].ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong while deleting the quiz.";
+                    _localizer["QuizDeleteFailed"].ToString();
             }
 
             return RedirectToAction(

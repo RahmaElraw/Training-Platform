@@ -37,4 +37,5 @@
   <data name="False" xml:space="preserve"><value>خطأ</value></data>
   <data name="EnterOptionPlaceholder" xml:space="preserve"><value>أدخل الخيار...</value></data>
   <data name="CorrectAnswer" xml:space="preserve"><value>إجابة صحيحة</value></data>
+<data name="DeleteOptionConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد حذف هذا الخيار؟</value></data>
 </root>

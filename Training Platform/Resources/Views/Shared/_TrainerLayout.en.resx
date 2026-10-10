@@ -30,4 +30,46 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="TrainerDashboardTitle" xml:space="preserve">
+    <value>Trainer | Dashboard</value>
+  </data>
+  <data name="TrainerBrand" xml:space="preserve">
+    <value>Trainer</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="Quizzes" xml:space="preserve">
+    <value>Quizzes</value>
+  </data>
+  <data name="TraineesProgress" xml:space="preserve">
+    <value>Trainees Progress</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Mark all as read</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>NEW</value>
+  </data>
+  <data name="NoNotification" xml:space="preserve">
+    <value>No notification</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>Instagram</value>
+  </data>
+  <data name="Linkedin" xml:space="preserve">
+    <value>Linkedin</value>
+  </data>
 </root>

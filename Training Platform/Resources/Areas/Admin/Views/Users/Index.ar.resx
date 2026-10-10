@@ -29,4 +29,10 @@
   <data name="MakeDeactivate" xml:space="preserve"><value>تعطيل</value></data>
   <data name="MakeActivate" xml:space="preserve"><value>تفعيل</value></data>
   <data name="NoUsersFound" xml:space="preserve"><value>لم يتم العثور على مستخدمين.</value></data>
+<data name="DeactivateUserConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد إلغاء تفعيل هذا المستخدم؟</value></data>
+  <data name="ActivateUserConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد تفعيل هذا المستخدم؟</value></data>
+<data name="Clear" xml:space="preserve"><value>مسح</value></data>
+  <data name="NoRole" xml:space="preserve"><value>بدون دور</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+  <data name="UsersPagination" xml:space="preserve"><value>ترقيم صفحات المستخدمين</value></data>
 </root>

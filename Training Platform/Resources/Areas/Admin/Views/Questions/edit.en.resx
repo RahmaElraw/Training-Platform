@@ -37,4 +37,5 @@
   <data name="False" xml:space="preserve"><value>False</value></data>
   <data name="EnterOptionPlaceholder" xml:space="preserve"><value>Enter option...</value></data>
   <data name="CorrectAnswer" xml:space="preserve"><value>Correct Answer</value></data>
+<data name="DeleteOptionConfirm" xml:space="preserve"><value>Are you sure you want to delete this option?</value></data>
 </root>

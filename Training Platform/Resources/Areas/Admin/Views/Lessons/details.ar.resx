@@ -27,4 +27,6 @@
   <data name="OpenMaterial" xml:space="preserve"><value>فتح المادة</value></data>
   <data name="NoCourseMaterialsYet" xml:space="preserve"><value>لم يتم إضافة مواد الكورس بعد.</value></data>
   <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+<data name="DeleteMaterialConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد حذف هذا الملف التعليمي؟</value></data>
+<data name="Close" xml:space="preserve"><value>إغلاق</value></data>
 </root>

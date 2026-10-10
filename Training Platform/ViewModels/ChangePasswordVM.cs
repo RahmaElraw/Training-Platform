@@ -16,7 +16,7 @@
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm New Password")]
-        [Compare(nameof(NewPassword), ErrorMessage = "New password and confirmation password do not match.")]
+        [Compare(nameof(NewPassword), ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = "'{0}' and '{1}' do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

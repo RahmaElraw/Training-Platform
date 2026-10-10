@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TrainerDashboard" xml:space="preserve"><value>Trainer Dashboard</value></data>
+  <data name="TrainerPanel" xml:space="preserve"><value>TRAINER PANEL</value></data>
+  <data name="WelcomeBackTrainer" xml:space="preserve"><value>Welcome back, Trainer 👋</value></data>
+  <data name="DashboardSubtitle" xml:space="preserve"><value>Here's an overview of your courses and trainees.</value></data>
+  <data name="MyCourses" xml:space="preserve"><value>My Courses</value></data>
+  <data name="CoursesAssignedToYou" xml:space="preserve"><value>Courses assigned to you</value></data>
+  <data name="PublishedCourses" xml:space="preserve"><value>Published Courses</value></data>
+  <data name="AvailableCourses" xml:space="preserve"><value>Available courses</value></data>
+  <data name="TotalTrainees" xml:space="preserve"><value>Total Trainees</value></data>
+  <data name="EnrolledTrainees" xml:space="preserve"><value>Enrolled trainees</value></data>
+  <data name="MyQuizzes" xml:space="preserve"><value>My Quizzes</value></data>
+  <data name="CreatedQuizzes" xml:space="preserve"><value>Created quizzes</value></data>
+  <data name="QuickActions" xml:space="preserve"><value>Quick Actions</value></data>
+  <data name="QuickActionsSubtitle" xml:space="preserve"><value>Quick access to your trainer tools.</value></data>
+  <data name="ViewYourCourses" xml:space="preserve"><value>View your courses</value></data>
+  <data name="ManageYourQuizzes" xml:space="preserve"><value>Manage your quizzes</value></data>
+  <data name="TraineeProgress" xml:space="preserve"><value>Trainee Progress</value></data>
+  <data name="TrackTraineeProgress" xml:space="preserve"><value>Track trainee progress</value></data>
+  <data name="EnrollmentProgress" xml:space="preserve"><value>Enrollment Progress</value></data>
+  <data name="OverallTraineeProgress" xml:space="preserve"><value>Overall trainee progress</value></data>
+  <data name="Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="InProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="TraineesPerCourse" xml:space="preserve"><value>Trainees per Course</value></data>
+  <data name="TraineesPerCourseSubtitle" xml:space="preserve"><value>Number of trainees enrolled in each course.</value></data>
+  <data name="CompletedEnrollments" xml:space="preserve"><value>Completed Enrollments</value></data>
+  <data name="CertificatesIssued" xml:space="preserve"><value>Certificates Issued</value></data>
+  <data name="RecentCourses" xml:space="preserve"><value>Recent Courses</value></data>
+  <data name="RecentCoursesSubtitle" xml:space="preserve"><value>Your recently created courses.</value></data>
+  <data name="ViewAll" xml:space="preserve"><value>View All</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Trainees" xml:space="preserve"><value>Trainees</value></data>
+  <data name="Created" xml:space="preserve"><value>Created</value></data>
+  <data name="Action" xml:space="preserve"><value>Action</value></data>
+  <data name="Published" xml:space="preserve"><value>Published</value></data>
+  <data name="Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="ViewCourse" xml:space="preserve"><value>View Course</value></data>
+  <data name="NoCoursesYet" xml:space="preserve"><value>No Courses Yet</value></data>
+  <data name="NoCoursesYetSubtitle" xml:space="preserve"><value>You don't have any courses assigned to you yet.</value></data>
+  <data name="GoToCourses" xml:space="preserve"><value>Go to Courses</value></data>
+  <data name="Enrollment" xml:space="preserve"><value>Enrollment</value></data>
+  <data name="Enrollments" xml:space="preserve"><value>Enrollments</value></data>
+</root>

@@ -1,4 +1,6 @@
-﻿namespace Training_Platform.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Training_Platform.ViewModels
 {
     public class TrainerHomeVM
     {
@@ -39,8 +41,10 @@
     {
         public int Id { get; set; }
 
+        [Display(Name = "Title")]
         public string Title { get; set; } = string.Empty;
 
+        [Display(Name = "Is Published")]
         public bool IsPublished { get; set; }
 
         public DateTime CreatedAt { get; set; }

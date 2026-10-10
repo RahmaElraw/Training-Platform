@@ -29,4 +29,10 @@
   <data name="MakeDeactivate" xml:space="preserve"><value>Make Deactivate</value></data>
   <data name="MakeActivate" xml:space="preserve"><value>Make Activate</value></data>
   <data name="NoUsersFound" xml:space="preserve"><value>No Users Found.</value></data>
+<data name="DeactivateUserConfirm" xml:space="preserve"><value>Are you sure you want to deactivate this user?</value></data>
+  <data name="ActivateUserConfirm" xml:space="preserve"><value>Are you sure you want to activate this user?</value></data>
+<data name="Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="NoRole" xml:space="preserve"><value>No Role</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="UsersPagination" xml:space="preserve"><value>Users pagination</value></data>
 </root>

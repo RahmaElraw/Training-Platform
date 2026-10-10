@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -11,17 +12,20 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Enrollment> _enrollmentRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<ApplicationUser> _userRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
         public EnrollmentsController(
             IRepository<Enrollment> enrollmentRepository,
             IRepository<Course> courseRepository,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _enrollmentRepository = enrollmentRepository;
             _courseRepository = courseRepository;
             _userRepository = userRepository;
+            _localizer = localizer;
         }
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -96,7 +100,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.UserId),
-                    "Selected user does not exist.");
+                    _localizer["SelectedUserDoesNotExist"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -109,7 +113,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -123,7 +127,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     string.Empty,
-                    "This user is already enrolled in this course.");
+                    _localizer["UserAlreadyEnrolledInCourse"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -148,14 +152,15 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _enrollmentRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Enrollment created successfully.";
+                    _localizer["EnrollmentCreatedSuccessfully"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadEnrollmentData(model);
 
@@ -217,7 +222,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.UserId),
-                    "Selected user does not exist.");
+                    _localizer["SelectedUserDoesNotExist"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -229,7 +234,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -244,7 +249,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     string.Empty,
-                    "This user is already enrolled in this course.");
+                    _localizer["UserAlreadyEnrolledInCourse"]);
 
                 await LoadEnrollmentData(model);
                 return View(model);
@@ -270,14 +275,15 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _enrollmentRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Enrollment updated successfully.";
+                    _localizer["EnrollmentUpdatedSuccessfully"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadEnrollmentData(model);
 
@@ -301,12 +307,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _enrollmentRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Enrollment deleted successfully.";
+                    _localizer["EnrollmentDeletedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong.";
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
 

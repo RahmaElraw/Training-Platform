@@ -2,7 +2,7 @@
 @model Quiz
 
 @{
-    ViewData["Title"] = "Quiz Details";
+    ViewData["Title"] = @Localizer["PageTitle"];
 
     var questions = Model.Questions?
         .OrderBy(q => q.Id)
@@ -26,11 +26,11 @@
         <div>
             <h2 class="fw-bold mb-1">
                 <i class="bi bi-clipboard-check me-2"></i>
-                Quiz Details
+                @Localizer["PageTitle"]
             </h2>
 
             <p class="text-muted mb-0">
-                View quiz information, questions, and trainee results.
+                @Localizer["PageSubtitle"]
             </p>
         </div>
 
@@ -41,7 +41,7 @@
                class="btn btn-primary">
 
                 <i class="bi bi-pencil me-1"></i>
-                Edit
+                @Localizer["Edit"]
 
             </a>
 
@@ -49,7 +49,7 @@
                class="btn btn-outline-secondary">
 
                 <i class="bi bi-arrow-left me-1"></i>
-                Back to Quizzes
+                @Localizer["BackToQuizzes"]
 
             </a>
 
@@ -66,7 +66,7 @@
 
             <h5 class="mb-0 fw-semibold">
                 <i class="bi bi-info-circle me-2"></i>
-                Quiz Information
+                @Localizer["QuizInformation"]
             </h5>
 
         </div>
@@ -79,7 +79,7 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Quiz Title
+                        @Localizer["QuizTitle"]
                     </div>
 
                     <div class="fw-semibold fs-5">
@@ -93,11 +93,11 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Course
+                        @Localizer["Course"]
                     </div>
 
                     <div class="fw-semibold">
-                        @(Model.Course?.Title ?? "Unknown Course")
+                        @(Model.Course?.Title ?? Localizer["UnknownCourse"].Value)
                     </div>
 
                 </div>
@@ -107,7 +107,7 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Passing Score
+                        @Localizer["PassingScore"]
                     </div>
 
                     <div class="fw-semibold">
@@ -121,11 +121,11 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Time Limit
+                        @Localizer["TimeLimit"]
                     </div>
 
                     <div class="fw-semibold">
-                        @Model.TimeLimit minutes
+                        @Model.TimeLimit @Localizer["Minutes"]
                     </div>
 
                 </div>
@@ -135,7 +135,7 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Questions
+                        @Localizer["Questions"]
                     </div>
 
                     <div class="fw-semibold">
@@ -149,7 +149,7 @@
                 <div class="col-md-4">
 
                     <div class="text-muted small mb-1">
-                        Total Marks
+                        @Localizer["TotalMarks"]
                     </div>
 
                     <div class="fw-semibold">
@@ -177,11 +177,11 @@
 
                     <h5 class="mb-1 fw-semibold">
                         <i class="bi bi-question-circle me-2"></i>
-                        Questions
+                        @Localizer["Questions"]
                     </h5>
 
                     <small class="text-muted">
-                        Manage questions for this quiz.
+                        @Localizer["QuestionsSubtitle"]
                     </small>
 
                 </div>
@@ -194,7 +194,7 @@
                    class="btn btn-primary btn-sm">
 
                     <i class="bi bi-plus-lg me-1"></i>
-                    Add Question
+                    @Localizer["AddQuestion"]
 
                 </a>
 
@@ -220,19 +220,19 @@
                                 </th>
 
                                 <th>
-                                    Question
+                                    @Localizer["Question"]
                                 </th>
 
                                 <th style="width:100px;">
-                                    Mark
+                                    @Localizer["Mark"]
                                 </th>
 
                                 <th style="width:170px;">
-                                    Type
+                                    @Localizer["Type"]
                                 </th>
 
                                 <th class="text-end pe-4" style="width:180px;">
-                                    Actions
+                                    @Localizer["Actions"]
                                 </th>
 
                             </tr>
@@ -275,13 +275,13 @@
                                             QuestionType.MultipleChoice)
                                         {
                                             <span class="badge bg-primary-subtle text-primary">
-                                                Multiple Choice
+                                                @Localizer["MultipleChoice"]
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="badge bg-success-subtle text-success">
-                                                True / False
+                                                @Localizer["TrueFalse"]
                                             </span>
                                         }
 
@@ -297,7 +297,7 @@
                                                asp-action="Details"
                                                asp-route-id="@question.Id"
                                                class="btn btn-sm btn-outline-info"
-                                               title="View Details">
+                                               title="@Localizer["ViewDetails"]">
 
                                                 <i class="bi bi-eye"></i>
 
@@ -310,7 +310,7 @@
                                                asp-action="Edit"
                                                asp-route-id="@question.Id"
                                                class="btn btn-sm btn-outline-primary"
-                                               title="Edit Question">
+                                               title="@Localizer["EditQuestion"]">
 
                                                 <i class="bi bi-pencil"></i>
 
@@ -325,13 +325,13 @@
                                                   asp-route-quizId="@Model.Id"
                                                   method="post"
                                                   class="d-inline"
-                                                  onsubmit="return confirm('Are you sure you want to delete this question?');">
+                                                  onsubmit="return confirm('@Localizer["DeleteQuestionConfirm"]');">
 
                                                 @Html.AntiForgeryToken()
 
                                                 <button type="submit"
                                                         class="btn btn-sm btn-outline-danger"
-                                                        title="Delete Question">
+                                                        title="@Localizer["DeleteQuestion"]">
 
                                                     <i class="bi bi-trash"></i>
 
@@ -363,11 +363,11 @@
                     <i class="bi bi-question-circle display-4 text-muted"></i>
 
                     <h5 class="mt-3">
-                        No Questions Yet
+                        @Localizer["NoQuestionsYet"]
                     </h5>
 
                     <p class="text-muted mb-4">
-                        This quiz does not have any questions yet.
+                        @Localizer["NoQuestionsInQuiz"]
                     </p>
 
                     <a asp-area="Trainer"
@@ -377,7 +377,7 @@
                        class="btn btn-primary">
 
                         <i class="bi bi-plus-lg me-1"></i>
-                        Add First Question
+                        @Localizer["AddFirstQuestion"]
 
                     </a>
 
@@ -397,11 +397,11 @@
 
             <h5 class="mb-1 fw-semibold">
                 <i class="bi bi-bar-chart-line me-2"></i>
-                Quiz Results
+                @Localizer["QuizResults"]
             </h5>
 
             <small class="text-muted">
-                Results submitted by trainees.
+                @Localizer["ResultsSubtitle"]
             </small>
 
         </div>
@@ -420,19 +420,19 @@
                             <tr>
 
                                 <th class="ps-4">
-                                    Trainee
+                                    @Localizer["Trainee"]
                                 </th>
 
                                 <th>
-                                    Score
+                                    @Localizer["Score"]
                                 </th>
 
                                 <th>
-                                    Status
+                                    @Localizer["Status"]
                                 </th>
 
                                 <th>
-                                    Submitted At
+                                    @Localizer["SubmittedAt"]
                                 </th>
 
                             </tr>
@@ -448,7 +448,7 @@
                                     <td class="ps-4">
 
                                         <div class="fw-semibold">
-                                            @(result.User?.UserName ?? "Unknown")
+                                            @(result.User?.UserName ?? Localizer["UnknownUser"].Value)
                                         </div>
 
                                     </td>
@@ -466,13 +466,13 @@
                                         @if (result.IsPassed)
                                         {
                                             <span class="badge bg-success">
-                                                Passed
+                                                @Localizer["Passed"]
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="badge bg-danger">
-                                                Failed
+                                                @Localizer["Failed"]
                                             </span>
                                         }
 
@@ -504,11 +504,11 @@
                     <i class="bi bi-bar-chart display-4 text-muted"></i>
 
                     <h5 class="mt-3">
-                        No Results Yet
+                        @Localizer["NoResultsYet"]
                     </h5>
 
                     <p class="text-muted mb-0">
-                        No trainees have submitted this quiz yet.
+                        @Localizer["NoTraineesSubmitted"]
                     </p>
 
                 </div>

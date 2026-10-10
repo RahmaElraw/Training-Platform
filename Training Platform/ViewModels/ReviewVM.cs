@@ -16,12 +16,15 @@ namespace Training_Platform.ViewModels
 
         public DateTime CreatedAt { get; set; }
 
+        [Display(Name = "Course Id")]
         public int CourseId { get; set; }
 
+        [Display(Name = "User Id")]
         public string UserId { get; set; } = string.Empty;
 
         public string CourseTitle { get; set; } = string.Empty;
 
+        [Display(Name = "User Name")]
         public string UserName { get; set; } = string.Empty;
     }
 }

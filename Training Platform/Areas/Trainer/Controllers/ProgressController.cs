@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
+
     public class ProgressController : Controller
     {
         private readonly IProgressRepository _progressRepository;

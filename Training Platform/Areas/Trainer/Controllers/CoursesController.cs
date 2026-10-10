@@ -3,6 +3,8 @@
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
+
     public class CoursesController : Controller
     {
         private readonly IRepository<Course> _courseRepository;

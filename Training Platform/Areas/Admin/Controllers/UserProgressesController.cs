@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using System.Linq.Expressions;
 
 namespace Training_Platform.Areas.Admin.Controllers
@@ -12,15 +13,18 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<UserProgress> _userProgressRepository;
         private readonly IRepository<Lesson> _lessonRepository;
         private readonly IRepository<Course> _courseRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public UserProgressesController(
             IRepository<UserProgress> userProgressRepository,
             IRepository<Lesson> lessonRepository,
-            IRepository<Course> courseRepository)
+            IRepository<Course> courseRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _userProgressRepository = userProgressRepository;
             _lessonRepository = lessonRepository;
             _courseRepository = courseRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -101,12 +105,14 @@ namespace Training_Platform.Areas.Admin.Controllers
                         UserId = g.Key.UserId,
 
                         UserName =
-                            g.Key.UserName ?? "Unknown User",
+                            g.Key.UserName
+                            ?? _localizer["UnknownUser"].ToString(),
 
                         CourseId = courseId,
 
                         CourseTitle =
-                            course?.Title ?? "Unknown Course",
+                            course?.Title
+                            ?? _localizer["UnknownCourse"].ToString(),
 
                         TotalLessons = totalLessons,
 

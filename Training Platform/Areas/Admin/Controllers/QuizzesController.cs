@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -10,15 +11,18 @@ namespace Training_Platform.Areas.Admin.Controllers
     {
         private readonly IRepository<Quiz> _quizRepository;
         private readonly IRepository<Course> _courseRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
         public QuizzesController(
             IRepository<Quiz> quizRepository,
-            IRepository<Course> courseRepository)
+            IRepository<Course> courseRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _quizRepository = quizRepository;
             _courseRepository = courseRepository;
+            _localizer = localizer;
         }
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -97,7 +101,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadQuizData(model);
                 return View(model);
@@ -116,7 +120,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "A quiz with this title already exists in this course.");
+                    _localizer["QuizTitleAlreadyExistsInCourse"]);
 
                 await LoadQuizData(model);
                 return View(model);
@@ -141,14 +145,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _quizRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Quiz created successfully.";
+                    _localizer["QuizCreatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadQuizData(model);
 
@@ -209,7 +213,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadQuizData(model);
                 return View(model);
@@ -229,7 +233,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "A quiz with this title already exists in this course.");
+                    _localizer["QuizTitleAlreadyExistsInCourse"]);
 
                 await LoadQuizData(model);
                 return View(model);
@@ -255,14 +259,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _quizRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Quiz updated successfully.";
+                    _localizer["QuizUpdatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
             await LoadQuizData(model);
 
@@ -285,12 +289,12 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData["Success"] =
-                    "Quiz and all related questions, options, and results deleted successfully.";
+                    _localizer["QuizDeletedSuccessfully"].ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong while deleting the quiz.";
+                    _localizer["SomethingWentWrongDeletingQuiz"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

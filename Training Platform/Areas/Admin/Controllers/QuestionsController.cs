@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -11,17 +12,20 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<Quiz> _quizRepository;
         private readonly IRepository<QuestionOption> _questionOptionRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
         public QuestionsController(
             IRepository<Question> questionRepository,
             IRepository<Quiz> quizRepository,
-            IRepository<QuestionOption> questionOptionRepository)
+            IRepository<QuestionOption> questionOptionRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _questionRepository = questionRepository;
             _quizRepository = quizRepository;
             _questionOptionRepository = questionOptionRepository;
+            _localizer = localizer;
         }
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -115,7 +119,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuizId),
-                    "Selected quiz does not exist.");
+                    _localizer["SelectedQuizDoesNotExist"]);
 
                 return await ReturnCreateView(model);
             }
@@ -128,7 +132,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Please add at least one option.");
+                    _localizer["PleaseAddAtLeastOneOption"]);
 
                 return await ReturnCreateView(model);
             }
@@ -148,7 +152,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Question options cannot be duplicated.");
+                    _localizer["QuestionOptionsCannotBeDuplicated"]);
 
                 return await ReturnCreateView(model);
             }
@@ -160,7 +164,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Please select one correct answer.");
+                    _localizer["PleaseSelectOneCorrectAnswer"]);
 
                 return await ReturnCreateView(model);
             }
@@ -171,7 +175,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "Multiple choice questions must have at least two options.");
+                        _localizer[
+                            "MultipleChoiceNeedsAtLeastTwoOptions"]);
 
                     return await ReturnCreateView(model);
                 }
@@ -180,7 +185,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "Multiple choice questions can have only one correct answer.");
+                        _localizer[
+                            "MultipleChoiceCanHaveOnlyOneCorrectAnswer"]);
 
                     return await ReturnCreateView(model);
                 }
@@ -193,7 +199,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "True/False questions must have exactly two options.");
+                        _localizer["TrueFalseMustHaveExactlyTwoOptions"]);
 
                     return await ReturnCreateView(model);
                 }
@@ -213,7 +219,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "True/False questions can only have True and False options.");
+                        _localizer[
+                            "TrueFalseOnlyTrueAndFalseOptions"]);
 
                     return await ReturnCreateView(model);
                 }
@@ -234,16 +241,16 @@ namespace Training_Platform.Areas.Admin.Controllers
                 if (!hasTrue || !hasFalse)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionOptions),
-                        "True/False questions must contain both True and False.");
+                    nameof(model.QuestionOptions),
+                    _localizer["TrueFalseMustContainBothTrueAndFalse"]);
 
                     return await ReturnCreateView(model);
                 }
                 if (correctAnswers != 1)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionOptions),
-                        "True/False questions must have exactly one correct answer.");
+                    nameof(model.QuestionOptions),
+                    _localizer["TrueFalseExactlyOneCorrectAnswer"]);
 
                     return await ReturnCreateView(model);
                 }
@@ -273,7 +280,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (questionResult <= 0)
             {
                 TempData["error"] =
-                    "Something went wrong while creating the question.";
+                    _localizer["SomethingWentWrongCreatingQuestion"]
+                        .ToString();
 
                 return await ReturnCreateView(model);
             }
@@ -302,7 +310,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (optionResult <= 0)
             {
                 TempData["error"] =
-                    "Question was created, but something went wrong while saving the options.";
+                    _localizer["QuestionCreatedOptionsFailed"].ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -311,7 +319,8 @@ namespace Training_Platform.Areas.Admin.Controllers
 
 
             TempData["success"] =
-                "Question and options created successfully.";
+                _localizer["QuestionAndOptionsCreatedSuccessfully"]
+                    .ToString();
 
 
             return RedirectToAction(nameof(Index));
@@ -400,7 +409,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuizId),
-                    "Selected quiz does not exist.");
+                    _localizer["SelectedQuizDoesNotExist"]);
 
                 await LoadQuestionData(model);
                 return View(model);
@@ -414,7 +423,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Please add at least one option.");
+                    _localizer["PleaseAddAtLeastOneOption"]);
 
                 await LoadQuestionData(model);
                 return View(model);
@@ -435,7 +444,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Question options cannot be duplicated.");
+                    _localizer["QuestionOptionsCannotBeDuplicated"]);
 
                 await LoadQuestionData(model);
                 return View(model);
@@ -448,7 +457,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.QuestionOptions),
-                    "Please select one correct answer.");
+                    _localizer["PleaseSelectOneCorrectAnswer"]);
 
                 await LoadQuestionData(model);
                 return View(model);
@@ -459,7 +468,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "Multiple choice questions must have at least two options.");
+                        _localizer[
+                            "MultipleChoiceNeedsAtLeastTwoOptions"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -469,7 +479,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "Multiple choice questions must have exactly one correct answer.");
+                        _localizer[
+                            "MultipleChoiceMustHaveExactlyOneCorrectAnswer"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -482,7 +493,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "True/False questions must have exactly two options.");
+                        _localizer["TrueFalseMustHaveExactlyTwoOptions"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -501,7 +512,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.QuestionOptions),
-                        "True/False questions can only contain True and False options.");
+                        _localizer[
+                            "TrueFalseOnlyTrueAndFalseOptions"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -520,8 +532,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 if (!hasTrue || !hasFalse)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionOptions),
-                        "True/False questions must contain both True and False.");
+                    nameof(model.QuestionOptions),
+                    _localizer["TrueFalseMustContainBothTrueAndFalse"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -530,8 +542,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 if (correctAnswers != 1)
                 {
                     ModelState.AddModelError(
-                        nameof(model.QuestionOptions),
-                        "True/False questions must have exactly one correct answer.");
+                    nameof(model.QuestionOptions),
+                    _localizer["TrueFalseExactlyOneCorrectAnswer"]);
 
                     await LoadQuestionData(model);
                     return View(model);
@@ -584,13 +596,15 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData["success"] =
-                    "Question and options updated successfully.";
+                    _localizer["QuestionAndOptionsUpdatedSuccessfully"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
             TempData["error"] =
-                "Something went wrong while updating the question.";
+                _localizer["SomethingWentWrongUpdatingQuestion"]
+                    .ToString();
 
             await LoadQuestionData(model);
 
@@ -613,12 +627,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData["success"] =
-                    "Question and its options deleted successfully.";
+                    _localizer["QuestionAndOptionsDeletedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData["error"] =
-                    "Something went wrong while deleting the question.";
+                    _localizer["SomethingWentWrongDeletingQuestion"]
+                        .ToString();
             }
 
             return RedirectToAction(nameof(Index));
@@ -650,7 +666,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["Error"] =
-                    "Please enter valid option data.";
+                    _localizer["PleaseEnterValidOptionData"].ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -661,7 +677,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (string.IsNullOrWhiteSpace(model.OptionText))
             {
                 TempData["Error"] =
-                    "Option text is required.";
+                    _localizer["OptionTextRequired"].ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -695,7 +711,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (duplicateOption)
             {
                 TempData["Error"] =
-                    "This option already exists.";
+                    _localizer["OptionAlreadyExists"].ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -707,7 +723,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 if (question.QuestionOptions.Count >= 2)
                 {
                     TempData["Error"] =
-                        "True/False questions can only have two options.";
+                        _localizer["TrueFalseOnlyTwoOptions"].ToString();
 
                     return RedirectToAction(
                         nameof(Edit),
@@ -728,7 +744,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 if (!validTrueFalse)
                 {
                     TempData["Error"] =
-                        "True/False questions can only have True or False options.";
+                        _localizer["TrueFalseOnlyTrueOrFalseOptions"]
+                            .ToString();
 
                     return RedirectToAction(
                         nameof(Edit),
@@ -741,7 +758,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                         o.IsCorrect))
                 {
                     TempData["Error"] =
-                        "A True/False question can have only one correct answer.";
+                        _localizer["TrueFalseQuestionOnlyOneCorrectAnswer"]
+                            .ToString();
 
                     return RedirectToAction(
                         nameof(Edit),
@@ -756,7 +774,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                         o.IsCorrect))
                 {
                     TempData["Error"] =
-                        "This question can have only one correct answer.";
+                        _localizer["QuestionOnlyOneCorrectAnswer"]
+                            .ToString();
 
                     return RedirectToAction(
                         nameof(Edit),
@@ -782,12 +801,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _questionOptionRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Question option added successfully.";
+                    _localizer["QuestionOptionAddedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong.";
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
 
@@ -838,7 +858,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OptionText),
-                    "Option text is required.");
+                    _localizer["OptionTextRequired"]);
 
                 return View(model);
             }
@@ -885,7 +905,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OptionText),
-                    "This option already exists.");
+                    _localizer["OptionAlreadyExists"]);
 
                 return View(model);
             }
@@ -906,7 +926,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.OptionText),
-                        "True/False questions can only have True or False options.");
+                        _localizer[
+                            "TrueFalseOnlyTrueOrFalseOptions"]);
 
                     return View(model);
                 }
@@ -919,7 +940,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.IsCorrect),
-                        "A True/False question can have only one correct answer.");
+                        _localizer[
+                            "TrueFalseQuestionOnlyOneCorrectAnswer"]);
 
                     return View(model);
                 }
@@ -934,7 +956,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(model.IsCorrect),
-                        "This question can have only one correct answer.");
+                        _localizer[
+                            "QuestionOnlyOneCorrectAnswer"]);
 
                     return View(model);
                 }
@@ -952,7 +975,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (await _questionOptionRepository.CommitAsync() > 0)
             {
                 TempData["Success"] =
-                    "Question option updated successfully.";
+                    _localizer["QuestionOptionUpdatedSuccessfully"]
+                        .ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -961,7 +985,7 @@ namespace Training_Platform.Areas.Admin.Controllers
 
 
             TempData["Error"] =
-                "Something went wrong.";
+                _localizer["SomethingWentWrong"].ToString();
 
 
             return View(model);
@@ -991,7 +1015,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (question.QuestionOptions.Count <= 1)
             {
                 TempData["error"] =
-                    "A question must have at least one option.";
+                    _localizer["QuestionMustHaveAtLeastOneOption"]
+                        .ToString();
 
                 return RedirectToAction(
                     nameof(Edit),
@@ -1005,12 +1030,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData["success"] =
-                    "Question option deleted successfully.";
+                    _localizer["QuestionOptionDeletedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData["error"] =
-                    "Something went wrong while deleting the option.";
+                    _localizer["SomethingWentWrongDeletingOption"]
+                        .ToString();
             }
 
             return RedirectToAction(

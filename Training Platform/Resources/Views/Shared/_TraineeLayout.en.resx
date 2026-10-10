@@ -29,4 +29,5 @@
   <data name="ProfileAndAccount" xml:space="preserve"><value>Profile &amp; account</value></data>
   <data name="SwitchToLightTheme" xml:space="preserve"><value>Switch to light theme</value></data>
   <data name="SwitchToDarkTheme" xml:space="preserve"><value>Switch to dark theme</value></data>
+<data name="New" xml:space="preserve"><value>NEW</value></data>
 </root>

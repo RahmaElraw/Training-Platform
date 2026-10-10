@@ -30,4 +30,5 @@
   <data name="Url" xml:space="preserve"><value>URL</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="SaveChanges" xml:space="preserve"><value>Save Changes</value></data>
+<data name="DeleteMaterialConfirm" xml:space="preserve"><value>Are you sure you want to delete this material?</value></data>
 </root>

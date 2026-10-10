@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 
 namespace Training_Platform.Areas.Admin.Controllers
@@ -11,15 +12,18 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public HomeController(
             IRepository<Category> categoryRepository,
             IRepository<Course> courseRepository,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IStringLocalizer<SharedResource> localizer)
         {
             _categoryRepository = categoryRepository;
             _courseRepository = courseRepository;
             _userManager = userManager;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index()

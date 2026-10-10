@@ -276,7 +276,7 @@
                                 </div>
                                 <div class="scrollbar-overlay" style="max-height:19rem">
                                     <div class="list-group list-group-flush fw-normal fs--1">
-                                        <div class="list-group-title border-bottom">NEW</div>
+                                        <div class="list-group-title border-bottom">@Localizer["New"]</div>
                                         <!-- Notification Items -->
                                         <div class="list-group-item">
                                             <a class="notification notification-flush notification-unread" href="#!">
@@ -394,6 +394,8 @@
             });
         });
 </script>
+
+@await Html.PartialAsync("~/Views/Shared/_PasswordToggle.cshtml")
 
 @RenderSection("Scripts", required: false)
 </body>

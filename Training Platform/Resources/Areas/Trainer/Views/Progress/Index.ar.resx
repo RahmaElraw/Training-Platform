@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TraineeProgress" xml:space="preserve"><value>تقدم المتدربين</value></data>
+  <data name="TrackProgressDescription" xml:space="preserve"><value>تابع تقدم المتدربين المسجلين في دوراتك.</value></data>
+  <data name="BackToDashboard" xml:space="preserve"><value>العودة إلى لوحة التحكم</value></data>
+  <data name="FilterByCourse" xml:space="preserve"><value>تصفية حسب الدورة</value></data>
+  <data name="AllCourses" xml:space="preserve"><value>جميع الدورات</value></data>
+  <data name="Filter" xml:space="preserve"><value>تصفية</value></data>
+  <data name="Reset" xml:space="preserve"><value>إعادة تعيين</value></data>
+  <data name="TotalEnrollments" xml:space="preserve"><value>إجمالي التسجيلات</value></data>
+  <data name="Completed" xml:space="preserve"><value>مكتمل</value></data>
+  <data name="InProgress" xml:space="preserve"><value>قيد التنفيذ</value></data>
+  <data name="AverageProgress" xml:space="preserve"><value>متوسط التقدم</value></data>
+  <data name="ProgressDescription" xml:space="preserve"><value>تقدم المتدربين في دوراتك</value></data>
+  <data name="Records" xml:space="preserve"><value>سجل</value></data>
+  <data name="NoTraineeProgress" xml:space="preserve"><value>لا يوجد تقدم للمتدربين</value></data>
+  <data name="NoTraineesEnrolled" xml:space="preserve"><value>لا يوجد حاليًا متدربون مسجلون في دوراتك.</value></data>
+  <data name="Trainee" xml:space="preserve"><value>المتدرب</value></data>
+  <data name="Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="Course" xml:space="preserve"><value>الدورة</value></data>
+  <data name="Progress" xml:space="preserve"><value>التقدم</value></data>
+  <data name="Lessons" xml:space="preserve"><value>الدروس</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+</root>

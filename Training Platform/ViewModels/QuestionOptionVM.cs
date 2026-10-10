@@ -8,8 +8,10 @@ namespace Training_Platform.ViewModels
 
         
         [MaxLength(500)]
+        [Display(Name = "Option Text")]
         public string? OptionText { get; set; } = string.Empty;
 
+        [Display(Name = "Is Correct")]
         public bool IsCorrect { get; set; }
 
         

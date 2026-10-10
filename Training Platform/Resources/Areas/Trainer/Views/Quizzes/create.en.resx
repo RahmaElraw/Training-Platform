@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Create Quiz</value></data>
+  <data name="PageSubtitle" xml:space="preserve"><value>Create a new quiz.</value></data>
+  <data name="BackToCourse" xml:space="preserve"><value>Back to Course</value></data>
+  <data name="BackToDashboard" xml:space="preserve"><value>Back to Dashboard</value></data>
+  <data name="QuizInformation" xml:space="preserve"><value>Quiz Information</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="SelectCourse" xml:space="preserve"><value>-- Select Course --</value></data>
+  <data name="QuizTitle" xml:space="preserve"><value>Quiz Title</value></data>
+  <data name="EnterQuizTitle" xml:space="preserve"><value>Enter quiz title</value></data>
+  <data name="PassingScore" xml:space="preserve"><value>Passing Score</value></data>
+  <data name="TimeLimit" xml:space="preserve"><value>Time Limit</value></data>
+  <data name="Minutes" xml:space="preserve"><value>minutes</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="CreateQuiz" xml:space="preserve"><value>Create Quiz</value></data>
+</root>

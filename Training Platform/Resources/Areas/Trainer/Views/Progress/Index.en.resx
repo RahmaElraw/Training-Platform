@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TraineeProgress" xml:space="preserve"><value>Trainee Progress</value></data>
+  <data name="TrackProgressDescription" xml:space="preserve"><value>Track the progress of trainees enrolled in your courses.</value></data>
+  <data name="BackToDashboard" xml:space="preserve"><value>Back to Dashboard</value></data>
+  <data name="FilterByCourse" xml:space="preserve"><value>Filter by Course</value></data>
+  <data name="AllCourses" xml:space="preserve"><value>All Courses</value></data>
+  <data name="Filter" xml:space="preserve"><value>Filter</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="TotalEnrollments" xml:space="preserve"><value>Total Enrollments</value></data>
+  <data name="Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="InProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="AverageProgress" xml:space="preserve"><value>Average Progress</value></data>
+  <data name="ProgressDescription" xml:space="preserve"><value>Progress of trainees in your courses</value></data>
+  <data name="Records" xml:space="preserve"><value>Records</value></data>
+  <data name="NoTraineeProgress" xml:space="preserve"><value>No trainee progress available</value></data>
+  <data name="NoTraineesEnrolled" xml:space="preserve"><value>There are currently no trainees enrolled in your courses.</value></data>
+  <data name="Trainee" xml:space="preserve"><value>Trainee</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="Progress" xml:space="preserve"><value>Progress</value></data>
+  <data name="Lessons" xml:space="preserve"><value>Lessons</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+</root>

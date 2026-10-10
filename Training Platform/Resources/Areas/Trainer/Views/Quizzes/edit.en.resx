@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Edit Quiz</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="CourseLockedHint" xml:space="preserve"><value>The course cannot be changed after the quiz is created.</value></data>
+  <data name="QuizTitle" xml:space="preserve"><value>Quiz Title</value></data>
+  <data name="EnterQuizTitle" xml:space="preserve"><value>Enter quiz title</value></data>
+  <data name="PassingScorePercent" xml:space="preserve"><value>Passing Score (%)</value></data>
+  <data name="TimeLimitMinutes" xml:space="preserve"><value>Time Limit (minutes)</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Save Changes</value></data>
+  <data name="BackToQuiz" xml:space="preserve"><value>Back to Quiz</value></data>
+<data name="UnknownCourse" xml:space="preserve"><value>Unknown Course</value></data>
+</root>

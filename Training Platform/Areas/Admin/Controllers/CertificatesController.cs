@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -10,13 +11,16 @@ namespace Training_Platform.Areas.Admin.Controllers
     {
         private readonly IRepository<Certificate> _certificateRepository;
         private readonly IRepository<Enrollment> _enrollmentRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public CertificatesController(
             IRepository<Certificate> certificateRepository,
-            IRepository<Enrollment> enrollmentRepository)
+            IRepository<Enrollment> enrollmentRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _certificateRepository = certificateRepository;
             _enrollmentRepository = enrollmentRepository;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(
@@ -220,13 +224,16 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result <= 0)
             {
                 TempData["error_notification"] =
-                    "Something went wrong while updating the certificate link.";
+                    _localizer[
+                        "SomethingWentWrongUpdatingCertificateLink"]
+                        .ToString();
 
                 return View(model);
             }
 
             TempData["success_notification"] =
-                "Certificate link updated successfully.";
+                _localizer["CertificateLinkUpdatedSuccessfully"]
+                    .ToString();
 
             return RedirectToAction(
                 nameof(Details),

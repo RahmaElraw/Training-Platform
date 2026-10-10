@@ -2,7 +2,7 @@
 @model Question
 
 @{
-    ViewData["Title"] = "Question Details";
+    ViewData["Title"] = Localizer["QuestionDetails"].Value;
 }
 
 <div class="container-fluid">
@@ -13,11 +13,11 @@
         <div>
 
             <h2 class="fw-bold">
-                Question Details
+                @Localizer["QuestionDetails"]
             </h2>
 
             <p class="text-muted mb-0">
-                View question information and answers
+                @Localizer["ViewQuestionInfo"]
             </p>
 
         </div>
@@ -28,14 +28,14 @@
                asp-route-id="@Model.Id"
                class="btn btn-primary">
                 <i class="bi bi-pencil"></i>
-                Edit
+                @Localizer["Edit"]
             </a>
 
             <a asp-action="Index"
                asp-route-quizId="@Model.QuizId"
                class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i>
-                Back to Questions
+                @Localizer["BackToQuestions"]
             </a>
 
         </div>
@@ -48,7 +48,7 @@
         <div class="card-header bg-white">
 
             <h5 class="mb-0">
-                Question Information
+                @Localizer["QuestionInformation"]
             </h5>
 
         </div>
@@ -69,17 +69,17 @@
 
                     <div class="mb-3">
 
-                        <strong>Quiz:</strong>
+                        <strong>@Localizer["Quiz"]:</strong>
 
                         <div>
-                            @(Model.Quiz?.Title ?? "N/A")
+                            @(Model.Quiz?.Title ?? Localizer["NA"].Value)
                         </div>
 
                     </div>
 
                     <div class="mb-3">
 
-                        <strong>Type:</strong>
+                        <strong>@Localizer["Type"]:</strong>
 
                         <div class="mt-1">
 
@@ -87,13 +87,13 @@
                                 QuestionType.MultipleChoice)
                             {
                                 <span class="badge bg-primary">
-                                    Multiple Choice
+                                    @Localizer["MultipleChoice"]
                                 </span>
                             }
                             else
                             {
                                 <span class="badge bg-info">
-                                    True / False
+                                    @Localizer["TrueFalse"]
                                 </span>
                             }
 
@@ -103,7 +103,7 @@
 
                     <div>
 
-                        <strong>Mark:</strong>
+                        <strong>@Localizer["Mark"]:</strong>
 
                         <div class="mt-1">
 
@@ -129,7 +129,7 @@
         <div class="card-header bg-white">
 
             <h5 class="mb-0">
-                Answer Options
+                @Localizer["AnswerOptions"]
             </h5>
 
         </div>
@@ -147,8 +147,8 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Option</th>
-                                <th>Correct Answer</th>
+                                <th>@Localizer["Option"]</th>
+                                <th>@Localizer["CorrectAnswer"]</th>
                             </tr>
 
                         </thead>
@@ -177,13 +177,13 @@
                                         {
                                             <span class="badge bg-success">
                                                 <i class="bi bi-check-lg"></i>
-                                                Correct
+                                                @Localizer["Correct"]
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="badge bg-secondary">
-                                                Incorrect
+                                                @Localizer["Incorrect"]
                                             </span>
                                         }
 
@@ -207,7 +207,7 @@
                     <i class="bi bi-list-ul fs-2 text-muted"></i>
 
                     <p class="text-muted mt-2 mb-0">
-                        No options found for this question.
+                        @Localizer["NoOptionsFound"]
                     </p>
 
                 </div>

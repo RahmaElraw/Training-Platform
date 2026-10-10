@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 using QuestionVM = Training_Platform.ViewModels.Trainee.QuestionVM;
@@ -13,17 +14,20 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<QuizResult> _quizResultRepository;
         private readonly IRepository<Enrollment> _enrollmentRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public QuizzesController(
             IRepository<Quiz> quizRepository,
             IRepository<Question> questionRepository,
             IRepository<QuizResult> quizResultRepository,
-            IRepository<Enrollment> enrollmentRepository)
+            IRepository<Enrollment> enrollmentRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
             _quizResultRepository = quizResultRepository;
             _enrollmentRepository = enrollmentRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -252,7 +256,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
                     QuizId = q.Id,
                     QuizTitle = q.Title,
                     CourseId = q.CourseId,
-                    CourseTitle = q.Course?.Title ?? "N/A",
+                    CourseTitle = q.Course?.Title ?? _localizer["NotAvailable"].ToString(),
                     TimeLimitMinutes = q.TimeLimit,
                     PassingScore = q.PassingScore,
                     QuestionCount = q.Questions?.Count ?? 0,

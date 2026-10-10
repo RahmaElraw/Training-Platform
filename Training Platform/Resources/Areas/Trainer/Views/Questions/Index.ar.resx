@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Questions" xml:space="preserve"><value>الأسئلة</value></data>
+  <data name="ManageQuestionsFor" xml:space="preserve"><value>إدارة أسئلة</value></data>
+  <data name="Quiz" xml:space="preserve"><value>الاختبار</value></data>
+  <data name="BackToQuiz" xml:space="preserve"><value>العودة إلى الاختبار</value></data>
+  <data name="AddQuestion" xml:space="preserve"><value>إضافة سؤال</value></data>
+  <data name="QuizQuestions" xml:space="preserve"><value>أسئلة الاختبار</value></data>
+  <data name="Question" xml:space="preserve"><value>السؤال</value></data>
+  <data name="Type" xml:space="preserve"><value>النوع</value></data>
+  <data name="Mark" xml:space="preserve"><value>الدرجة</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="MultipleChoice" xml:space="preserve"><value>اختيار من متعدد</value></data>
+  <data name="TrueFalse" xml:space="preserve"><value>صواب أو خطأ</value></data>
+  <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="DeleteQuestionConfirm" xml:space="preserve"><value>هل أنت متأكد من حذف هذا السؤال؟</value></data>
+  <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+  <data name="NoQuestionsFound" xml:space="preserve"><value>لا توجد أسئلة</value></data>
+  <data name="StartAddingQuestion" xml:space="preserve"><value>ابدأ بإضافة سؤال إلى هذا الاختبار.</value></data>
+</root>

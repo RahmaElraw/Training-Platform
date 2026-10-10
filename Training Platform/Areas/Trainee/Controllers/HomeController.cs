@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using Training_Platform.ViewModels.Trainee;
 
@@ -11,15 +12,18 @@ namespace Training_Platform.Areas.Trainee.Controllers
         private readonly IRepository<Enrollment> _enrollmentRepository;
         private readonly IRepository<Certificate> _certificateRepository;
         private readonly IRepository<UserProgress> _userProgressRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public HomeController(
             IRepository<Enrollment> enrollmentRepository,
             IRepository<Certificate> certificateRepository,
-            IRepository<UserProgress> userProgressRepository)
+            IRepository<UserProgress> userProgressRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _enrollmentRepository = enrollmentRepository;
             _certificateRepository = certificateRepository;
             _userProgressRepository = userProgressRepository;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(
@@ -74,7 +78,7 @@ namespace Training_Platform.Areas.Trainee.Controllers
 
                 return new CourseProgressItemVM
                 {
-                    CourseTitle = e.Course?.Title ?? "N/A",
+                    CourseTitle = e.Course?.Title ?? _localizer["NotAvailable"].ToString(),
                     CompletedLessons = completedLessons,
                     TotalLessons = totalLessons,
                     ProgressPercentage = percentage

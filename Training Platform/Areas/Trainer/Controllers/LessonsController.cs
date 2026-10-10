@@ -1,18 +1,24 @@
 ﻿using System.Security.Claims;
+using Microsoft.Extensions.Localization;
+
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
+    [Authorize(Roles = RoleNames.TRAINER)]
     public class LessonsController : Controller
     {
         private readonly IRepository<Lesson> _lessonRepository;
         private readonly IRepository<Course> _courseRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public LessonsController(
             IRepository<Lesson> lessonRepository,
-            IRepository<Course> courseRepository)
+            IRepository<Course> courseRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _lessonRepository = lessonRepository;
             _courseRepository = courseRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -116,7 +122,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "You already have a lesson with this title in this course.");
+                    _localizer["DuplicateLessonTitle"]);
 
                 ViewBag.Course = course;
                 return View(model);
@@ -132,7 +138,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OrderNumber),
-                    "This order number is already used in this course.");
+                    _localizer["DuplicateLessonOrderNumber"]);
 
                 ViewBag.Course = course;
                 return View(model);
@@ -155,7 +161,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 cancellationToken) > 0)
             {
                 TempData["Success"] =
-                    "Lesson created successfully.";
+                    _localizer["LessonCreatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Index),
@@ -166,7 +172,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             }
 
             TempData["Error"] =
-                "Something went wrong while creating the lesson.";
+                _localizer["LessonCreateFailed"].ToString();
 
             ViewBag.Course = course;
 
@@ -258,7 +264,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    "You already have a lesson with this title in this course.");
+                    _localizer["DuplicateLessonTitle"]);
 
                 ViewBag.Course = course;
                 return View(model);
@@ -275,7 +281,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OrderNumber),
-                    "This order number is already used in this course.");
+                    _localizer["DuplicateLessonOrderNumber"]);
 
                 ViewBag.Course = course;
                 return View(model);
@@ -292,7 +298,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 cancellationToken) > 0)
             {
                 TempData["Success"] =
-                    "Lesson updated successfully.";
+                    _localizer["LessonUpdatedSuccess"].ToString();
 
                 return RedirectToAction(
                     nameof(Index),
@@ -303,7 +309,7 @@ namespace Training_Platform.Areas.Trainer.Controllers
             }
 
             TempData["Error"] =
-                "Something went wrong while updating the lesson.";
+                _localizer["LessonUpdateFailed"].ToString();
 
             ViewBag.Course = course;
 
@@ -384,20 +390,21 @@ namespace Training_Platform.Areas.Trainer.Controllers
                 if (materialsCount > 0 || progressCount > 0)
                 {
                     TempData["Success"] =
-                        $"Lesson deleted successfully. " +
-                        $"{materialsCount} material(s) and " +
-                        $"{progressCount} progress record(s) were also deleted.";
+                        string.Format(
+                            _localizer["LessonDeletedSuccessWithRelatedData"].ToString(),
+                            materialsCount,
+                            progressCount);
                 }
                 else
                 {
                     TempData["Success"] =
-                        "Lesson deleted successfully.";
+                        _localizer["LessonDeletedSuccess"].ToString();
                 }
             }
             else
             {
                 TempData["Error"] =
-                    "Something went wrong while deleting the lesson.";
+                    _localizer["LessonDeleteFailed"].ToString();
             }
 
             return RedirectToAction(

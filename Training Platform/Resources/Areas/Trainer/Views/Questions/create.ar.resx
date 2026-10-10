@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CreateQuestion" xml:space="preserve"><value>إنشاء سؤال</value></data>
+  <data name="AddNewQuestionTo" xml:space="preserve"><value>إضافة سؤال جديد إلى</value></data>
+  <data name="Quiz" xml:space="preserve"><value>الاختبار</value></data>
+  <data name="QuestionInformation" xml:space="preserve"><value>بيانات السؤال</value></data>
+  <data name="Question" xml:space="preserve"><value>السؤال</value></data>
+  <data name="EnterQuestionPlaceholder" xml:space="preserve"><value>أدخل السؤال</value></data>
+  <data name="Mark" xml:space="preserve"><value>الدرجة</value></data>
+  <data name="QuestionType" xml:space="preserve"><value>نوع السؤال</value></data>
+  <data name="MultipleChoice" xml:space="preserve"><value>اختيار من متعدد</value></data>
+  <data name="TrueFalse" xml:space="preserve"><value>صواب أو خطأ</value></data>
+  <data name="QuestionOptions" xml:space="preserve"><value>خيارات السؤال</value></data>
+  <data name="OptionsHelpText" xml:space="preserve"><value>أضف خيارين على الأقل وحدد الإجابة الصحيحة.</value></data>
+  <data name="AddOption" xml:space="preserve"><value>إضافة خيار</value></data>
+  <data name="Option" xml:space="preserve"><value>الخيار</value></data>
+  <data name="EnterOptionPlaceholder" xml:space="preserve"><value>أدخل الخيار</value></data>
+  <data name="CorrectAnswer" xml:space="preserve"><value>الإجابة الصحيحة</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+</root>

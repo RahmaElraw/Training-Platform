@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using Training_Platform.ViewModels;
 
 namespace Training_Platform.Areas.Admin.Controllers
@@ -8,12 +9,16 @@ namespace Training_Platform.Areas.Admin.Controllers
     public class CategoriesController : Controller
     {
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
-        public CategoriesController(IRepository<Category> categoryRepository)
+        public CategoriesController(
+            IRepository<Category> categoryRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _categoryRepository = categoryRepository;
+            _localizer = localizer;
         }
 
 
@@ -67,7 +72,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (exists != null)
             {
                 ModelState.AddModelError(nameof(model.Name),
-                    "Category name already exists.");
+                    _localizer["CategoryNameExists"]);
 
                 return View(model);
             }
@@ -82,11 +87,13 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (await _categoryRepository.CommitAsync() > 0)
             {
-                TempData["Success"] = "Category created successfully.";
+                TempData["Success"] =
+                    _localizer["CategoryCreatedSuccessfully"].ToString();
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData["Error"] = "Something went wrong.";
+            TempData["Error"] =
+                _localizer["SomethingWentWrong"].ToString();
         
                 return View(model);
         }
@@ -122,7 +129,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (exists != null)
             {
                 ModelState.AddModelError(nameof(model.Name),
-                    "Category name already exists.");
+                    _localizer["CategoryNameExists"]);
 
                 return View(model);
             }
@@ -139,11 +146,13 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (await _categoryRepository.CommitAsync() > 0)
             {
-                TempData["Success"] = "Category updated successfully.";
+                TempData["Success"] =
+                    _localizer["CategoryUpdatedSuccessfully"].ToString();
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData["Error"] = "Something went wrong.";
+            TempData["Error"] =
+                _localizer["SomethingWentWrong"].ToString();
 
             return View(model);
         }
@@ -160,7 +169,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (category.Courses.Count != 0)
             {
                 TempData["Error"] =
-                    "Cannot delete category because it contains courses.";
+                    _localizer["CategoryCannotDeleteWithCourses"]
+                        .ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -169,11 +179,13 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (await _categoryRepository.CommitAsync() > 0)
             {
-                TempData["Success"] = "Category deleted successfully.";
+                TempData["Success"] =
+                    _localizer["CategoryDeletedSuccessfully"].ToString();
             }
             else
             {
-                TempData["Error"] = "Something went wrong.";
+                TempData["Error"] =
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

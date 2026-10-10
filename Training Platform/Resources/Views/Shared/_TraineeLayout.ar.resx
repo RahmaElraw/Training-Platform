@@ -29,4 +29,5 @@
   <data name="ProfileAndAccount" xml:space="preserve"><value>الملف الشخصي والحساب</value></data>
   <data name="SwitchToLightTheme" xml:space="preserve"><value>التبديل إلى الوضع النهاري</value></data>
   <data name="SwitchToDarkTheme" xml:space="preserve"><value>التبديل إلى الوضع الليلي</value></data>
+<data name="New" xml:space="preserve"><value>جديد</value></data>
 </root>

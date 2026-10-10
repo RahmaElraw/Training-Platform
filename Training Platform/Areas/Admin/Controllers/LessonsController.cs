@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace Training_Platform.Areas.Admin.Controllers
 {
@@ -11,6 +12,7 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly IRepository<Lesson> _lessonRepository;
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<CourseMaterial> _courseMaterialRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         private const int PageSize = 6;
 
@@ -22,11 +24,13 @@ namespace Training_Platform.Areas.Admin.Controllers
         public LessonsController(
             IRepository<Lesson> lessonRepository,
             IRepository<Course> courseRepository,
-            IRepository<CourseMaterial> courseMaterialRepository)
+            IRepository<CourseMaterial> courseMaterialRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _lessonRepository = lessonRepository;
             _courseRepository = courseRepository;
             _courseMaterialRepository = courseMaterialRepository;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -112,7 +116,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadLessonData(model);
                 return View(model);
@@ -128,7 +132,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OrderNumber),
-                    "This order number already exists in this course.");
+                    _localizer["OrderNumberAlreadyExistsInCourse"]);
 
                 await LoadLessonData(model);
                 return View(model);
@@ -157,14 +161,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Lesson created successfully.";
+                    _localizer["LessonCreatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData[ErrorMessage] =
-                "Something went wrong while creating the lesson.";
+                _localizer["SomethingWentWrongCreatingLesson"].ToString();
 
             await LoadLessonData(model);
 
@@ -235,7 +239,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.CourseId),
-                    "Selected course does not exist.");
+                    _localizer["SelectedCourseDoesNotExist"]);
 
                 await LoadLessonData(model);
                 return View(model);
@@ -252,7 +256,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.OrderNumber),
-                    "This order number already exists in this course.");
+                    _localizer["OrderNumberAlreadyExistsInCourse"]);
 
                 await LoadLessonData(model);
                 return View(model);
@@ -282,14 +286,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Lesson updated successfully.";
+                    _localizer["LessonUpdatedSuccessfully"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
 
             TempData[ErrorMessage] =
-                "Something went wrong while updating the lesson.";
+                _localizer["SomethingWentWrongUpdatingLesson"].ToString();
 
             await LoadLessonData(model);
 
@@ -313,12 +317,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Lesson deleted successfully, including all related materials and progress records.";
+                    _localizer["LessonDeletedSuccessfully"].ToString();
             }
             else
             {
                 TempData[ErrorMessage] =
-                    "Something went wrong while deleting the lesson.";
+                    _localizer["SomethingWentWrongDeletingLesson"]
+                        .ToString();
             }
 
             return RedirectToAction(nameof(Index));
@@ -352,7 +357,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 TempData[ErrorMessage] =
-                    "Please enter valid material data.";
+                    _localizer["PleaseEnterValidMaterialData"].ToString();
 
                 return RedirectToAction(
                     nameof(Details),
@@ -366,7 +371,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (lesson == null)
             {
                 TempData[ErrorMessage] =
-                    "The selected lesson does not exist.";
+                    _localizer["SelectedLessonDoesNotExist"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -392,12 +397,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Course material added successfully.";
+                    _localizer["CourseMaterialAddedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData[ErrorMessage] =
-                    "Something went wrong while adding the material.";
+                    _localizer["SomethingWentWrongAddingMaterial"]
+                        .ToString();
             }
 
 
@@ -459,7 +466,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Course material updated successfully.";
+                    _localizer["CourseMaterialUpdatedSuccessfully"]
+                        .ToString();
 
                 return RedirectToAction(
                     nameof(Details),
@@ -467,7 +475,8 @@ namespace Training_Platform.Areas.Admin.Controllers
             }
 
             TempData[ErrorMessage] =
-                "Something went wrong while updating the material.";
+                _localizer["SomethingWentWrongUpdatingMaterial"]
+                    .ToString();
 
             return View(model);
         }
@@ -497,12 +506,14 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (result > 0)
             {
                 TempData[SuccessMessage] =
-                    "Course material deleted successfully.";
+                    _localizer["CourseMaterialDeletedSuccessfully"]
+                        .ToString();
             }
             else
             {
                 TempData[ErrorMessage] =
-                    "Something went wrong while deleting the material.";
+                    _localizer["SomethingWentWrongDeletingMaterial"]
+                        .ToString();
             }
 
 

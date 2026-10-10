@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Training_Platform.Models;
 
 namespace Training_Platform.Areas.Admin.Controllers
@@ -9,10 +10,14 @@ namespace Training_Platform.Areas.Admin.Controllers
     public class ReviewsController : Controller
     {
         private readonly IRepository<Review> _reviewRepository;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public ReviewsController(IRepository<Review> reviewRepository)
+        public ReviewsController(
+            IRepository<Review> reviewRepository,
+            IStringLocalizer<SharedResource> localizer)
         {
             _reviewRepository = reviewRepository;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(
@@ -105,11 +110,13 @@ namespace Training_Platform.Areas.Admin.Controllers
 
             if (await _reviewRepository.CommitAsync(cancellationToken) > 0)
             {
-                TempData["Success"] = "Review deleted successfully.";
+                TempData["Success"] =
+                    _localizer["ReviewDeletedSuccessfully"].ToString();
             }
             else
             {
-                TempData["Error"] = "Something went wrong.";
+                TempData["Error"] =
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
             return RedirectToAction(nameof(Index));

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="LessonDetails" xml:space="preserve"><value>Lesson Details</value></data>
+  <data name="ViewLessonInfo" xml:space="preserve"><value>View lesson information and manage its learning materials.</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="BackToLessons" xml:space="preserve"><value>Back to Lessons</value></data>
+  <data name="LessonInformation" xml:space="preserve"><value>Lesson Information</value></data>
+  <data name="NoDescriptionAvailable" xml:space="preserve"><value>No description available.</value></data>
+  <data name="CourseLabel" xml:space="preserve"><value>Course:</value></data>
+  <data name="OrderLabel" xml:space="preserve"><value>Order:</value></data>
+  <data name="Lesson" xml:space="preserve"><value>Lesson</value></data>
+  <data name="LessonVideo" xml:space="preserve"><value>Lesson Video</value></data>
+  <data name="OpenVideo" xml:space="preserve"><value>Open Video</value></data>
+  <data name="VideoUrl" xml:space="preserve"><value>Video URL</value></data>
+  <data name="NoVideoAvailable" xml:space="preserve"><value>No video available for this lesson.</value></data>
+  <data name="CourseMaterials" xml:space="preserve"><value>Course Materials</value></data>
+  <data name="MaterialsSubtitle" xml:space="preserve"><value>Learning materials related to this lesson.</value></data>
+  <data name="ManageMaterials" xml:space="preserve"><value>Manage Materials</value></data>
+  <data name="Material" xml:space="preserve"><value>Material</value></data>
+  <data name="Link" xml:space="preserve"><value>Link</value></data>
+  <data name="Open" xml:space="preserve"><value>Open</value></data>
+  <data name="NoUrl" xml:space="preserve"><value>No URL</value></data>
+  <data name="NoCourseMaterials" xml:space="preserve"><value>No Course Materials</value></data>
+  <data name="NoMaterialsAddedYet" xml:space="preserve"><value>No learning materials have been added to this lesson yet.</value></data>
+  <data name="AddFirstMaterial" xml:space="preserve"><value>Add First Material</value></data>
+  <data name="EditLesson" xml:space="preserve"><value>Edit Lesson</value></data>
+</root>

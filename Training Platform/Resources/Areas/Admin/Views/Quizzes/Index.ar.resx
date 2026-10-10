@@ -27,4 +27,5 @@
   <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
   <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
   <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+<data name="DeleteQuizCascadeWarning" xml:space="preserve"><value>تحذير: حذف هذا الاختبار سيؤدي أيضًا إلى حذف جميع الأسئلة والخيارات ونتائج الاختبار. هل أنت متأكد أنك تريد المتابعة؟</value></data>
 </root>

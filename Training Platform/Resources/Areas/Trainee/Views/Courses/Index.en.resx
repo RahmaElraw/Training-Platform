@@ -29,4 +29,8 @@
   <data name="NoCoursesFilterMessage" xml:space="preserve"><value>No courses match your active filter criteria.</value></data>
   <data name="ClearFilters" xml:space="preserve"><value>Clear Filters</value></data>
   <data name="NoPublishedCourses" xml:space="preserve"><value>There are no published courses available.</value></data>
+<data name="OutOfFiveStars" xml:space="preserve"><value>out of 5 stars</value></data>
+  <data name="CourseNavigation" xml:space="preserve"><value>Course page navigation</value></data>
+  <data name="Previous" xml:space="preserve"><value>Previous</value></data>
+  <data name="Next" xml:space="preserve"><value>Next</value></data>
 </root>

@@ -2,7 +2,7 @@
 @model LessonVM
 
 @{
-    ViewData["Title"] = "Edit Lesson";
+    ViewData["Title"] = Localizer["EditLesson"];
 }
 
 <div class="container-fluid">
@@ -11,11 +11,11 @@
     <div class="mb-4">
 
         <h2 class="fw-bold">
-            Edit Lesson
+            @Localizer["EditLesson"]
         </h2>
 
         <p class="text-muted">
-            Update lesson information
+            @Localizer["UpdateLessonInfo"]
         </p>
 
     </div>
@@ -26,7 +26,7 @@
         <div class="card-header bg-white">
 
             <h5 class="mb-0">
-                Lesson Information
+                @Localizer["LessonInformation"]
             </h5>
 
         </div>
@@ -53,12 +53,12 @@
 
                     <label asp-for="Title"
                            class="form-label">
-                        Lesson Title
+                        @Localizer["LessonTitle"]
                     </label>
 
                     <input asp-for="Title"
                            class="form-control"
-                           placeholder="Enter lesson title" />
+                           placeholder="@Localizer["EnterLessonTitle"]" />
 
                     <span asp-validation-for="Title"
                           class="text-danger">
@@ -72,13 +72,13 @@
 
                     <label asp-for="Description"
                            class="form-label">
-                        Description
+                        @Localizer["Description"]
                     </label>
 
                     <textarea asp-for="Description"
                               class="form-control"
                               rows="4"
-                              placeholder="Enter lesson description"></textarea>
+                              placeholder="@Localizer["EnterLessonDescription"]"></textarea>
 
                     <span asp-validation-for="Description"
                           class="text-danger">
@@ -92,7 +92,7 @@
 
                     <label asp-for="VideoUrl"
                            class="form-label">
-                        Video URL
+                        @Localizer["VideoUrl"]
                     </label>
 
                     <input asp-for="VideoUrl"
@@ -111,7 +111,7 @@
 
                     <label asp-for="OrderNumber"
                            class="form-label">
-                        Lesson Order
+                        @Localizer["LessonOrder"]
                     </label>
 
                     <input asp-for="OrderNumber"
@@ -124,7 +124,7 @@
                     </span>
 
                     <small class="text-muted">
-                        Determines the order in which lessons appear.
+                        @Localizer["OrderHint"]
                     </small>
 
                 </div>
@@ -137,7 +137,7 @@
                             class="btn btn-primary">
 
                         <i class="bi bi-save"></i>
-                        Save Changes
+                        @Localizer["SaveChanges"]
 
                     </button>
 
@@ -145,7 +145,7 @@
                        asp-route-courseId="@Model.CourseId"
                        class="btn btn-outline-secondary">
 
-                        Cancel
+                        @Localizer["Cancel"]
 
                     </a>
 

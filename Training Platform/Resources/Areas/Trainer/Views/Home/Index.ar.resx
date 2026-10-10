@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TrainerDashboard" xml:space="preserve"><value>لوحة تحكم المدرب</value></data>
+  <data name="TrainerPanel" xml:space="preserve"><value>لوحة المدرب</value></data>
+  <data name="WelcomeBackTrainer" xml:space="preserve"><value>مرحباً بعودتك يا مدرب 👋</value></data>
+  <data name="DashboardSubtitle" xml:space="preserve"><value>إليك نظرة عامة على دوراتك ومتدربيك.</value></data>
+  <data name="MyCourses" xml:space="preserve"><value>دوراتي</value></data>
+  <data name="CoursesAssignedToYou" xml:space="preserve"><value>الدورات المسندة إليك</value></data>
+  <data name="PublishedCourses" xml:space="preserve"><value>الدورات المنشورة</value></data>
+  <data name="AvailableCourses" xml:space="preserve"><value>الدورات المتاحة</value></data>
+  <data name="TotalTrainees" xml:space="preserve"><value>إجمالي المتدربين</value></data>
+  <data name="EnrolledTrainees" xml:space="preserve"><value>المتدربون المسجلون</value></data>
+  <data name="MyQuizzes" xml:space="preserve"><value>اختباراتي</value></data>
+  <data name="CreatedQuizzes" xml:space="preserve"><value>الاختبارات التي أنشأتها</value></data>
+  <data name="QuickActions" xml:space="preserve"><value>إجراءات سريعة</value></data>
+  <data name="QuickActionsSubtitle" xml:space="preserve"><value>وصول سريع إلى أدوات المدرب.</value></data>
+  <data name="ViewYourCourses" xml:space="preserve"><value>عرض دوراتك</value></data>
+  <data name="ManageYourQuizzes" xml:space="preserve"><value>إدارة اختباراتك</value></data>
+  <data name="TraineeProgress" xml:space="preserve"><value>تقدم المتدربين</value></data>
+  <data name="TrackTraineeProgress" xml:space="preserve"><value>تتبع تقدم المتدربين</value></data>
+  <data name="EnrollmentProgress" xml:space="preserve"><value>تقدم التسجيل</value></data>
+  <data name="OverallTraineeProgress" xml:space="preserve"><value>التقدم العام للمتدربين</value></data>
+  <data name="Completed" xml:space="preserve"><value>مكتمل</value></data>
+  <data name="InProgress" xml:space="preserve"><value>قيد التنفيذ</value></data>
+  <data name="TraineesPerCourse" xml:space="preserve"><value>المتدربون في كل دورة</value></data>
+  <data name="TraineesPerCourseSubtitle" xml:space="preserve"><value>عدد المتدربين المسجلين في كل دورة.</value></data>
+  <data name="CompletedEnrollments" xml:space="preserve"><value>التسجيلات المكتملة</value></data>
+  <data name="CertificatesIssued" xml:space="preserve"><value>الشهادات الممنوحة</value></data>
+  <data name="RecentCourses" xml:space="preserve"><value>أحدث الدورات</value></data>
+  <data name="RecentCoursesSubtitle" xml:space="preserve"><value>الدورات التي أنشأتها مؤخراً.</value></data>
+  <data name="ViewAll" xml:space="preserve"><value>عرض الكل</value></data>
+  <data name="Course" xml:space="preserve"><value>الدورة</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+  <data name="Trainees" xml:space="preserve"><value>المتدربون</value></data>
+  <data name="Created" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="Action" xml:space="preserve"><value>إجراء</value></data>
+  <data name="Published" xml:space="preserve"><value>منشور</value></data>
+  <data name="Draft" xml:space="preserve"><value>مسودة</value></data>
+  <data name="ViewCourse" xml:space="preserve"><value>عرض الدورة</value></data>
+  <data name="NoCoursesYet" xml:space="preserve"><value>لا توجد دورات بعد</value></data>
+  <data name="NoCoursesYetSubtitle" xml:space="preserve"><value>لا توجد لديك أي دورات مسندة إليك حتى الآن.</value></data>
+  <data name="GoToCourses" xml:space="preserve"><value>الذهاب إلى الدورات</value></data>
+  <data name="Enrollment" xml:space="preserve"><value>التسجيل</value></data>
+  <data name="Enrollments" xml:space="preserve"><value>التسجيلات</value></data>
+</root>

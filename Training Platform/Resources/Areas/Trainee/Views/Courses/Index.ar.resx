@@ -29,4 +29,8 @@
   <data name="NoCoursesFilterMessage" xml:space="preserve"><value>لا توجد دورات تطابق معايير التصفية النشطة.</value></data>
   <data name="ClearFilters" xml:space="preserve"><value>مسح التصفية</value></data>
   <data name="NoPublishedCourses" xml:space="preserve"><value>لا توجد دورات منشورة متاحة.</value></data>
+<data name="OutOfFiveStars" xml:space="preserve"><value>من 5 نجوم</value></data>
+  <data name="CourseNavigation" xml:space="preserve"><value>ترقيم صفحات الدورات</value></data>
+  <data name="Previous" xml:space="preserve"><value>السابق</value></data>
+  <data name="Next" xml:space="preserve"><value>التالي</value></data>
 </root>

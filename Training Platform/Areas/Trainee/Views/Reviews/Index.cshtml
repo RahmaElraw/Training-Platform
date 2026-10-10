@@ -42,7 +42,7 @@
                                     </td>
                                     <td>
                                         @{
-                                            var comment = string.IsNullOrWhiteSpace(item.Comment) ? "<em class='text-muted'>No comment</em>" : item.Comment;
+                                            var comment = string.IsNullOrWhiteSpace(item.Comment) ? $"<em class='text-muted'>{Localizer["NoComment"].Value}</em>" : item.Comment;
                                             if (comment.Length > 50 && !comment.Contains("<em"))
                                             {
                                                 comment = comment.Substring(0, 50) + "...";

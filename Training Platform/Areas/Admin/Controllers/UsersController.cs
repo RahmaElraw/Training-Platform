@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
+
 namespace Training_Platform.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
@@ -9,15 +11,18 @@ namespace Training_Platform.Areas.Admin.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public UsersController(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<int>> roleManager,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IStringLocalizer<SharedResource> localizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _webHostEnvironment = webHostEnvironment;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(
@@ -68,7 +73,8 @@ namespace Training_Platform.Areas.Admin.Controllers
                 userRoles.Add(new UserWithRoleVM
                 {
                     User = user,
-                    Role = roles.FirstOrDefault() ?? "No Role"
+                    Role = roles.FirstOrDefault()
+                          ?? _localizer["NoRole"].ToString()
                 });
             }
 
@@ -114,13 +120,15 @@ namespace Training_Platform.Areas.Admin.Controllers
             {
                 TempData["success_notification"] =
                     user.IsApproved
-                        ? "User activated successfully."
-                        : "User deactivated successfully.";
+                        ? _localizer["UserActivatedSuccessfully"]
+                            .ToString()
+                        : _localizer["UserDeactivatedSuccessfully"]
+                            .ToString();
             }
             else
             {
                 TempData["error_notification"] =
-                    "Something went wrong.";
+                    _localizer["SomethingWentWrong"].ToString();
             }
 
             return RedirectToAction(nameof(Index));
@@ -233,7 +241,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             }
 
             TempData["success_notification"] =
-                "User created successfully.";
+                _localizer["UserCreatedSuccessfully"].ToString();
 
             return RedirectToAction(nameof(Index));
         }
@@ -302,7 +310,7 @@ namespace Training_Platform.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(
                         nameof(vm.ConfirmPassword),
-                        "Passwords do not match.");
+                        _localizer["PasswordsDoNotMatch"]);
 
                     return View(vm);
                 }
@@ -332,7 +340,7 @@ namespace Training_Platform.Areas.Admin.Controllers
             }
 
             TempData["success_notification"] =
-                "User updated successfully.";
+                _localizer["UserUpdatedSuccessfully"].ToString();
 
             return RedirectToAction(nameof(Index));
         }
@@ -354,13 +362,13 @@ namespace Training_Platform.Areas.Admin.Controllers
             if (!result.Succeeded)
             {
                 TempData["error_notification"] =
-                    "Failed to delete user.";
+                    _localizer["FailedToDeleteUser"].ToString();
 
                 return RedirectToAction(nameof(Index));
             }
 
             TempData["success_notification"] =
-                "User deleted successfully.";
+                _localizer["UserDeletedSuccessfully"].ToString();
 
             return RedirectToAction(nameof(Index));
         }

@@ -34,4 +34,6 @@
   <data name="ViewAll" xml:space="preserve"><value>View all</value></data>
   <data name="Account" xml:space="preserve"><value>Account</value></data>
   <data name="ProfileAndAccount" xml:space="preserve"><value>Profile &amp; account</value></data>
+<data name="New" xml:space="preserve"><value>NEW</value></data>
+  <data name="NoNotifications" xml:space="preserve"><value>No notifications.</value></data>
 </root>

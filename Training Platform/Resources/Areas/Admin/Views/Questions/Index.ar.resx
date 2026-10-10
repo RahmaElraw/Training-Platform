@@ -33,4 +33,5 @@
   <data name="QuestionsPagination" xml:space="preserve"><value>ترقيم صفحات الأسئلة</value></data>
   <data name="Previous" xml:space="preserve"><value>السابق</value></data>
   <data name="Next" xml:space="preserve"><value>التالي</value></data>
+<data name="DeleteQuestionConfirm" xml:space="preserve"><value>هل أنت متأكد أنك تريد حذف هذا السؤال؟</value></data>
 </root>

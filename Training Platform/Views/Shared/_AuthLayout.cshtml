@@ -367,7 +367,7 @@
             <form asp-area="" asp-controller="Culture" asp-action="SetCulture" method="post" class="m-0 d-flex align-items-center">
                 <i class="bi bi-globe2 auth-controls-icon"></i>
                 <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                <select name="culture" class="auth-lang-select" onchange="this.form.submit();" aria-label="Language">
+                <select name="culture" class="auth-lang-select" onchange="this.form.submit();" aria-label="@Localizer["Language"]">
                     @if (isArabic)
                     {
                         <option value="ar" selected>العربية</option>
@@ -416,6 +416,8 @@
             });
         });
     </script>
+
+    @await Html.PartialAsync("~/Views/Shared/_PasswordToggle.cshtml")
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

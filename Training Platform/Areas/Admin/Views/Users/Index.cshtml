@@ -10,7 +10,7 @@
     <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
         <i class="fas fa-check-circle me-1"></i>
         @(TempData["Success"] ?? TempData["success_notification"])
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@Localizer["Close"]"></button>
     </div>
 }
 @if (TempData["Error"] != null || TempData["error_notification"] != null)
@@ -18,7 +18,7 @@
     <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
         <i class="fas fa-exclamation-triangle me-1"></i>
         @(TempData["Error"] ?? TempData["error_notification"])
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@Localizer["Close"]"></button>
     </div>
 }
 
@@ -54,7 +54,7 @@
             {
                 <div class="col-auto">
                     <a asp-action="Index" class="btn btn-outline-secondary">
-                        <i class="fas fa-times me-1"></i> Clear
+                        <i class="fas fa-times me-1"></i> @Localizer["Clear"]
                     </a>
                 </div>
             }
@@ -108,7 +108,7 @@
                                 <td>
                                     @if (item.Role == "No Role")
                                     {
-                                        <span class="badge bg-secondary">No Role</span>
+                                        <span class="badge bg-secondary">@Localizer["NoRole"]</span>
                                     }
                                     else
                                     {
@@ -164,7 +164,7 @@
                                                 <button type="submit"
                                                         class="btn btn-danger btn-sm"
                                                         title="@Localizer["MakeDeactivate"]"
-                                                        onclick="return confirm('Are you sure you want to deactivate this user?');">
+                                                        onclick="return confirm('@Localizer["DeactivateUserConfirm"]');">
                                                     <i class="fas fa-user-slash"></i>
                                                 </button>
                                             }
@@ -173,7 +173,7 @@
                                                 <button type="submit"
                                                         class="btn btn-success btn-sm"
                                                         title="@Localizer["MakeActivate"]"
-                                                        onclick="return confirm('Are you sure you want to activate this user?');">
+                                                        onclick="return confirm('@Localizer["ActivateUserConfirm"]');">
                                                     <i class="fas fa-user-check"></i>
                                                 </button>
                                             }
@@ -203,7 +203,7 @@
     @if (Model.TotalPages > 1)
     {
         <div class="card-footer bg-white py-3">
-            <nav aria-label="Users pagination">
+            <nav aria-label="@Localizer["UsersPagination"]">
                 <ul class="pagination justify-content-center mb-0">
                     <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
                         <a class="page-link"

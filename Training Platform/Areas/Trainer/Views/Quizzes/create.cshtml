@@ -3,7 +3,7 @@
 @using Training_Platform.Models
 
 @{
-    ViewData["Title"] = "Create Quiz";
+    ViewData["Title"] = @Localizer["PageTitle"];
 
     var isCoursePreselected =
         ViewBag.IsCoursePreselected as bool? ?? false;
@@ -22,11 +22,11 @@
         <div>
             <h2 class="fw-bold mb-1">
                 <i class="bi bi-clipboard-plus me-2"></i>
-                Create Quiz
+                @Localizer["PageTitle"]
             </h2>
 
             <p class="text-muted mb-0">
-                Create a new quiz.
+                @Localizer["PageSubtitle"]
             </p>
         </div>
 
@@ -39,7 +39,7 @@
                class="btn btn-outline-secondary">
 
                 <i class="bi bi-arrow-left me-1"></i>
-                Back to Course
+                @Localizer["BackToCourse"]
 
             </a>
         }
@@ -51,7 +51,7 @@
                class="btn btn-outline-secondary">
 
                 <i class="bi bi-arrow-left me-1"></i>
-                Back to Dashboard
+                @Localizer["BackToDashboard"]
 
             </a>
         }
@@ -65,7 +65,7 @@
 
             <h5 class="mb-0 fw-semibold">
                 <i class="bi bi-info-circle me-2"></i>
-                Quiz Information
+                @Localizer["QuizInformation"]
             </h5>
 
         </div>
@@ -94,7 +94,7 @@
                     <div class="mb-4">
 
                         <label class="form-label fw-semibold">
-                            Course
+                            @Localizer["Course"]
                         </label>
 
                         <div class="form-control bg-light">
@@ -117,7 +117,7 @@
                         <label asp-for="CourseId"
                                class="form-label fw-semibold">
 
-                            Course
+                            @Localizer["Course"]
 
                         </label>
 
@@ -125,7 +125,7 @@
                                 class="form-select">
 
                             <option value="">
-                                -- Select Course --
+                                @Localizer["SelectCourse"]
                             </option>
 
                             @if (courses != null)
@@ -155,13 +155,13 @@
                     <label asp-for="Title"
                            class="form-label fw-semibold">
 
-                        Quiz Title
+                        @Localizer["QuizTitle"]
 
                     </label>
 
                     <input asp-for="Title"
                            class="form-control"
-                           placeholder="Enter quiz title" />
+                           placeholder="@Localizer["EnterQuizTitle"]" />
 
                     <span asp-validation-for="Title"
                           class="text-danger">
@@ -179,7 +179,7 @@
                         <label asp-for="PassingScore"
                                class="form-label fw-semibold">
 
-                            Passing Score
+                            @Localizer["PassingScore"]
 
                         </label>
 
@@ -209,7 +209,7 @@
                         <label asp-for="TimeLimit"
                                class="form-label fw-semibold">
 
-                            Time Limit
+                            @Localizer["TimeLimit"]
 
                         </label>
 
@@ -222,7 +222,7 @@
                                    max="300" />
 
                             <span class="input-group-text">
-                                minutes
+                                @Localizer["Minutes"]
                             </span>
 
                         </div>
@@ -245,10 +245,10 @@
                         <a asp-area="Trainer"
                            asp-controller="Courses"
                            asp-action="Details"
-                           asp-route-id="@course.Id"
-                           class="btn btn-outline-secondary">
+                               asp-route-id="@course.Id"
+                               class="btn btn-outline-secondary">
 
-                            Cancel
+                            @Localizer["Cancel"]
 
                         </a>
                     }
@@ -259,7 +259,7 @@
                            asp-action="Index"
                            class="btn btn-outline-secondary">
 
-                            Cancel
+                            @Localizer["Cancel"]
 
                         </a>
                     }
@@ -268,7 +268,7 @@
                             class="btn btn-primary">
 
                         <i class="bi bi-check-lg me-1"></i>
-                        Create Quiz
+                        @Localizer["CreateQuiz"]
 
                     </button>
 

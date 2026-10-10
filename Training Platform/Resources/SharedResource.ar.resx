@@ -165,4 +165,553 @@
   <data name="EmailNotRegistered" xml:space="preserve">
     <value>هذا البريد الإلكتروني غير مسجل.</value>
   </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>حدث خطأ ما.</value>
+  </data>
+  <data name="UnknownUser" xml:space="preserve">
+    <value>مستخدم غير معروف</value>
+  </data>
+  <data name="UnknownCourse" xml:space="preserve">
+    <value>دورة غير معروفة</value>
+  </data>
+  <data name="NoRole" xml:space="preserve">
+    <value>بلا دور</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>غير متاح</value>
+  </data>
+  <data name="CategoryNameExists" xml:space="preserve">
+    <value>اسم التصنيف موجود بالفعل.</value>
+  </data>
+  <data name="CategoryCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء التصنيف بنجاح.</value>
+  </data>
+  <data name="CategoryUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث التصنيف بنجاح.</value>
+  </data>
+  <data name="CategoryCannotDeleteWithCourses" xml:space="preserve">
+    <value>لا يمكن حذف التصنيف لاحتوائه على دورات.</value>
+  </data>
+  <data name="CategoryDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف التصنيف بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongUpdatingCertificateLink" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث رابط الشهادة.</value>
+  </data>
+  <data name="CertificateLinkUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث رابط الشهادة بنجاح.</value>
+  </data>
+  <data name="SelectedCategoryDoesNotExist" xml:space="preserve">
+    <value>التصنيف المحدد غير موجود.</value>
+  </data>
+  <data name="SelectedTrainerDoesNotExist" xml:space="preserve">
+    <value>المدرب المحدد غير موجود.</value>
+  </data>
+  <data name="CourseTitleAlreadyExists" xml:space="preserve">
+    <value>عنوان الدورة موجود بالفعل.</value>
+  </data>
+  <data name="CourseCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء الدورة بنجاح.</value>
+  </data>
+  <data name="CourseUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث الدورة بنجاح.</value>
+  </data>
+  <data name="CourseCannotDeleteWithEnrollments" xml:space="preserve">
+    <value>لا يمكن حذف الدورة لوجود تسجيلات بها.</value>
+  </data>
+  <data name="CourseCannotDeleteWithLessons" xml:space="preserve">
+    <value>لا يمكن حذف الدورة لوجود دروس بها.</value>
+  </data>
+  <data name="CourseCannotDeleteWithQuizzes" xml:space="preserve">
+    <value>لا يمكن حذف الدورة لوجود اختبارات بها.</value>
+  </data>
+  <data name="CourseCannotDeleteWithCertificates" xml:space="preserve">
+    <value>لا يمكن حذف الدورة لوجود شهادات بها.</value>
+  </data>
+  <data name="CourseCannotDeleteWithReviews" xml:space="preserve">
+    <value>لا يمكن حذف الدورة لوجود تقييمات بها.</value>
+  </data>
+  <data name="CourseDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف الدورة بنجاح.</value>
+  </data>
+  <data name="SelectedUserDoesNotExist" xml:space="preserve">
+    <value>المستخدم المحدد غير موجود.</value>
+  </data>
+  <data name="SelectedCourseDoesNotExist" xml:space="preserve">
+    <value>الدورة المحددة غير موجودة.</value>
+  </data>
+  <data name="UserAlreadyEnrolledInCourse" xml:space="preserve">
+    <value>هذا المستخدم مسجل بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="AlreadyEnrolledInCourse" xml:space="preserve">
+    <value>أنت مسجل بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="EnrollmentCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء التسجيل بنجاح.</value>
+  </data>
+  <data name="EnrollmentUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث التسجيل بنجاح.</value>
+  </data>
+  <data name="EnrollmentDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف التسجيل بنجاح.</value>
+  </data>
+  <data name="EnrolledSuccessfully" xml:space="preserve">
+    <value>تم تسجيلك بنجاح.</value>
+  </data>
+  <data name="EnrolledSuccessfullyEnjoyLearning" xml:space="preserve">
+    <value>تم التسجيل بنجاح! استمتع بالتعلم.</value>
+  </data>
+  <data name="UnenrolledFromCourse" xml:space="preserve">
+    <value>لقد قمت بإلغاء التسجيل من الدورة.</value>
+  </data>
+  <data name="OrderNumberAlreadyExistsInCourse" xml:space="preserve">
+    <value>رقم الترتيب هذا موجود بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="DuplicateLessonTitle" xml:space="preserve">
+    <value>يوجد درس بهذا العنوان بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="DuplicateLessonOrderNumber" xml:space="preserve">
+    <value>رقم الترتيب هذا مستخدم بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="LessonCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء الدرس بنجاح.</value>
+  </data>
+  <data name="LessonCreatedSuccess" xml:space="preserve">
+    <value>تم إنشاء الدرس بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongCreatingLesson" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إنشاء الدرس.</value>
+  </data>
+  <data name="LessonCreateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إنشاء الدرس.</value>
+  </data>
+  <data name="LessonUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث الدرس بنجاح.</value>
+  </data>
+  <data name="LessonUpdatedSuccess" xml:space="preserve">
+    <value>تم تحديث الدرس بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongUpdatingLesson" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث الدرس.</value>
+  </data>
+  <data name="LessonUpdateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث الدرس.</value>
+  </data>
+  <data name="LessonDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف الدرس وجميع المواد وسجلات التقدم المرتبطة به بنجاح.</value>
+  </data>
+  <data name="LessonDeletedSuccessWithRelatedData" xml:space="preserve">
+    <value>تم حذف الدرس بنجاح. كما تم حذف {0} مادة و{1} سجل تقدم.</value>
+  </data>
+  <data name="LessonDeletedSuccess" xml:space="preserve">
+    <value>تم حذف الدرس بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongDeletingLesson" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف الدرس.</value>
+  </data>
+  <data name="LessonDeleteFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف الدرس.</value>
+  </data>
+  <data name="LessonCompletedSuccessfully" xml:space="preserve">
+    <value>تم إكمال الدرس بنجاح.</value>
+  </data>
+  <data name="PleaseEnterValidMaterialData" xml:space="preserve">
+    <value>يرجى إدخال بيانات مادة صحيحة.</value>
+  </data>
+  <data name="SelectedLessonDoesNotExist" xml:space="preserve">
+    <value>الدرس المحدد غير موجود.</value>
+  </data>
+  <data name="CourseMaterialAddedSuccessfully" xml:space="preserve">
+    <value>تمت إضافة مادة الدورة بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongAddingMaterial" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إضافة المادة.</value>
+  </data>
+  <data name="CourseMaterialUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث مادة الدورة بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongUpdatingMaterial" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث المادة.</value>
+  </data>
+  <data name="CourseMaterialDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف مادة الدورة بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongDeletingMaterial" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف المادة.</value>
+  </data>
+  <data name="SelectedQuizDoesNotExist" xml:space="preserve">
+    <value>الاختبار المحدد غير موجود.</value>
+  </data>
+  <data name="QuizTitleAlreadyExistsInCourse" xml:space="preserve">
+    <value>يوجد اختبار بهذا العنوان بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="DuplicateQuizTitle" xml:space="preserve">
+    <value>يوجد اختبار بهذا العنوان بالفعل في هذه الدورة.</value>
+  </data>
+  <data name="QuizCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء الاختبار بنجاح.</value>
+  </data>
+  <data name="QuizCreatedSuccess" xml:space="preserve">
+    <value>تم إنشاء الاختبار بنجاح.</value>
+  </data>
+  <data name="QuizUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث الاختبار بنجاح.</value>
+  </data>
+  <data name="QuizUpdatedSuccess" xml:space="preserve">
+    <value>تم تحديث الاختبار بنجاح.</value>
+  </data>
+  <data name="QuizDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف الاختبار وجميع الأسئلة والخيارات والنتائج المرتبطة به بنجاح.</value>
+  </data>
+  <data name="QuizDeletedSuccess" xml:space="preserve">
+    <value>تم حذف الاختبار والبيانات المرتبطة به بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongDeletingQuiz" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف الاختبار.</value>
+  </data>
+  <data name="QuizCreateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إنشاء الاختبار.</value>
+  </data>
+  <data name="QuizUpdateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث الاختبار.</value>
+  </data>
+  <data name="QuizDeleteFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف الاختبار.</value>
+  </data>
+  <data name="PleaseAddAtLeastOneOption" xml:space="preserve">
+    <value>يرجى إضافة خيار واحد على الأقل.</value>
+  </data>
+  <data name="QuestionOptionsCannotBeDuplicated" xml:space="preserve">
+    <value>لا يمكن تكرار خيارات السؤال.</value>
+  </data>
+  <data name="PleaseSelectOneCorrectAnswer" xml:space="preserve">
+    <value>يرجى اختيار إجابة صحيحة واحدة.</value>
+  </data>
+  <data name="MultipleChoiceNeedsAtLeastTwoOptions" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الاختيار من متعدد على خيارين على الأقل.</value>
+  </data>
+  <data name="MultipleChoiceAtLeastTwoOptions" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الاختيار من متعدد على خيارين على الأقل.</value>
+  </data>
+  <data name="MultipleChoiceCanHaveOnlyOneCorrectAnswer" xml:space="preserve">
+    <value>يمكن أن تحتوي أسئلة الاختيار من متعدد على إجابة صحيحة واحدة فقط.</value>
+  </data>
+  <data name="MultipleChoiceMustHaveExactlyOneCorrectAnswer" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الاختيار من متعدد على إجابة صحيحة واحدة بالضبط.</value>
+  </data>
+  <data name="TrueFalseMustHaveExactlyTwoOptions" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الصواب/الخطأ على خيارين بالضبط.</value>
+  </data>
+  <data name="TrueFalseExactlyTwoOptions" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الصواب/الخطأ على خيارين بالضبط.</value>
+  </data>
+  <data name="TrueFalseOnlyTrueAndFalseOptions" xml:space="preserve">
+    <value>يمكن لأسئلة الصواب/الخطأ أن تحتوي على خياري الصواب والخطأ فقط.</value>
+  </data>
+  <data name="TrueFalseMustContainBothTrueAndFalse" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الصواب/الخطأ على الصواب والخطأ معاً.</value>
+  </data>
+  <data name="TrueFalseExactlyOneCorrectAnswer" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الصواب/الخطأ على إجابة صحيحة واحدة بالضبط.</value>
+  </data>
+  <data name="TrueFalseExactlyOneCorrectOption" xml:space="preserve">
+    <value>يجب أن تحتوي أسئلة الصواب/الخطأ على خيار صحيح واحد بالضبط.</value>
+  </data>
+  <data name="TrueFalseQuestionOnlyOneCorrectAnswer" xml:space="preserve">
+    <value>يمكن لسؤال الصواب/الخطأ أن يحتوي على إجابة صحيحة واحدة فقط.</value>
+  </data>
+  <data name="TrueFalseOnlyTwoOptions" xml:space="preserve">
+    <value>لا يمكن أن تحتوي أسئلة الصواب/الخطأ إلا على خيارين.</value>
+  </data>
+  <data name="TrueFalseOnlyTrueOrFalseOptions" xml:space="preserve">
+    <value>يمكن لأسئلة الصواب/الخطأ أن تحتوي على خيار الصواب أو الخطأ فقط.</value>
+  </data>
+  <data name="SomethingWentWrongCreatingQuestion" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إنشاء السؤال.</value>
+  </data>
+  <data name="QuestionCreatedSuccess" xml:space="preserve">
+    <value>تم إنشاء السؤال بنجاح.</value>
+  </data>
+  <data name="QuestionCreateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء إنشاء السؤال.</value>
+  </data>
+  <data name="QuestionCreatedOptionsFailed" xml:space="preserve">
+    <value>تم إنشاء السؤال، ولكن حدث خطأ ما أثناء حفظ الخيارات.</value>
+  </data>
+  <data name="QuestionAndOptionsCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء السؤال وخياراته بنجاح.</value>
+  </data>
+  <data name="QuestionAndOptionsUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث السؤال وخياراته بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongUpdatingQuestion" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث السؤال.</value>
+  </data>
+  <data name="QuestionUpdatedSuccess" xml:space="preserve">
+    <value>تم تحديث السؤال بنجاح.</value>
+  </data>
+  <data name="QuestionUpdateFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء تحديث السؤال.</value>
+  </data>
+  <data name="QuestionAndOptionsDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف السؤال وخياراته بنجاح.</value>
+  </data>
+  <data name="QuestionDeletedSuccess" xml:space="preserve">
+    <value>تم حذف السؤال وخياراته بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongDeletingQuestion" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف السؤال.</value>
+  </data>
+  <data name="QuestionDeleteFailed" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف السؤال.</value>
+  </data>
+  <data name="PleaseEnterValidOptionData" xml:space="preserve">
+    <value>يرجى إدخال بيانات خيار صحيحة.</value>
+  </data>
+  <data name="OptionTextRequired" xml:space="preserve">
+    <value>نص الخيار مطلوب.</value>
+  </data>
+  <data name="OptionAlreadyExists" xml:space="preserve">
+    <value>هذا الخيار موجود بالفعل.</value>
+  </data>
+  <data name="QuestionOnlyOneCorrectAnswer" xml:space="preserve">
+    <value>يمكن أن يحتوي هذا السؤال على إجابة صحيحة واحدة فقط.</value>
+  </data>
+  <data name="QuestionOptionAddedSuccessfully" xml:space="preserve">
+    <value>تمت إضافة خيار السؤال بنجاح.</value>
+  </data>
+  <data name="QuestionOptionUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث خيار السؤال بنجاح.</value>
+  </data>
+  <data name="QuestionMustHaveAtLeastOneOption" xml:space="preserve">
+    <value>يجب أن يحتوي السؤال على خيار واحد على الأقل.</value>
+  </data>
+  <data name="QuestionOptionDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف خيار السؤال بنجاح.</value>
+  </data>
+  <data name="SomethingWentWrongDeletingOption" xml:space="preserve">
+    <value>حدث خطأ ما أثناء حذف الخيار.</value>
+  </data>
+  <data name="DuplicateQuestionText" xml:space="preserve">
+    <value>يوجد سؤال بهذا النص بالفعل في هذا الاختبار.</value>
+  </data>
+  <data name="MustSelectAtLeastOneCorrectOption" xml:space="preserve">
+    <value>يجب اختيار خيار صحيح واحد على الأقل.</value>
+  </data>
+  <data name="ReviewDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف التقييم بنجاح.</value>
+  </data>
+  <data name="RatingMustBeBetweenOneAndFiveStars" xml:space="preserve">
+    <value>يجب أن يكون التقييم بين 1 و5 نجوم.</value>
+  </data>
+  <data name="OnlyEnrolledTraineesCanReview" xml:space="preserve">
+    <value>فقط المتدربون المسجلون يمكنهم ترك تقييم.</value>
+  </data>
+  <data name="MustBeEnrolledToReview" xml:space="preserve">
+    <value>يجب أن تكون مسجلاً في هذه الدورة لترك تقييم.</value>
+  </data>
+  <data name="ReviewSaved" xml:space="preserve">
+    <value>تم حفظ تقييمك.</value>
+  </data>
+  <data name="AlreadyReviewedCourse" xml:space="preserve">
+    <value>لقد قمت بتقييم هذه الدورة بالفعل.</value>
+  </data>
+  <data name="ReviewSubmittedThankYou" xml:space="preserve">
+    <value>شكراً لك! تم إرسال تقييمك.</value>
+  </data>
+  <data name="ReviewUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث تقييمك بنجاح.</value>
+  </data>
+  <data name="UserActivatedSuccessfully" xml:space="preserve">
+    <value>تم تفعيل المستخدم بنجاح.</value>
+  </data>
+  <data name="UserDeactivatedSuccessfully" xml:space="preserve">
+    <value>تم إلغاء تفعيل المستخدم بنجاح.</value>
+  </data>
+  <data name="UserCreatedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء المستخدم بنجاح.</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>كلمتا المرور غير متطابقتين.</value>
+  </data>
+  <data name="UserUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث المستخدم بنجاح.</value>
+  </data>
+  <data name="FailedToDeleteUser" xml:space="preserve">
+    <value>فشل حذف المستخدم.</value>
+  </data>
+  <data name="UserDeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف المستخدم بنجاح.</value>
+  </data>
+  <data name="MustEnrollInCourseFirst" xml:space="preserve">
+    <value>يجب أن تسجل في هذه الدورة أولاً.</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="Category Id" xml:space="preserve">
+    <value>التصنيف</value>
+  </data>
+  <data name="Certificate Number" xml:space="preserve">
+    <value>رقم الشهادة</value>
+  </data>
+  <data name="Certificate Url" xml:space="preserve">
+    <value>رابط الشهادة</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>التعليق</value>
+  </data>
+  <data name="Confirm New Password" xml:space="preserve">
+    <value>تأكيد كلمة المرور الجديدة</value>
+  </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="Course Id" xml:space="preserve">
+    <value>الدورة</value>
+  </data>
+  <data name="Current Password" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="Duration In Hours" xml:space="preserve">
+    <value>المدة بالساعات</value>
+  </data>
+  <data name="Enrollment Date" xml:space="preserve">
+    <value>تاريخ التسجيل</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>الاسم الأول</value>
+  </data>
+  <data name="Is Approved" xml:space="preserve">
+    <value>تمت الموافقة</value>
+  </data>
+  <data name="Is Completed" xml:space="preserve">
+    <value>مكتمل</value>
+  </data>
+  <data name="Is Correct" xml:space="preserve">
+    <value>صحيح</value>
+  </data>
+  <data name="Is Published" xml:space="preserve">
+    <value>منشور</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>الاسم الأخير</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>المستوى</value>
+  </data>
+  <data name="Mark" xml:space="preserve">
+    <value>الدرجة</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
+  </data>
+  <data name="Option Text" xml:space="preserve">
+    <value>نص الخيار</value>
+  </data>
+  <data name="Order Number" xml:space="preserve">
+    <value>رقم الترتيب</value>
+  </data>
+  <data name="Passing Score" xml:space="preserve">
+    <value>درجة النجاح</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Question Text" xml:space="preserve">
+    <value>نص السؤال</value>
+  </data>
+  <data name="Question Type" xml:space="preserve">
+    <value>نوع السؤال</value>
+  </data>
+  <data name="Quiz Id" xml:space="preserve">
+    <value>الاختبار</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>التقييم</value>
+  </data>
+  <data name="Selected Role" xml:space="preserve">
+    <value>الدور المحدد</value>
+  </data>
+  <data name="Thumbnail" xml:space="preserve">
+    <value>الصورة المصغرة</value>
+  </data>
+  <data name="Time Limit" xml:space="preserve">
+    <value>الحد الزمني</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="Trainer Id" xml:space="preserve">
+    <value>المدرب</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>الرابط</value>
+  </data>
+  <data name="User Id" xml:space="preserve">
+    <value>المستخدم</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Video Url" xml:space="preserve">
+    <value>رابط الفيديو</value>
+  </data>
+  <data name="The {0} and {1} fields must match." xml:space="preserve">
+    <value>الحقلان {0} و{1} غير متطابقين.</value>
+  </data>
+  <data name="The {0} field is not a valid phone number." xml:space="preserve">
+    <value>الحقل {0} ليس رقم هاتف صالحًا.</value>
+  </data>
+  <data name="The value provided is invalid." xml:space="preserve">
+    <value>القيمة المدخلة غير صالحة.</value>
+  </data>
+  <data name="The {0} field must be a string with a minimum length of {1}." xml:space="preserve">
+    <value>يجب أن يكون الحقل {0} نصًا بطول لا يقل عن {1}.</value>
+  </data>
+  <data name="The {0} field is not a valid date." xml:space="preserve">
+    <value>الحقل {0} ليس تاريخًا صالحًا.</value>
+  </data>
+  <data name="The {0} field must be a number." xml:space="preserve">
+    <value>يجب أن يكون الحقل {0} رقمًا.</value>
+  </data>
+  <data name="The value '{0}' is not valid for {1}." xml:space="preserve">
+    <value>القيمة '{0}' غير صالحة للحقل {1}.</value>
+  </data>
+  <data name="The {0} field must be a valid URI." xml:space="preserve">
+    <value>يجب أن يكون الحقل {0} رابطًا صالحًا.</value>
+  </data>
+  <data name="ShowPassword" xml:space="preserve">
+    <value>إظهار كلمة المرور</value>
+  </data>
+  <data name="HidePassword" xml:space="preserve">
+    <value>إخفاء كلمة المرور</value>
+  </data>
+  <data name="The Email or Full Name field is required." xml:space="preserve">
+    <value>الحقل {0} إلزامي.</value>
+  </data>
+  <data name="The Password field is required." xml:space="preserve">
+    <value>الحقل {0} إلزامي.</value>
+  </data>
+  <data name="The field {0} must be a string with a minimum length of {1}." xml:space="preserve">
+    <value>يجب أن يكون الحقل {0} نصًا لا يقل طوله عن {1}.</value>
+  </data>
+  <data name="The Email Or Full Name field is required." xml:space="preserve">
+    <value>حقل البريد الإلكتروني أو الاسم الكامل مطلوب.</value>
+  </data>
+  <data name="The email or full name field is required." xml:space="preserve">
+    <value>حقل البريد الإلكتروني أو الاسم الكامل مطلوب.</value>
+  </data>
+  <data name="The password field is required." xml:space="preserve">
+    <value>حقل كلمة المرور مطلوب.</value>
+  </data>
 </root>

@@ -6,7 +6,7 @@ using Training_Platform.Areas.Trainer;
 namespace Training_Platform.Areas.Trainer.Controllers
 {
     [Area(SD.Trainer_Area)]
-    [Authorize]
+    [Authorize(Roles = RoleNames.TRAINER)]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;

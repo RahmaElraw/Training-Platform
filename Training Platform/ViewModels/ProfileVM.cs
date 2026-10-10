@@ -4,6 +4,7 @@ namespace Training_Platform.ViewModels
 {
     public class ProfileVM
     {
+            [Display(Name = "Email")]
             public string Email { get; set; } = string.Empty;
             public string? ProfileImage { get; set; }
 
